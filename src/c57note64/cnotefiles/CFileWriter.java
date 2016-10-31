@@ -20,8 +20,7 @@ public class CFileWriter {
 			+ "doing\n"
 			+ "done\n"
 			+ "settings\n"
-			+ "types\n"
-			+ "type1127,127,255";
+			+ "types\n";
 	
 	public static void makeDefaultNoteFile(File file) {
 		try {
