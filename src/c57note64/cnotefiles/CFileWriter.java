@@ -34,8 +34,9 @@ public class CFileWriter {
 	}
 	
 	public static void saveNoteFile(File saveFile) {
-		String writeString = "notes\n"
-				+ "todo\n";
+		String writeString = C57note64Main.syntaxVersion+"\n"
+			+ "notes\n"
+			+ "todo\n";
 		/**
 		 * Save todo notes
 		 */
