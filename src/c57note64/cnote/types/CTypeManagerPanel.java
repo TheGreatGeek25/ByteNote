@@ -11,6 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import c57note64.C57note64Main;
+import c57note64.CMainPanel;
 import c57note64.cnote.types.table.CColorRenderer;
 import c57note64.cnote.types.table.CTypeTableModel;
 import c57note64.cnote.types.typeeditor.CTypeEditor;
@@ -67,6 +69,21 @@ public class CTypeManagerPanel extends JPanel {
 	}
 	
 	public void deleteType(int row) {
+		for (int i = 0; i < ( (CMainPanel) C57note64Main.c57main.getContentPane()).todoPanel.notes.size(); i++) {
+			if(( (CMainPanel) C57note64Main.c57main.getContentPane()).todoPanel.notes.get(i).type.equals(data[row][0])) {
+				( (CMainPanel) C57note64Main.c57main.getContentPane()).todoPanel.notes.get(i).type = "(default)";
+			}
+		}
+		for (int i = 0; i < ( (CMainPanel) C57note64Main.c57main.getContentPane()).doingPanel.notes.size(); i++) {
+			if(( (CMainPanel) C57note64Main.c57main.getContentPane()).doingPanel.notes.get(i).type.equals(data[row][0])) {
+				( (CMainPanel) C57note64Main.c57main.getContentPane()).doingPanel.notes.get(i).type = "(default)";
+			}
+		}
+		for (int i = 0; i < ( (CMainPanel) C57note64Main.c57main.getContentPane()).donePanel.notes.size(); i++) {
+			if(( (CMainPanel) C57note64Main.c57main.getContentPane()).donePanel.notes.get(i).type.equals(data[row][0])) {
+				( (CMainPanel) C57note64Main.c57main.getContentPane()).donePanel.notes.get(i).type = "(default)";
+			}
+		}
 		ArrayList<Object[]> asList = new ArrayList<Object[]>(Arrays.asList(data));
 		asList.remove(row);
 		Object[][] newData = new Object[asList.size()][data[0].length];

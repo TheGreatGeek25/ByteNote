@@ -2,9 +2,7 @@ package c57note64.cnotefiles;
 
 import java.awt.Color;
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -65,7 +63,7 @@ public class CFileReader {
 				if(i+1<typeArray.length) {
 					if(typeArray[i+1].split(",").length == 3) {
 						typeColor = new Color(Integer.parseInt(typeArray[i+1].split(",")[0]), Integer.parseInt(typeArray[i+1].split(",")[1]), Integer.parseInt(typeArray[i+1].split(",")[2]));
-						typeMap.put(typeName, typeColor);					
+						typeMap.put(typeName, typeColor);
 					}
 				}
 			}
@@ -89,6 +87,8 @@ public class CFileReader {
 			/**
 			 * Add notes to todo section
 			 */
+			( (CMainPanel) C57note64Main.c57main.getContentPane()).todoPanel.notes.clear();
+			( (CMainPanel) C57note64Main.c57main.getContentPane()).todoPanel.removeAll();
 			for (int i = 1; i < todoStrArray.length; i++) {
 				CNote todoNote;
 				String[] todoNoteDataArray = todoStrArray[i].split("");
@@ -110,6 +110,8 @@ public class CFileReader {
 			/**
 			 * Add notes to doing section
 			 */
+			( (CMainPanel) C57note64Main.c57main.getContentPane()).doingPanel.notes.clear();
+			( (CMainPanel) C57note64Main.c57main.getContentPane()).doingPanel.removeAll();
 			for (int i = 1; i < doneStrArray.length; i++) {
 				CNote doneNote;
 				String[] doneNoteDataArray = doneStrArray[i].split("");
@@ -125,12 +127,14 @@ public class CFileReader {
 			
 			
 				doneNote = new CNote(Integer.parseInt(doneNoteData.get("priority")), doneNoteData.get("noteText"), doneNoteData.get("type"));
-				( (CMainPanel) C57note64Main.c57main.getContentPane()).donePanel.addNote(doneNote);
+				( (CMainPanel) C57note64Main.c57main.getContentPane()).doingPanel.addNote(doneNote);
 				i++;
 			}
 			/**
 		 	* Add notes to done section
 		 	*/
+			( (CMainPanel) C57note64Main.c57main.getContentPane()).donePanel.notes.clear();
+			( (CMainPanel) C57note64Main.c57main.getContentPane()).donePanel.removeAll();
 			for (int i = 1; i < doingStrArray.length; i++) {
 				CNote doingNote;
 				String[] doingNoteDataArray = doingStrArray[i].split("");
@@ -146,7 +150,7 @@ public class CFileReader {
 			
 			
 				doingNote = new CNote(Integer.parseInt(doingNoteData.get("priority")), doingNoteData.get("noteText"), doingNoteData.get("type"));
-				( (CMainPanel) C57note64Main.c57main.getContentPane()).doingPanel.addNote(doingNote);
+				( (CMainPanel) C57note64Main.c57main.getContentPane()).donePanel.addNote(doingNote);
 				i++;
 			}
 		
@@ -157,16 +161,13 @@ public class CFileReader {
 		String fileStr = readNoteFile(noteFile);
 		String[] fileStrArray = fileStr.split("");
 		String fileVersionStr = fileStrArray[0].replace("\n", "");
-		List<String> supVersions = Arrays.asList(C57note64Main.supportedSyntaxVersions);
-		if(supVersions.contains(fileVersionStr)) {
-			switch (fileVersionStr) {
-			case "v1.0":
-				return new v1_0();
-			}
-		} else {
+		switch (fileVersionStr) {
+		case "v1.0":
+			return new v1_0();
+		default:
 			throw new IllegalArgumentException(fileVersionStr+" is not a compatible file syntax version!");
 		}
-		return null;
+		
 	}
 	
 	public static String readNoteFile(File file) {

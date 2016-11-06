@@ -14,13 +14,24 @@ import c57note64.cnote.types.CNoteTypes;
 
 public class CFileWriter {
 	
-	public static final String defaultNoteFileContents = C57note64Main.version+"\n"
+	public static final String defaultNoteFileContents = C57note64Main.syntaxVersion+"\n"
 			+ "notes\n"
 			+ "todo\n"
 			+ "doing\n"
 			+ "done\n"
 			+ "settings\n"
-			+ "types\n";
+			+ "types\n"
+			+ "(default)255,255,150";
+	
+	public static void writePathFile(File file) {
+		try {
+			file.createNewFile();
+//			System.out.println("Saving note file path at: "+file.getAbsolutePath());
+			Files.write(Paths.get(file.getAbsolutePath()), C57note64Main.filePath.getBytes(), StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static void makeDefaultNoteFile(File file) {
 		try {
@@ -35,8 +46,8 @@ public class CFileWriter {
 	
 	public static void saveNoteFile(File saveFile) {
 		String writeString = C57note64Main.syntaxVersion+"\n"
-			+ "notes\n"
-			+ "todo\n";
+				+ "notes\n"
+				+ "todo\n";
 		/**
 		 * Save todo notes
 		 */

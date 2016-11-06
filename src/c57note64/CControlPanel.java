@@ -17,7 +17,7 @@ public class CControlPanel extends JPanel {
 	public JMenuBar menuBar;
 	
 	public JMenu file;
-	public JMenuItem save;
+	public JMenuItem save, saveAs, newFile, open;
 	public JMenu notes;
 	public JMenuItem newNote, deleteNote, manageTypes;
 	public JMenu selection;
@@ -36,10 +36,26 @@ public class CControlPanel extends JPanel {
 		file = new JMenu("File");
 		menuBar.add(file);
 		
+		newFile = new JMenuItem( new CAction("newFileAction") );
+		newFile.setText("New...");
+		newFile.setAccelerator(KeyStroke.getKeyStroke("control pressed N"));
+		file.add(newFile);
+		
+		open = new JMenuItem( new CAction("openAction") );
+		open.setText("Open...");
+		file.add(open);
+		
 		save = new JMenuItem( new CAction("saveAction") );
 		save.setText("Save");
 		save.setAccelerator(KeyStroke.getKeyStroke("control pressed S"));
 		file.add(save);
+		
+		saveAs = new JMenuItem( new CAction("saveAsAction") );
+		saveAs.setText("Save As...");
+		saveAs.setAccelerator(KeyStroke.getKeyStroke("control shift pressed S"));
+		file.add(saveAs);
+		
+		
 		
 		notes = new JMenu("Notes");
 		menuBar.add(notes);
