@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -24,7 +23,7 @@ public class C57note64Main extends JFrame {
 	public static boolean isSaved = true;
 	
 	public static C57note64Main c57main;
-	public static final String version = "v1.1";
+	public static final String version = "v1.1.1";
 	public static final String syntaxVersion = "v1.0";
 	
 	public static String filePath;
@@ -55,11 +54,14 @@ public class C57note64Main extends JFrame {
 		if(args.length == 1) {
 			try {
 				filePath = args[0];
-				new URL(filePath).toURI();
+				new File(filePath).toURI();
 			} catch (Exception e) {
+				e.printStackTrace();
 				System.err.println("Invalid file");
 				System.out.println("Launching file selection GUI");
-				JFileChooser jfc = new JFileChooser();
+				filePath = "";
+//				filePath = getFileToOpen().getAbsolutePath();
+				/*JFileChooser jfc = new JFileChooser();
 				jfc.setDialogTitle("Select file");
 				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				CNoteFileFilter cnff = new CNoteFileFilter();
@@ -78,17 +80,21 @@ public class C57note64Main extends JFrame {
 				} else if(n == JFileChooser.CANCEL_OPTION) {
 					System.exit(0);
 				}
-				tempFrame.dispose();
-//				e.printStackTrace();
+				tempFrame.dispose();*/
+				
 			}
 		} else {
 			try {
 				File pathFile = new File(C57note64Main.class.getResource("lastOpenedPath.txt").toURI());
 				filePath = CFileReader.readNoteFile(pathFile).replace("\n", "");
+				new File(filePath).toURI();
 			} catch (Exception e) {
+				e.printStackTrace();
 				System.err.println("Invalid file");
 				System.out.println("Launching file selection GUI");
-				JFileChooser jfc = new JFileChooser();
+				filePath = "";
+//				filePath = getFileToOpen().getAbsolutePath();
+				/*JFileChooser jfc = new JFileChooser();
 				jfc.setDialogTitle("Select file");
 				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				CNoteFileFilter cnff = new CNoteFileFilter();
@@ -107,8 +113,8 @@ public class C57note64Main extends JFrame {
 				} else if(n == JFileChooser.CANCEL_OPTION) {
 					System.exit(0);
 				}
-				tempFrame.dispose();
-//				e.printStackTrace();
+				tempFrame.dispose();*/
+				
 			}
 			
 		}
@@ -121,11 +127,17 @@ public class C57note64Main extends JFrame {
 					/*File thisFile = new File(C57note64Main.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 					File cnoteFile = new File(thisFile.getParentFile().getAbsolutePath()+File.separator+"notes.cnote");*/
 					File cnotefile = new File(filePath);
+					while(!isFileValid(cnotefile)) {
+						filePath = getFileToOpen(c57main).getAbsolutePath();
+						cnotefile = new File(filePath);
+					}
 					CFileWriter.makeDefaultNoteFile(cnotefile);
 					CFileReader.getNoteFileReader(cnotefile).noteFileMain(cnotefile);
 					CFileWriter.writePathFile( new File(C57note64Main.class.getResource("lastOpenedPath.txt").toURI()) );
+					System.err.println("File at \""+cnotefile.getAbsolutePath()+"\" is invalid.");
+					
 				} catch (Exception e1) {
-					e1.printStackTrace();
+//					e1.printStackTrace();
 				}
 				Timer t = new Timer(10, new ActionListener() {
 					@Override
@@ -138,13 +150,53 @@ public class C57note64Main extends JFrame {
 		});
 	}
 	
+	public static File getFileToOpen(JFrame dialogParentFrame) {
+		File outFile = null;
+		
+		JFileChooser jfc = new JFileChooser();
+		jfc.setDialogTitle("Select file");
+		jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		CNoteFileFilter cnff = new CNoteFileFilter();
+		jfc.addChoosableFileFilter(cnff);
+		jfc.setFileFilter(cnff);
+//		JFrame tempFrame = new JFrame();
+//		tempFrame.setIconImage( new ImageIcon(C57note64Main.class.getResource("logo32.png")).getImage() );
+//		tempFrame.setEnabled(false);
+		int n = jfc.showOpenDialog(dialogParentFrame);
+		if(n == JFileChooser.APPROVE_OPTION) {
+			outFile = jfc.getSelectedFile();
+			if(!outFile.getName().endsWith(".cnote") && jfc.getFileFilter() == cnff) {
+				outFile = new File(outFile+".cnote");
+			}
+		} else if(n == JFileChooser.CANCEL_OPTION) {
+//			tempFrame.dispose();
+			System.exit(0);
+		}
+//		tempFrame.dispose();
+		return outFile;
+	}
+	
+	public static boolean isFileValid(File file) {
+		try{
+			if(file.createNewFile()) {
+				if(!file.delete()) {
+					System.err.println("ERROR!!");
+				}
+			}
+			return true;
+		} catch(Exception e) {
+//			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public void c57run() {
 		((CMainPanel) getContentPane()).c57run();
 		if(isSaved) {
-			setTitle("C57note64   "+filePath);
+			setTitle("C57note64   "+new File(filePath).getAbsolutePath());
 		} else {
 //			setTitle("C57note64 *UNSAVED*");
-			setTitle("C57note64   *"+filePath+"*");
+			setTitle("C57note64   *"+new File(filePath).getAbsolutePath()+"*");
 		}
 		CNoteTypes.addToMap("(default)", new Color(255, 255, 150) );
 	}

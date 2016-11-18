@@ -29,7 +29,7 @@ public class CFileWriter {
 //			System.out.println("Saving note file path at: "+file.getAbsolutePath());
 			Files.write(Paths.get(file.getAbsolutePath()), C57note64Main.filePath.getBytes(), StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 	
@@ -41,6 +41,8 @@ public class CFileWriter {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+//			System.exit(0);
+			
 		}
 	}
 	

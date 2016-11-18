@@ -112,29 +112,6 @@ public class CFileReader {
 			 */
 			( (CMainPanel) C57note64Main.c57main.getContentPane()).doingPanel.notes.clear();
 			( (CMainPanel) C57note64Main.c57main.getContentPane()).doingPanel.removeAll();
-			for (int i = 1; i < doneStrArray.length; i++) {
-				CNote doneNote;
-				String[] doneNoteDataArray = doneStrArray[i].split("");
-				Map<String, String> doneNoteData = new HashMap<String, String>();
-			
-				for (int j = 0; j < doneNoteDataArray.length; j++) {
-				
-					if(j+1 < doneNoteDataArray.length) {
-						doneNoteData.put(doneNoteDataArray[j].replace("\n", ""), doneNoteDataArray[j+1]);
-					}
-					j++;
-				}
-			
-			
-				doneNote = new CNote(Integer.parseInt(doneNoteData.get("priority")), doneNoteData.get("noteText"), doneNoteData.get("type"));
-				( (CMainPanel) C57note64Main.c57main.getContentPane()).doingPanel.addNote(doneNote);
-				i++;
-			}
-			/**
-		 	* Add notes to done section
-		 	*/
-			( (CMainPanel) C57note64Main.c57main.getContentPane()).donePanel.notes.clear();
-			( (CMainPanel) C57note64Main.c57main.getContentPane()).donePanel.removeAll();
 			for (int i = 1; i < doingStrArray.length; i++) {
 				CNote doingNote;
 				String[] doingNoteDataArray = doingStrArray[i].split("");
@@ -150,7 +127,30 @@ public class CFileReader {
 			
 			
 				doingNote = new CNote(Integer.parseInt(doingNoteData.get("priority")), doingNoteData.get("noteText"), doingNoteData.get("type"));
-				( (CMainPanel) C57note64Main.c57main.getContentPane()).donePanel.addNote(doingNote);
+				( (CMainPanel) C57note64Main.c57main.getContentPane()).doingPanel.addNote(doingNote);
+				i++;
+			}
+			/**
+		 	* Add notes to done section
+		 	*/
+			( (CMainPanel) C57note64Main.c57main.getContentPane()).donePanel.notes.clear();
+			( (CMainPanel) C57note64Main.c57main.getContentPane()).donePanel.removeAll();
+			for (int i = 1; i < doneStrArray.length; i++) {
+				CNote doneNote;
+				String[] doneNoteDataArray = doneStrArray[i].split("");
+				Map<String, String> doneNoteData = new HashMap<String, String>();
+			
+				for (int j = 0; j < doneNoteDataArray.length; j++) {
+				
+					if(j+1 < doneNoteDataArray.length) {
+						doneNoteData.put(doneNoteDataArray[j].replace("\n", ""), doneNoteDataArray[j+1]);
+					}
+					j++;
+				}
+			
+			
+				doneNote = new CNote(Integer.parseInt(doneNoteData.get("priority")), doneNoteData.get("noteText"), doneNoteData.get("type"));
+				( (CMainPanel) C57note64Main.c57main.getContentPane()).donePanel.addNote(doneNote);
 				i++;
 			}
 		
@@ -177,7 +177,7 @@ public class CFileReader {
 			scanner = new Scanner(file);
 			fileString = scanner.useDelimiter("\\A").next();
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		} finally {
 			if(scanner != null) {
 				scanner.close();
