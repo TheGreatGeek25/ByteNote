@@ -2,8 +2,6 @@ package c57note64.cnote;
 
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-
 import c57note64.CInfoPanel;
 import c57note64.JFXMain;
 import c57note64.cnote.types.CNoteTypes;
@@ -21,13 +19,18 @@ import javafx.scene.paint.Color;
 
 public class CNotePanel extends GridPane {
 	
+	/*
+	 * 
+	 * CNote.cNotePrefHeight = 15;
+	 * 
+	 */
+	
 	public static double paneToWin = 1.0/3.0;
 	
 	public ArrayList<CNote> notes = new ArrayList<CNote>();
 	public int minShownIndex = 0;
 	
-	public JButton pageDown;
-	public JButton pageUp;
+	public static int hvgap = 15;
 	
 	public Integer columns = 2;
 	
@@ -44,9 +47,9 @@ public class CNotePanel extends GridPane {
 			c.add(cc);
 		}
 		
-		setPrefSize((JFXMain.mainStage.getWidth()*paneToWin)-JFXMain.mainStage.getWidth()/42, Math.max(JFXMain.mainStage.getHeight()-CInfoPanel.defaultHeight*2, getChildren().size()*15));
-		setHgap(15);
-		setVgap(15);
+		setPrefSize((JFXMain.mainStage.getWidth()*paneToWin)-JFXMain.mainStage.getWidth()/42, Math.max(JFXMain.mainStage.getHeight()-CInfoPanel.defaultHeight*2, Math.floor(getChildren().size()/2)*CNote.cNotePrefHeight));
+		setHgap(hvgap);
+		setVgap(hvgap);
 		
 //		setMaximumSize( new Dimension((int) (C57note64Main.c57main.getSize().width*paneToWin), C57note64Main.c57main.getSize().height) );
 		setBorder( new Border( new BorderStroke(null, BorderStrokeStyle.SOLID, null, new BorderWidths(8) ) ) );
@@ -70,7 +73,8 @@ public class CNotePanel extends GridPane {
 		ObservableList<Node> children = getChildren();
 		for (int i = 0; i < children.size(); i++) {
 			GridPane.setConstraints(children.get(i), i%columns, i/columns);
-			( (CNote) children.get(i) ).setPrefSize(this.getWidth()/2-15*3, this.getHeight()/Math.floor(children.size()/2)-15*(Math.floor(children.size()/2)) );
+//			( (CNote) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.floor(children.size()/2)-hvgap*Math.floor(children.size()/2) );
+			( (CNote) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.floor(children.size()/2));
 		}
 	}
 	
@@ -81,7 +85,7 @@ public class CNotePanel extends GridPane {
 				((CNote) getChildren().get(i)).c57run();
 			}
 		}
-		setPrefSize((JFXMain.root.getWidth()*paneToWin)-JFXMain.root.getWidth()/42, Math.max(JFXMain.root.getHeight()-CInfoPanel.defaultHeight*2, getChildren().size()*15));
+		setPrefSize((JFXMain.root.getWidth()*paneToWin)-JFXMain.root.getWidth()/42, Math.max(JFXMain.root.getHeight()-CInfoPanel.defaultHeight*2, Math.floor(getChildren().size()/2)*CNote.cNotePrefHeight));
 //		setLayout( new GridLayout(/*15+*/getChildren().size()/2, 2, 15, 15) );
 		
 //		repaint();

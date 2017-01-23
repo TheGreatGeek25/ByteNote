@@ -14,6 +14,8 @@ import javafx.scene.layout.BorderStrokeStyle;
 
 public class CNote extends Label {
 	
+	public static int cNotePrefHeight = 100;
+	
 	public int priority;
 	public String noteText;
 	public String type;
@@ -28,7 +30,6 @@ public class CNote extends Label {
 		setText(this.noteText);
 //		setTextFill(Color.BLACK);
 //		setOpaque(true);
-//		setPrefSize(10, 10);
 //		addMouseListener( new CMouseListener() );
 		addEventFilter(MouseEvent.MOUSE_CLICKED, new CMouseListener() );
 				

@@ -42,14 +42,14 @@ public class JFXMain extends Application {
 			primaryStage.show();
 			
 			File cnotefile = new File(C57note64Main.filePath);
-			while(!C57note64Main.isFileValid(cnotefile)) {				
+			while(!C57note64Main.isFileValid(cnotefile)) {
+				System.err.println("File at \""+cnotefile.getAbsolutePath()+"\" is invalid.");
 				C57note64Main.filePath = openFileView(mainStage, "open").getAbsolutePath();
 				cnotefile = new File(C57note64Main.filePath);
 			}
 			CFileWriter.makeDefaultNoteFile(cnotefile);
 			CFileReader.getNoteFileReader(cnotefile).noteFileMain(cnotefile);
 			CFileWriter.writePathFile( new File(C57note64Main.class.getResource("lastOpenedPath.txt").toURI()) );
-			System.err.println("File at \""+cnotefile.getAbsolutePath()+"\" is invalid.");
 			
 			root.c57run = root.new C57runService();
 			root.c57run.setRestartOnFailure(true);	
