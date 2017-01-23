@@ -8,7 +8,6 @@ import c57note64.cnote.editor.CNoteEditPanel;
 import c57note64.cnote.types.CTypeManagerPanel;
 import c57note64.cnotefiles.CFileReader;
 import c57note64.cnotefiles.CFileWriter;
-import c57note64.cnotefiles.CTreeFileChooserPane.CFileChooserType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -56,9 +55,7 @@ public class CAction implements EventHandler<ActionEvent> {
 					@Override
 					public void run() {
 						File inputFile = null;
-						try {
-							inputFile = JFXMain.openFileView(JFXMain.mainStage, CFileChooserType.SAVE);
-						} catch (URISyntaxException e1) {}
+						inputFile = JFXMain.openFileView(JFXMain.mainStage, "save");
 						if(inputFile != null) {
 							C57note64Main.filePath = inputFile.getAbsolutePath();
 							try {
@@ -78,9 +75,7 @@ public class CAction implements EventHandler<ActionEvent> {
 				break;
 			case "openAction":
 				File inputFile1 = null;
-				try {
-					inputFile1 = C57View.openFileView(JFXMain.mainStage, CFileChooserType.OPEN);
-				} catch (URISyntaxException e1) {}
+				inputFile1 = JFXMain.openFileView(JFXMain.mainStage, "open");
 				if(inputFile1 != null) {
 					C57note64Main.filePath = inputFile1.getAbsolutePath();
 					try {
@@ -94,9 +89,7 @@ public class CAction implements EventHandler<ActionEvent> {
 				break;
 			case "saveAsAction":
 				File inputFile2 = null;
-				try {
-					inputFile2 = C57View.openFileView(JFXMain.mainStage, CFileChooserType.SAVE);
-				} catch (URISyntaxException e1) {}
+				inputFile2 = JFXMain.openFileView(JFXMain.mainStage, "save");
 				C57note64Main.filePath = inputFile2.getAbsolutePath();
 				try {
 					CFileWriter.makeDefaultNoteFile(inputFile2);
