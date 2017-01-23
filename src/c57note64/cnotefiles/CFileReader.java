@@ -13,6 +13,22 @@ import javafx.scene.paint.Color;
 public class CFileReader {
 	
 	public static class v1_0 extends Reader {
+		
+		@Override
+		public void readNoteFileString(String string) {
+			String fileStr = string;
+			String[] fileStrArray = fileStr.split("")[1].split("");
+			Map<String, String> mainMap = new HashMap<String, String>();
+			for (int i = 0; i < fileStrArray.length; i++) {
+				if(i+1<fileStrArray.length) {
+					mainMap.put(fileStrArray[i].replace("\n", ""), fileStrArray[i+1]);
+				}
+				i++;
+			}
+			setSettingsFromString(mainMap.get("settings"));
+			setNotesFromString(mainMap.get("notes"));
+		}
+		
 		public void noteFileMain(File file) {
 			String fileStr = readNoteFile(file);
 //			fileStr = fileStr.replace("\n", "");
@@ -193,6 +209,7 @@ public class CFileReader {
 	}
 	
 	public static abstract class Reader {
+		public abstract void readNoteFileString(String string);
 		public abstract void noteFileMain(File noteFile);
 //		public abstract String readNoteFile(File file);
 		public abstract void setSettingsFromString(String settings);

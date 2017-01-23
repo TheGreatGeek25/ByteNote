@@ -1,8 +1,7 @@
 package c57note64.cnote.types;
 
-
-import c57note64.C57View;
 import c57note64.C57note64Main;
+import c57note64.JFXMain;
 import c57note64.cnote.types.typeeditor.CTypeEditorPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,9 +30,8 @@ public class CTypeControlPanel extends VBox {
 			@Override
 			public void handle(ActionEvent event) {
 				C57note64Main.isSaved = false;
-//				new CTypeEditor(JFXMain.root.controlPanel.typeManager, "Edit type"); TODO
 				( (CTypeManagerPanel) getParent()).typeEditor = new CTypeEditorPanel();
-				C57View.showView((Stage) CTypeControlPanel.this.getScene().getWindow(), ( (CTypeManagerPanel) getParent()).typeEditor, "Edit type", 300, 300);
+				JFXMain.showView((Stage) CTypeControlPanel.this.getScene().getWindow(), ( (CTypeManagerPanel) getParent()).typeEditor, "Edit type", 300, 300);
 			}
 		});
 		getChildren().add(addButton);
@@ -45,9 +43,8 @@ public class CTypeControlPanel extends VBox {
 			public void handle(ActionEvent event) {
 				C57note64Main.isSaved = false;
 				String type = (String) ( (CTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem().getTypeName();
-//				new CTypeEditor(JFXMain.root.controlPanel.typeManager, "Edit type", type); TODO
 				( (CTypeManagerPanel) getParent()).typeEditor = new CTypeEditorPanel(type);
-				C57View.showView((Stage) CTypeControlPanel.this.getScene().getWindow(), ( (CTypeManagerPanel) getParent()).typeEditor, "Edit type", 300, 300);
+				JFXMain.showView((Stage) CTypeControlPanel.this.getScene().getWindow(), ( (CTypeManagerPanel) getParent()).typeEditor, "Edit type", 300, 300);
 			}
 		});
 		editButton.setDisable(true);

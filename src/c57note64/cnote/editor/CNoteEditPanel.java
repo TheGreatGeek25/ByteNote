@@ -1,8 +1,5 @@
 package c57note64.cnote.editor;
 
-
-import c57note64.CPlatform;
-import c57note64.CPlatform.Platform;
 import c57note64.JFXMain;
 import c57note64.cnote.CNote;
 import c57note64.cnote.CNotePanel;
@@ -18,7 +15,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
@@ -121,11 +117,8 @@ public class CNoteEditPanel extends GridPane {
 			break;
 		}
 		//close edit dialog
-		if(CPlatform.getPlatform() == Platform.DESKTOP) {
-			this.getScene().getWindow().hide();
-		} else if (CPlatform.getPlatform() == Platform.MOBILE) {
-			( (Button) ( (BorderPane) this.getScene().getRoot() ).getTop() ).fire();
-		}
+		this.getScene().getWindow().hide();
+		
 		
 //		this.parent.dispatchEvent(new WindowEvent(this.parent, WindowEvent.WINDOW_CLOSING));
 //		((CMainPanel) C57note64Main.c57main.getContentPane()).infoPanel.noteEditor = null;
