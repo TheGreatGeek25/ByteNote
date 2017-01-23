@@ -1,7 +1,5 @@
 package c57note64;
 
-import c57note64.C57View;
-import c57note64.CPlatform.Platform;
 import c57note64.cnote.CNote;
 import c57note64.cnote.editor.CNoteEditPanel;
 import javafx.event.ActionEvent;
@@ -59,7 +57,7 @@ public class CInfoPanel extends HBox {
 			public void handle(ActionEvent event) {
 				C57note64Main.isSaved = false;
 				CInfoPanel.this.noteEditor = new CNoteEditPanel(note);
-				C57View.showView(JFXMain.mainStage, CInfoPanel.this.noteEditor, "Edit note", 300, 300);
+				JFXMain.showView(JFXMain.mainStage, CInfoPanel.this.noteEditor, "Edit note", 300, 300);
 //				CInfoPanel.this.noteEditor = new CNoteEdit(C57note64Main_OLD.c57main, "Edit note", note);
 			}
 		});
@@ -89,22 +87,10 @@ public class CInfoPanel extends HBox {
 	}
 	
 	public void c57run() {
-//		revalidate();
-//		repaint();
-		if(noteEditor != null) {
-			if(CPlatform.getPlatform() == Platform.DESKTOP) {
-				if(noteEditor.getScene().getWindow().isShowing()) {
-					noteEditor.c57run();
-				} else {
-					noteEditor = null;
-				}
-			} else if(CPlatform.getPlatform() == Platform.MOBILE) {
-				if(noteEditor.getScene().getWindow() != null) {
-					noteEditor.c57run();
-				} else {
-					noteEditor = null;
-				}
-			}
+		if(noteEditor.getScene().getWindow().isShowing()) {
+			noteEditor.c57run();
+		} else {
+			noteEditor = null;
 		}
 		
 	}
