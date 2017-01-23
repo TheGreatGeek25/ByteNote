@@ -87,10 +87,12 @@ public class CInfoPanel extends HBox {
 	}
 	
 	public void c57run() {
-		if(noteEditor.getScene().getWindow().isShowing()) {
-			noteEditor.c57run();
-		} else {
-			noteEditor = null;
+		if(noteEditor != null) {
+			if(noteEditor.getScene().getWindow().isShowing()) {
+				noteEditor.c57run();
+			} else {
+				noteEditor = null;
+			}
 		}
 		
 	}
