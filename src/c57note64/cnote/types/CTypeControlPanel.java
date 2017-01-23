@@ -77,7 +77,7 @@ public class CTypeControlPanel extends VBox {
 	
 	public void c57run() {
 //		System.out.println(( (CTypeManagerPanel) getParent()).mainTable.getSelectedRow());
-		if(!( (CTypeManagerPanel) getParent()).mainTable.getSelectionModel().isEmpty()) {
+		if(!( (CTypeManagerPanel) getParent()).mainTable.getSelectionModel().isEmpty() && !( (CTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem().getTypeName().equals("(default)")) {
 			deleteButton.setDisable(false);
 			editButton.setDisable(false);
 		} else {
