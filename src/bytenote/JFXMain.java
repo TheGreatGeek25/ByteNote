@@ -44,8 +44,8 @@ public class JFXMain extends Application {
 			File cnotefile = new File(ByteNoteMain.filePath);
 			while(!ByteNoteMain.isFileValid(cnotefile)) {
 				System.err.println("File at \""+cnotefile.getAbsolutePath()+"\" is invalid.");
-				ByteNoteMain.filePath = openFileView(mainStage, "open").getAbsolutePath();
-				cnotefile = new File(ByteNoteMain.filePath);
+				cnotefile = openFileView(mainStage, "open");
+				ByteNoteMain.filePath = cnotefile.getAbsolutePath();
 			}
 			CFileWriter.makeDefaultNoteFile(cnotefile);
 			CFileReader.getNoteFileReader(cnotefile).noteFileMain(cnotefile);
