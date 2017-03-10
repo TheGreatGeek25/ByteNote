@@ -11,6 +11,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 
 public class CNote extends Label {
 	
@@ -41,8 +42,6 @@ public class CNote extends Label {
 	}
 	
 	public void c57run() {
-//		revalidate();
-//		repaint();
 		Parent parent = getParent();
 		panel = (CNotePanel) parent;
 		for (int i = 0; i < parent.getChildrenUnmodifiable().size(); i++) {
@@ -53,13 +52,13 @@ public class CNote extends Label {
 		
 		setText(noteText);
 		setBackground( new Background( new BackgroundFill(CNoteTypes.typeMap.get(type), null, null/*new Insets(30)*/) ) );
-//		setSelectedBorder(getSelected());
+		setSelectedBorder(getSelected());
 		
 	}
 	
 	public void setSelectedBorder(boolean selected) {
 		if(selected) {
-			setBorder(new Border(new BorderStroke(CNoteTypes.getPaintFromType(type, true), BorderStrokeStyle.SOLID, null, null) ) );
+			setBorder(new Border(new BorderStroke(CNoteTypes.getPaintFromType(type, true), BorderStrokeStyle.SOLID, null, new BorderWidths(4)) ) );
 //			setBorder(BorderFactory.createLineBorder( new Color(255-getBackground().getRed(), 255-getBackground().getGreen(), 255-getBackground().getBlue()) , 4));
 		} else {
 			setBorder(Border.EMPTY);
