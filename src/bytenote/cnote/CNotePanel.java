@@ -33,6 +33,8 @@ public class CNotePanel extends GridPane {
 	
 	public Integer columns = 2;
 	
+	public Label placeHolder;
+	
 	public CNotePanel() {
 		super();
 		
@@ -49,25 +51,28 @@ public class CNotePanel extends GridPane {
 		setPrefSize((JFXMain.mainStage.getWidth()*paneToWin)-JFXMain.mainStage.getWidth()/42, Math.max(JFXMain.mainStage.getHeight()-CInfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*CNote.cNotePrefHeight));
 		setHgap(hvgap);
 		setVgap(hvgap);
-		
-//		setMaximumSize( new Dimension((int) (C57note64Main.c57main.getSize().width*paneToWin), C57note64Main.c57main.getSize().height) );
 		setBorder( new Border( new BorderStroke(null, BorderStrokeStyle.SOLID, null, new BorderWidths(8) ) ) );
 		
 		setVisible(true);
-				
-//		setEnabled(true);
-//		setOpaque(true);
 		
 		/*CNoteTypes.addToMap("type1", Color.BLUE);
 		for (int i = 0; i < 16; i++) {
 			addNote( new CNote(i, "text"+i, "type1") );
 		}*/
 		
+		placeHolder = new Label();
+		placeHolder.setVisible(false);
+		
 		refreshLayout();
 		
 	}
 	
 	public void refreshLayout() {
+		if(notes.size() == 1 && !getChildren().contains(placeHolder)) {
+			getChildren().add(placeHolder);
+		} else if(notes.size() == 2 && getChildren().contains(placeHolder)) {
+			getChildren().remove(placeHolder);
+		}
 		ObservableList<Node> children = getChildren();
 		for (int i = 0; i < children.size(); i++) {
 			GridPane.setConstraints(children.get(i), i%columns, i/columns);

@@ -33,7 +33,7 @@ public class CNote extends Label {
 //		setOpaque(true);
 //		addMouseListener( new CMouseListener() );
 		addEventFilter(MouseEvent.MOUSE_CLICKED, new CMouseListener() );
-				
+		setWrapText(true);
 	}
 	
 	public CNote(int priority, String text, String type, CNotePanel panel) {
