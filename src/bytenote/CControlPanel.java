@@ -22,8 +22,14 @@ public class CControlPanel extends HBox {
 	public MenuItem newNote, deleteNote, manageTypes;
 	public Menu selection;
 	public MenuItem deselect;
+	public Menu settings;
+	public MenuItem checkUpdates;
 	
 	public CTypeManagerPanel typeManager;
+
+	
+
+	
 	
 	public CControlPanel() {
 		super();
@@ -85,6 +91,14 @@ public class CControlPanel extends HBox {
 		deselect.setOnAction( new CAction("deselectAction") );
 		deselect.setAccelerator(KeyCombination.keyCombination("Ctrl+Shift+A"));
 		selection.getItems().add(deselect);
+		
+		settings = new Menu("Settings");
+		menuBar.getMenus().add(settings);
+		
+		checkUpdates = new MenuItem("Check for Updates...");
+		checkUpdates.setOnAction( new CAction("checkForUpdatesAction") );
+		settings.getItems().add(checkUpdates);
+		
 		
 		getChildren().add(menuBar);
 		

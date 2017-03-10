@@ -100,6 +100,10 @@ public class CAction implements EventHandler<ActionEvent> {
 					e.printStackTrace();
 				}
 				break;
+			case "checkForUpdatesAction":
+				//TODO check for updates
+				System.out.println("checkForUpdates");
+				break;
 			default:
 				break;
 			}
