@@ -49,7 +49,7 @@ public class JFXMain extends Application {
 			}
 			CFileWriter.makeDefaultNoteFile(cnotefile);
 			CFileReader.getNoteFileReader(cnotefile).noteFileMain(cnotefile);
-			CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("lastOpenedPath.txt").toURI()) );
+			CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
 			
 			root.c57run = root.new C57runService();
 			root.c57run.setRestartOnFailure(true);	

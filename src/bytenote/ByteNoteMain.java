@@ -38,7 +38,7 @@ public class ByteNoteMain {
 			}
 		} else {
 			try {
-				File pathFile = new File(ByteNoteMain.class.getResource("lastOpenedPath.txt").toURI());
+				File pathFile = new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI());
 				filePath = CFileReader.readNoteFile(pathFile).replace("\n", "");
 				new File(filePath).toURI();
 			} catch (Exception e) {
