@@ -1,8 +1,8 @@
-package c57note64.cnote.types.typeeditor;
+package bytenote.cnote.types.typeeditor;
 
-import c57note64.JFXMain;
-import c57note64.cnote.types.CNoteTypes;
-import c57note64.cnote.types.CTypeManagerPanel;
+import bytenote.JFXMain;
+import bytenote.cnote.types.CNoteTypes;
+import bytenote.cnote.types.CTypeManagerPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;

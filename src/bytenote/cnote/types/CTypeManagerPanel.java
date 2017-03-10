@@ -1,8 +1,8 @@
-package c57note64.cnote.types;
+package bytenote.cnote.types;
 
-import c57note64.JFXMain;
-import c57note64.cnote.types.table.CColor;
-import c57note64.cnote.types.typeeditor.CTypeEditorPanel;
+import bytenote.JFXMain;
+import bytenote.cnote.types.table.CColor;
+import bytenote.cnote.types.typeeditor.CTypeEditorPanel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ScrollPane;

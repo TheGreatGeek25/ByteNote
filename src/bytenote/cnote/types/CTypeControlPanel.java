@@ -1,8 +1,8 @@
-package c57note64.cnote.types;
+package bytenote.cnote.types;
 
-import c57note64.C57note64Main;
-import c57note64.JFXMain;
-import c57note64.cnote.types.typeeditor.CTypeEditorPanel;
+import bytenote.ByteNoteMain;
+import bytenote.JFXMain;
+import bytenote.cnote.types.typeeditor.CTypeEditorPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -29,7 +29,7 @@ public class CTypeControlPanel extends VBox {
 		addButton.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				C57note64Main.isSaved = false;
+				ByteNoteMain.isSaved = false;
 				( (CTypeManagerPanel) getParent()).typeEditor = new CTypeEditorPanel();
 				JFXMain.showView((Stage) CTypeControlPanel.this.getScene().getWindow(), ( (CTypeManagerPanel) getParent()).typeEditor, "Edit type", 300, 300);
 			}
@@ -41,7 +41,7 @@ public class CTypeControlPanel extends VBox {
 		editButton.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				C57note64Main.isSaved = false;
+				ByteNoteMain.isSaved = false;
 				String type = (String) ( (CTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem().getTypeName();
 				( (CTypeManagerPanel) getParent()).typeEditor = new CTypeEditorPanel(type);
 				JFXMain.showView((Stage) CTypeControlPanel.this.getScene().getWindow(), ( (CTypeManagerPanel) getParent()).typeEditor, "Edit type", 300, 300);
@@ -63,7 +63,7 @@ public class CTypeControlPanel extends VBox {
 		deleteButton.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				C57note64Main.isSaved = false;
+				ByteNoteMain.isSaved = false;
 				( (CTypeManagerPanel) getParent()).deleteType(( (CTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem());
 //				( (CTypeManagerPanel) getParent()).mainTable.setModel( new CTypeTableModel(( (CTypeManagerPanel) getParent()).data, ( (CTypeManagerPanel) getParent()).columnNames) );
 			}

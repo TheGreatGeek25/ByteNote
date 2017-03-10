@@ -1,9 +1,9 @@
-package c57note64.cnote.editor;
+package bytenote.cnote.editor;
 
-import c57note64.JFXMain;
-import c57note64.cnote.CNote;
-import c57note64.cnote.CNotePanel;
-import c57note64.cnote.types.CNoteTypes;
+import bytenote.JFXMain;
+import bytenote.cnote.CNote;
+import bytenote.cnote.CNotePanel;
+import bytenote.cnote.types.CNoteTypes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

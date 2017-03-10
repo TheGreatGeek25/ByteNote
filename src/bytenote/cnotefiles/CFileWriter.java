@@ -1,4 +1,4 @@
-package c57note64.cnotefiles;
+package bytenote.cnotefiles;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,14 +7,14 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
-import c57note64.C57note64Main;
-import c57note64.JFXMain;
-import c57note64.cnote.CNote;
-import c57note64.cnote.types.CNoteTypes;
+import bytenote.ByteNoteMain;
+import bytenote.JFXMain;
+import bytenote.cnote.CNote;
+import bytenote.cnote.types.CNoteTypes;
 
 public class CFileWriter {
 	
-	public static final String defaultNoteFileContents = C57note64Main.syntaxVersion+"\n"
+	public static final String defaultNoteFileContents = ByteNoteMain.syntaxVersion+"\n"
 			+ "notes\n"
 			+ "todo\n"
 			+ "doing\n"
@@ -27,7 +27,7 @@ public class CFileWriter {
 		try {
 			file.createNewFile();
 //			System.out.println("Saving note file path at: "+file.getAbsolutePath());
-			Files.write(Paths.get(file.getAbsolutePath()), C57note64Main.filePath.getBytes(), StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+			Files.write(Paths.get(file.getAbsolutePath()), ByteNoteMain.filePath.getBytes(), StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
 		} catch (IOException e) {
 //			e.printStackTrace();
 		}
@@ -47,7 +47,7 @@ public class CFileWriter {
 	}
 	
 	public static void saveNoteFile(File saveFile) {
-		String writeString = C57note64Main.syntaxVersion+"\n"
+		String writeString = ByteNoteMain.syntaxVersion+"\n"
 				+ "notes\n"
 				+ "todo\n";
 		/**

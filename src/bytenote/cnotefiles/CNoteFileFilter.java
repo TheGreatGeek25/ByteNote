@@ -1,4 +1,4 @@
-package c57note64.cnotefiles;
+package bytenote.cnotefiles;
 
 import javafx.stage.FileChooser.ExtensionFilter;
 

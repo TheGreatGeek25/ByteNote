@@ -1,13 +1,13 @@
-package c57note64;
+package bytenote;
 
 import java.io.File;
 import java.net.URISyntaxException;
 
-import c57note64.cnote.CNote;
-import c57note64.cnote.editor.CNoteEditPanel;
-import c57note64.cnote.types.CTypeManagerPanel;
-import c57note64.cnotefiles.CFileReader;
-import c57note64.cnotefiles.CFileWriter;
+import bytenote.cnote.CNote;
+import bytenote.cnote.editor.CNoteEditPanel;
+import bytenote.cnote.types.CTypeManagerPanel;
+import bytenote.cnotefiles.CFileReader;
+import bytenote.cnotefiles.CFileWriter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -24,16 +24,16 @@ public class CAction implements EventHandler<ActionEvent> {
 			switch (action) {
 			case "saveAction":
 				try {
-					File cnoteFile = new File(C57note64Main.filePath);
+					File cnoteFile = new File(ByteNoteMain.filePath);
 					CFileWriter.saveNoteFile(cnoteFile);
-					C57note64Main.isSaved = true;
-					System.out.println("File saved to "+C57note64Main.filePath);
+					ByteNoteMain.isSaved = true;
+					System.out.println("File saved to "+ByteNoteMain.filePath);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				break;
 			case "newNoteAction":
-				C57note64Main.isSaved = false;
+				ByteNoteMain.isSaved = false;
 				CNoteEditPanel cnep = new CNoteEditPanel( new CNote(0, "Note Text", "(default)", JFXMain.root.todoPanel) );
 				JFXMain.root.infoPanel.noteEditor = cnep;
 //				C57View.showView(JFXMain.mainStage, new BorderPane(new CustomColorDialog(JFXMain.mainStage)), "Hello", 500, 500);
@@ -57,11 +57,11 @@ public class CAction implements EventHandler<ActionEvent> {
 						File inputFile = null;
 						inputFile = JFXMain.openFileView(JFXMain.mainStage, "save");
 						if(inputFile != null) {
-							C57note64Main.filePath = inputFile.getAbsolutePath();
+							ByteNoteMain.filePath = inputFile.getAbsolutePath();
 							try {
 								CFileWriter.makeDefaultNoteFile(inputFile);
 								CFileReader.getNoteFileReader(inputFile).noteFileMain(inputFile);
-								CFileWriter.writePathFile( new File(C57note64Main.class.getResource("lastOpenedPath.txt").toURI()) );
+								CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("lastOpenedPath.txt").toURI()) );
 							} catch (URISyntaxException e) {
 								e.printStackTrace();
 							}
@@ -77,10 +77,10 @@ public class CAction implements EventHandler<ActionEvent> {
 				File inputFile1 = null;
 				inputFile1 = JFXMain.openFileView(JFXMain.mainStage, "open");
 				if(inputFile1 != null) {
-					C57note64Main.filePath = inputFile1.getAbsolutePath();
+					ByteNoteMain.filePath = inputFile1.getAbsolutePath();
 					try {
 						CFileReader.getNoteFileReader(inputFile1).noteFileMain(inputFile1);
-						CFileWriter.writePathFile( new File(C57note64Main.class.getResource("lastOpenedPath.txt").toURI()) );
+						CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("lastOpenedPath.txt").toURI()) );
 					} catch (URISyntaxException e) {
 						e.printStackTrace();
 					}
@@ -90,12 +90,12 @@ public class CAction implements EventHandler<ActionEvent> {
 			case "saveAsAction":
 				File inputFile2 = null;
 				inputFile2 = JFXMain.openFileView(JFXMain.mainStage, "save");
-				C57note64Main.filePath = inputFile2.getAbsolutePath();
+				ByteNoteMain.filePath = inputFile2.getAbsolutePath();
 				try {
 					CFileWriter.makeDefaultNoteFile(inputFile2);
 					CFileWriter.saveNoteFile(inputFile2);
-					C57note64Main.isSaved = true;
-					CFileWriter.writePathFile( new File(C57note64Main.class.getResource("lastOpenedPath.txt").toURI()) );
+					ByteNoteMain.isSaved = true;
+					CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("lastOpenedPath.txt").toURI()) );
 				} catch (URISyntaxException e) {
 					e.printStackTrace();
 				}

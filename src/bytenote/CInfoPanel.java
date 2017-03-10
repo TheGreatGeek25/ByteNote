@@ -1,7 +1,7 @@
-package c57note64;
+package bytenote;
 
-import c57note64.cnote.CNote;
-import c57note64.cnote.editor.CNoteEditPanel;
+import bytenote.cnote.CNote;
+import bytenote.cnote.editor.CNoteEditPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -55,7 +55,7 @@ public class CInfoPanel extends HBox {
 		editNote.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				C57note64Main.isSaved = false;
+				ByteNoteMain.isSaved = false;
 				CInfoPanel.this.noteEditor = new CNoteEditPanel(note);
 				JFXMain.showView(JFXMain.mainStage, CInfoPanel.this.noteEditor, "Edit note", 300, 300);
 //				CInfoPanel.this.noteEditor = new CNoteEdit(C57note64Main_OLD.c57main, "Edit note", note);

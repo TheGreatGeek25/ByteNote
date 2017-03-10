@@ -1,9 +1,9 @@
-package c57note64;
+package bytenote;
 
 import java.io.File;
 
-import c57note64.cnote.CNotePanel;
-import c57note64.cnote.types.CNoteTypes;
+import bytenote.cnote.CNotePanel;
+import bytenote.cnote.types.CNoteTypes;
 import javafx.application.Platform;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
@@ -86,11 +86,11 @@ public class CMainPanel extends BorderPane {
 		donePanel.c57run();
 		infoPanel.c57run();
 		
-		if(C57note64Main.isSaved) {
-			JFXMain.mainStage.setTitle(C57note64Main.name+"   "+new File(C57note64Main.filePath).getAbsolutePath());
+		if(ByteNoteMain.isSaved) {
+			JFXMain.mainStage.setTitle(ByteNoteMain.name+"   "+new File(ByteNoteMain.filePath).getAbsolutePath());
 		} else {
 //			setTitle("C57note64 *UNSAVED*");
-			JFXMain.mainStage.setTitle(C57note64Main.name+"   *"+new File(C57note64Main.filePath).getAbsolutePath()+"*");
+			JFXMain.mainStage.setTitle(ByteNoteMain.name+"   *"+new File(ByteNoteMain.filePath).getAbsolutePath()+"*");
 		}
 		
 	}

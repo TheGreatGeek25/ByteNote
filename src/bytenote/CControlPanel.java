@@ -1,6 +1,6 @@
-package c57note64;
+package bytenote;
 
-import c57note64.cnote.types.CTypeManagerPanel;
+import bytenote.cnote.types.CTypeManagerPanel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;

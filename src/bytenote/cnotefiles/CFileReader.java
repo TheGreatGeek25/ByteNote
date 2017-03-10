@@ -1,13 +1,13 @@
-package c57note64.cnotefiles;
+package bytenote.cnotefiles;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import c57note64.JFXMain;
-import c57note64.cnote.CNote;
-import c57note64.cnote.types.CNoteTypes;
+import bytenote.JFXMain;
+import bytenote.cnote.CNote;
+import bytenote.cnote.types.CNoteTypes;
 import javafx.scene.paint.Color;
 
 public class CFileReader {

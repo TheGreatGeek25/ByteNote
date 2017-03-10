@@ -1,7 +1,7 @@
-package c57note64.cnote;
+package bytenote.cnote;
 
-import c57note64.JFXMain;
-import c57note64.cnote.types.CNoteTypes;
+import bytenote.JFXMain;
+import bytenote.cnote.types.CNoteTypes;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;

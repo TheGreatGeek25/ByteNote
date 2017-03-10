@@ -1,4 +1,4 @@
-package c57note64;
+package bytenote;
 
 import java.awt.Color;
 import java.awt.Dimension;

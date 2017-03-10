@@ -1,4 +1,4 @@
-package c57note64.cnote.types;
+package bytenote.cnote.types;
 
 import java.util.HashMap;
 import java.util.Map;

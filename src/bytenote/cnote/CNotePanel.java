@@ -1,10 +1,9 @@
-package c57note64.cnote;
+package bytenote.cnote;
 
 import java.util.ArrayList;
 
-import c57note64.CInfoPanel;
-import c57note64.JFXMain;
-import c57note64.cnote.types.CNoteTypes;
+import bytenote.CInfoPanel;
+import bytenote.JFXMain;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
@@ -15,7 +14,6 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.paint.Color;
 
 public class CNotePanel extends GridPane {
 	
@@ -47,7 +45,7 @@ public class CNotePanel extends GridPane {
 			c.add(cc);
 		}
 		
-		setPrefSize((JFXMain.mainStage.getWidth()*paneToWin)-JFXMain.mainStage.getWidth()/42, Math.max(JFXMain.mainStage.getHeight()-CInfoPanel.defaultHeight*2, Math.floor(getChildren().size()/2)*CNote.cNotePrefHeight));
+		setPrefSize((JFXMain.mainStage.getWidth()*paneToWin)-JFXMain.mainStage.getWidth()/42, Math.max(JFXMain.mainStage.getHeight()-CInfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*CNote.cNotePrefHeight));
 		setHgap(hvgap);
 		setVgap(hvgap);
 		
@@ -59,11 +57,10 @@ public class CNotePanel extends GridPane {
 //		setEnabled(true);
 //		setOpaque(true);
 		
-		CNoteTypes.addToMap("type1", Color.BLUE);
-		
+		/*CNoteTypes.addToMap("type1", Color.BLUE);
 		for (int i = 0; i < 16; i++) {
 			addNote( new CNote(i, "text"+i, "type1") );
-		}
+		}*/
 		
 		refreshLayout();
 		
@@ -74,7 +71,7 @@ public class CNotePanel extends GridPane {
 		for (int i = 0; i < children.size(); i++) {
 			GridPane.setConstraints(children.get(i), i%columns, i/columns);
 //			( (CNote) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.floor(children.size()/2)-hvgap*Math.floor(children.size()/2) );
-			( (CNote) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.floor(children.size()/2));
+			( (CNote) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.ceil(children.size()/2));
 		}
 	}
 	
@@ -85,7 +82,7 @@ public class CNotePanel extends GridPane {
 				((CNote) getChildren().get(i)).c57run();
 			}
 		}
-		setPrefSize((JFXMain.root.getWidth()*paneToWin)-JFXMain.root.getWidth()/42, Math.max(JFXMain.root.getHeight()-CInfoPanel.defaultHeight*2, Math.floor(getChildren().size()/2)*CNote.cNotePrefHeight));
+		setPrefSize((JFXMain.root.getWidth()*paneToWin)-JFXMain.root.getWidth()/42, Math.max(JFXMain.root.getHeight()-CInfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*CNote.cNotePrefHeight));
 //		setLayout( new GridLayout(/*15+*/getChildren().size()/2, 2, 15, 15) );
 		
 //		repaint();
