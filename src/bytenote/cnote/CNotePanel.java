@@ -7,6 +7,7 @@ import bytenote.JFXMain;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -71,7 +72,7 @@ public class CNotePanel extends GridPane {
 		for (int i = 0; i < children.size(); i++) {
 			GridPane.setConstraints(children.get(i), i%columns, i/columns);
 //			( (CNote) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.floor(children.size()/2)-hvgap*Math.floor(children.size()/2) );
-			( (CNote) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.ceil(children.size()/2));
+			( (Label) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.ceil(children.size()/2));
 		}
 	}
 	
@@ -83,10 +84,7 @@ public class CNotePanel extends GridPane {
 			}
 		}
 		setPrefSize((JFXMain.root.getWidth()*paneToWin)-JFXMain.root.getWidth()/42, Math.max(JFXMain.root.getHeight()-CInfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*CNote.cNotePrefHeight));
-//		setLayout( new GridLayout(/*15+*/getChildren().size()/2, 2, 15, 15) );
-		
-//		repaint();
-	}
+			}
 	
 	public void addNote(CNote note) {
 		if(getChildren().size() >= note.priority && note.priority >= 0) {
@@ -103,26 +101,6 @@ public class CNotePanel extends GridPane {
 		}
 		
 		
-	}
-	
-	public int getMinUnusedPriority() {
-		int i = 0;
-		while(true) {
-			if(getNoteWithPriority(i) == null) {
-				return i;
-			}
-			i++;
-		}
-	}
-		
-	public CNote getNoteWithPriority(int priority) {
-		for (int i = 0; i < notes.size(); i++) {
-			if (notes.get(i).priority == priority) {
-				return notes.get(i);
-			}
-		}
-//		System.err.println("No note with priority: "+priority);
-		return null;
 	}
 
 	public void remove(CNote cNote) {
