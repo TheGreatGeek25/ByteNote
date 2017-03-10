@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
@@ -52,7 +53,7 @@ public class JavaFXNotFoundFrame extends JFrame {
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
@@ -61,16 +62,26 @@ public class JavaFXNotFoundFrame extends JFrame {
 		lblError.setFont(new Font("Tahoma", Font.BOLD, 32));
 		GridBagConstraints gbc_lblError = new GridBagConstraints();
 		gbc_lblError.gridwidth = 7;
-		gbc_lblError.insets = new Insets(0, 0, 5, 0);
+		gbc_lblError.insets = new Insets(0, 0, 5, 5);
 		gbc_lblError.gridx = 0;
 		gbc_lblError.gridy = 0;
 		contentPane.add(lblError, gbc_lblError);
+		
+		JLabel lblErrorCodeFx = new JLabel("Error code: fx0000");
+		lblErrorCodeFx.setHorizontalTextPosition(SwingConstants.LEADING);
+		GridBagConstraints gbc_lblErrorCodeFx = new GridBagConstraints();
+		gbc_lblErrorCodeFx.gridwidth = 7;
+		gbc_lblErrorCodeFx.insets = new Insets(0, 3, 5, 5);
+		gbc_lblErrorCodeFx.gridx = 0;
+		gbc_lblErrorCodeFx.gridy = 1;
+		contentPane.add(lblErrorCodeFx, gbc_lblErrorCodeFx);
 		
 		JTextArea txtrError = new JTextArea();
 		txtrError.setEditable(false);
 		txtrError.setLineWrap(true);
 		txtrError.setText("You don't seem to hava a compatable Java JRE.\r\nYou JRE must include JavaFX for this application to function correctly.");
 		GridBagConstraints gbc_txtrError = new GridBagConstraints();
+		gbc_txtrError.insets = new Insets(0, 0, 0, 5);
 		gbc_txtrError.gridwidth = 7;
 		gbc_txtrError.fill = GridBagConstraints.BOTH;
 		gbc_txtrError.gridx = 0;
