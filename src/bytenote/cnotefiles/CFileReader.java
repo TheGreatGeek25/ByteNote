@@ -30,7 +30,7 @@ public class CFileReader {
 		}
 		
 		public void noteFileMain(File file) {
-			String fileStr = readNoteFile(file);
+			String fileStr = readFile(file);
 //			fileStr = fileStr.replace("\n", "");
 			String[] fileStrArray = fileStr.split("")[1].split("");
 			Map<String, String> mainMap = new HashMap<String, String>();
@@ -180,7 +180,7 @@ public class CFileReader {
 	}
 	
 	public static Reader getNoteFileReader(File noteFile) {
-		String fileStr = readNoteFile(noteFile);
+		String fileStr = readFile(noteFile);
 		String[] fileStrArray = fileStr.split("");
 		String fileVersionStr = fileStrArray[0].replace("\n", "");
 		switch (fileVersionStr) {
@@ -191,8 +191,8 @@ public class CFileReader {
 		}
 		
 	}
-	
-	public static String readNoteFile(File file) {
+
+	public static String readFile(File file) {
 		Scanner scanner = null;
 		String fileString = "";
 		try {
