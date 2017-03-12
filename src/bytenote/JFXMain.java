@@ -7,19 +7,24 @@ import bytenote.cnotefiles.CFileReader;
 import bytenote.cnotefiles.CFileWriter;
 import bytenote.cnotefiles.CNoteFileFilter;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class JFXMain extends Application {
 	
 	public static CMainPanel root;
 	
 	public static Stage mainStage;
-
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -32,6 +37,14 @@ public class JFXMain extends Application {
 			primaryStage.setMinWidth(ByteNoteMain.minWidth);
 			primaryStage.setHeight(ByteNoteMain.prefHeight);
 			primaryStage.setWidth(ByteNoteMain.prefWidth);
+			primaryStage.setOnCloseRequest( new EventHandler<WindowEvent>() {
+				@Override
+				public void handle(WindowEvent event) {
+					if(!confirmExit()) {
+						event.consume();
+					}
+				}
+			});
 						
 			root = new CMainPanel();
 			
@@ -85,6 +98,17 @@ public class JFXMain extends Application {
 		stage.setMinWidth(minWidth);
 		stage.setScene( new Scene(paneToShow) );
 		stage.show();
+	}
+
+	public static boolean confirmExit() {
+		if(!ByteNoteMain.isSaved) {
+			Alert a = new Alert(AlertType.CONFIRMATION, "Are you sure you want to exit? Unsaved changes will be lost.");
+			a.initOwner(mainStage);
+			a.initModality(Modality.WINDOW_MODAL);
+			ButtonType bt = a.showAndWait().get();
+			return bt == ButtonType.OK;
+		}
+		return true;
 	}
 	
 }
