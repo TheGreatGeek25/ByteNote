@@ -1,8 +1,8 @@
-package bytenote.cnote.types;
+package bytenote.note.types;
 
 import bytenote.ByteNoteMain;
 import bytenote.JFXMain;
-import bytenote.cnote.types.typeeditor.CTypeEditorPanel;
+import bytenote.note.types.typeeditor.CTypeEditorPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

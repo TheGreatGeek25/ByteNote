@@ -1,6 +1,6 @@
 package bytenote;
 
-import bytenote.cnote.types.CTypeManagerPanel;
+import bytenote.note.types.CTypeManagerPanel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;

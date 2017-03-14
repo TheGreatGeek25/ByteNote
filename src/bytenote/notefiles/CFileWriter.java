@@ -1,4 +1,4 @@
-package bytenote.cnotefiles;
+package bytenote.notefiles;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 import bytenote.ByteNoteMain;
 import bytenote.JFXMain;
-import bytenote.cnote.CNote;
-import bytenote.cnote.types.CNoteTypes;
+import bytenote.note.Note;
+import bytenote.note.types.NoteTypes;
 
 public class CFileWriter {
 	
@@ -53,7 +53,7 @@ public class CFileWriter {
 		/**
 		 * Save todo notes
 		 */
-		ArrayList<CNote> todoNoteList = JFXMain.root.todoPanel.notes;
+		ArrayList<Note> todoNoteList = JFXMain.root.todoPanel.notes;
 		for (int i = 0; i < todoNoteList.size(); i++) {
 			writeString += "note\n"
 					+ "noteText"+todoNoteList.get(i).noteText+"\n"
@@ -68,7 +68,7 @@ public class CFileWriter {
 		 * Save doing notes
 		 */
 		writeString += "doing\n";
-		ArrayList<CNote> doingNoteList =JFXMain.root.doingPanel.notes;
+		ArrayList<Note> doingNoteList =JFXMain.root.doingPanel.notes;
 		for (int i = 0; i < doingNoteList.size(); i++) {
 			writeString += "note\n"
 					+ "noteText"+doingNoteList.get(i).noteText+"\n"
@@ -82,7 +82,7 @@ public class CFileWriter {
 		 * Save done notes
 		 */
 		writeString += "done\n";
-		ArrayList<CNote> doneNoteList = JFXMain.root.donePanel.notes;
+		ArrayList<Note> doneNoteList = JFXMain.root.donePanel.notes;
 		for (int i = 0; i < doneNoteList.size(); i++) {
 			writeString += "note\n"
 					+ "noteText"+doneNoteList.get(i).noteText+"\n"
@@ -97,15 +97,15 @@ public class CFileWriter {
 		 */
 		writeString += "settings\n"
 				+ "types\n";
-		for (int i = 0; i < CNoteTypes.typeMap.keySet().toArray().length; i++) {
-			writeString += CNoteTypes.typeMap.keySet().toArray()[i]+"";
+		for (int i = 0; i < NoteTypes.typeMap.keySet().toArray().length; i++) {
+			writeString += NoteTypes.typeMap.keySet().toArray()[i]+"";
 			String color;
 			//red
-			color = ( (int) Math.floor(CNoteTypes.typeMap.get(CNoteTypes.typeMap.keySet().toArray()[i]).getRed()*255))+",";
+			color = ( (int) Math.floor(NoteTypes.typeMap.get(NoteTypes.typeMap.keySet().toArray()[i]).getRed()*255))+",";
 			//green
-			color += ( (int) Math.floor(CNoteTypes.typeMap.get(CNoteTypes.typeMap.keySet().toArray()[i]).getGreen()*255))+",";
+			color += ( (int) Math.floor(NoteTypes.typeMap.get(NoteTypes.typeMap.keySet().toArray()[i]).getGreen()*255))+",";
 			//blue
-			color += ( (int) Math.floor(CNoteTypes.typeMap.get(CNoteTypes.typeMap.keySet().toArray()[i]).getBlue()*255));
+			color += ( (int) Math.floor(NoteTypes.typeMap.get(NoteTypes.typeMap.keySet().toArray()[i]).getBlue()*255));
 			writeString += color+"\n";
 		}
 		

@@ -1,9 +1,9 @@
-package bytenote.cnote.editor;
+package bytenote.note.editor;
 
 import bytenote.JFXMain;
-import bytenote.cnote.CNote;
-import bytenote.cnote.CNotePanel;
-import bytenote.cnote.types.CNoteTypes;
+import bytenote.note.Note;
+import bytenote.note.NotePanel;
+import bytenote.note.types.NoteTypes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +18,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
-public class CNoteEditPanel extends GridPane {
+public class NoteEditPanel extends GridPane {
 	
 	public TextField noteTextField;
 	public ComboBox<Object> noteTypeBox;
@@ -30,11 +30,11 @@ public class CNoteEditPanel extends GridPane {
 	public Label panelBoxLabel;
 	public Label prioritySpinnerLabel;
 	
-	public CNote editNote;
+	public Note editNote;
 	
 	public Button doneButton;
 		
-	public CNoteEditPanel(CNote editNote) {
+	public NoteEditPanel(Note editNote) {
 		super();
 		this.editNote = editNote;
 				
@@ -51,7 +51,7 @@ public class CNoteEditPanel extends GridPane {
 		typeBoxLabel = new Label("Type");
 		add(typeBoxLabel, 0, 3);
 		
-		ObservableList<Object> types = FXCollections.observableArrayList(CNoteTypes.typeMap.keySet().toArray());
+		ObservableList<Object> types = FXCollections.observableArrayList(NoteTypes.typeMap.keySet().toArray());
 		noteTypeBox = new ComboBox<>(types);
 		noteTypeBox.setEditable(false);
 		noteTypeBox.setValue(this.editNote.type);
@@ -92,7 +92,7 @@ public class CNoteEditPanel extends GridPane {
 	
 
 	private void saveNote() {
-		CNotePanel notePanel = (CNotePanel) this.editNote.getParent();
+		NotePanel notePanel = (NotePanel) this.editNote.getParent();
 		//remove note from notePanel
 		if(notePanel != null) {
 			notePanel.remove(this.editNote);

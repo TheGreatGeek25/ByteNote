@@ -1,4 +1,4 @@
-package bytenote.cnotefiles;
+package bytenote.notefiles;
 
 import java.io.File;
 import java.util.HashMap;
@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 import bytenote.JFXMain;
-import bytenote.cnote.CNote;
-import bytenote.cnote.types.CNoteTypes;
+import bytenote.note.Note;
+import bytenote.note.types.NoteTypes;
 import javafx.scene.paint.Color;
 
 public class CFileReader {
@@ -83,7 +83,7 @@ public class CFileReader {
 					}
 				}
 			}
-			CNoteTypes.setMap(typeMap);
+			NoteTypes.setMap(typeMap);
 
 		
 		}
@@ -106,7 +106,7 @@ public class CFileReader {
 			JFXMain.root.todoPanel.notes.clear();
 			JFXMain.root.todoPanel.getChildren().remove(0, JFXMain.root.todoPanel.getChildren().size());
 			for (int i = 1; i < todoStrArray.length; i++) {
-				CNote todoNote;
+				Note todoNote;
 //				try {
 					if(todoStrArray[i].split("")[0].replace("\n", "").equals("note")) {
 						i++;
@@ -126,7 +126,7 @@ public class CFileReader {
 				}
 			
 			
-				todoNote = new CNote(Integer.parseInt(todoNoteData.get("priority")), todoNoteData.get("noteText"), todoNoteData.get("type"));
+				todoNote = new Note(Integer.parseInt(todoNoteData.get("priority")), todoNoteData.get("noteText"), todoNoteData.get("type"));
 				JFXMain.root.todoPanel.addNote(todoNote);
 			}
 			/**
@@ -135,7 +135,7 @@ public class CFileReader {
 			JFXMain.root.doingPanel.notes.clear();
 			JFXMain.root.doingPanel.getChildren().remove(0, JFXMain.root.doingPanel.getChildren().size());
 			for (int i = 1; i < doingStrArray.length; i++) {
-				CNote doingNote;
+				Note doingNote;
 				String[] doingNoteDataArray = doingStrArray[i].split("");
 				Map<String, String> doingNoteData = new HashMap<String, String>();
 			
@@ -148,7 +148,7 @@ public class CFileReader {
 				}
 			
 			
-				doingNote = new CNote(Integer.parseInt(doingNoteData.get("priority")), doingNoteData.get("noteText"), doingNoteData.get("type"));
+				doingNote = new Note(Integer.parseInt(doingNoteData.get("priority")), doingNoteData.get("noteText"), doingNoteData.get("type"));
 				JFXMain.root.doingPanel.addNote(doingNote);
 				i++;
 			}
@@ -158,7 +158,7 @@ public class CFileReader {
 			JFXMain.root.donePanel.notes.clear();
 			JFXMain.root.donePanel.getChildren().remove(0, JFXMain.root.donePanel.getChildren().size());
 			for (int i = 1; i < doneStrArray.length; i++) {
-				CNote doneNote;
+				Note doneNote;
 				String[] doneNoteDataArray = doneStrArray[i].split("");
 				Map<String, String> doneNoteData = new HashMap<String, String>();
 			
@@ -171,7 +171,7 @@ public class CFileReader {
 				}
 			
 			
-				doneNote = new CNote(Integer.parseInt(doneNoteData.get("priority")), doneNoteData.get("noteText"), doneNoteData.get("type"));
+				doneNote = new Note(Integer.parseInt(doneNoteData.get("priority")), doneNoteData.get("noteText"), doneNoteData.get("type"));
 				JFXMain.root.donePanel.addNote(doneNote);
 				i++;
 			}
@@ -187,7 +187,7 @@ public class CFileReader {
 		case "v1.0":
 			return new v1_0();
 		default:
-			throw new IllegalArgumentException(fileVersionStr+" is not a compatible file syntax version!");
+			throw new IllegalArgumentException(fileVersionStr+" is not a compatible note file syntax version!");
 		}
 		
 	}

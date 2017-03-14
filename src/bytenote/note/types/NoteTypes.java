@@ -1,4 +1,4 @@
-package bytenote.cnote.types;
+package bytenote.note.types;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-public class CNoteTypes {
+public class NoteTypes {
 	public static Map<String, Color> typeMap = new HashMap<String, Color>();
 	public static void addToMap(String type, Color color) {
 		typeMap.put(type, color);

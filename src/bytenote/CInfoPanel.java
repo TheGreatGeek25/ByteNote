@@ -1,7 +1,7 @@
 package bytenote;
 
-import bytenote.cnote.CNote;
-import bytenote.cnote.editor.CNoteEditPanel;
+import bytenote.note.Note;
+import bytenote.note.editor.NoteEditPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -20,11 +20,11 @@ public class CInfoPanel extends HBox {
 	public Label noteType;
 	public Label notePriority;
 	
-	public CNote note;
+	public Note note;
 	
 	public Button editNote;
 	
-	public CNoteEditPanel noteEditor;
+	public NoteEditPanel noteEditor;
 	
 	public CInfoPanel() {
 		super();
@@ -56,7 +56,7 @@ public class CInfoPanel extends HBox {
 			@Override
 			public void handle(ActionEvent event) {
 				ByteNoteMain.isSaved = false;
-				CInfoPanel.this.noteEditor = new CNoteEditPanel(note);
+				CInfoPanel.this.noteEditor = new NoteEditPanel(note);
 				JFXMain.showView(JFXMain.mainStage, CInfoPanel.this.noteEditor, "Edit note", 300, 300);
 //				CInfoPanel.this.noteEditor = new CNoteEdit(C57note64Main_OLD.c57main, "Edit note", note);
 			}
@@ -69,7 +69,7 @@ public class CInfoPanel extends HBox {
 		
 	}
 	
-	public void setNote(CNote note) {
+	public void setNote(Note note) {
 		this.note = note;
 		if(note != null) {
 			this.noteText.setText("Note text: "+note.noteText);

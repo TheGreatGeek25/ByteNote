@@ -2,8 +2,8 @@ package bytenote;
 
 import java.io.File;
 
-import bytenote.cnote.CNotePanel;
-import bytenote.cnote.types.CNoteTypes;
+import bytenote.note.NotePanel;
+import bytenote.note.types.NoteTypes;
 import javafx.application.Platform;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
@@ -16,9 +16,9 @@ public class CMainPanel extends BorderPane {
 	
 	public C57runService c57run;
 	
-	public CNotePanel todoPanel;
-	public CNotePanel doingPanel;
-	public CNotePanel donePanel;
+	public NotePanel todoPanel;
+	public NotePanel doingPanel;
+	public NotePanel donePanel;
 	public ScrollPane todoScrollPane;
 	public ScrollPane doingScrollPane;
 	public ScrollPane doneScrollPane;
@@ -35,24 +35,24 @@ public class CMainPanel extends BorderPane {
 		setVisible(true);
 		
 		controlPanel = new CControlPanel();
-		todoPanel = new CNotePanel();
-		doingPanel = new CNotePanel();
-		donePanel = new CNotePanel();
+		todoPanel = new NotePanel();
+		doingPanel = new NotePanel();
+		donePanel = new NotePanel();
 		infoPanel = new CInfoPanel();
 		
 		todoScrollPane = new ScrollPane(todoPanel);
 		todoScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
 		todoScrollPane.setFitToWidth(true);
-		todoScrollPane.setPrefWidth(this.getWidth()*CNotePanel.paneToWin);
+		todoScrollPane.setPrefWidth(this.getWidth()*NotePanel.paneToWin);
 		
 		doingScrollPane = new ScrollPane(doingPanel);
 		doingScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-		doingScrollPane.setPrefSize(this.getWidth()*CNotePanel.paneToWin, this.getHeight());
+		doingScrollPane.setPrefSize(this.getWidth()*NotePanel.paneToWin, this.getHeight());
 		doingScrollPane.setFitToWidth(true);
 		
 		doneScrollPane = new ScrollPane(donePanel);
 		doneScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-		doneScrollPane.setPrefSize(this.getWidth()*CNotePanel.paneToWin, this.getHeight());
+		doneScrollPane.setPrefSize(this.getWidth()*NotePanel.paneToWin, this.getHeight());
 		doneScrollPane.setFitToWidth(true); 
 		
 		setTop(controlPanel);
@@ -69,15 +69,15 @@ public class CMainPanel extends BorderPane {
 	}
 	
 	public void c57run() {
-		CNoteTypes.addToMap("(default)", Color.rgb(255, 255, 150) );
+		NoteTypes.addToMap("(default)", Color.rgb(255, 255, 150) );
 //		revalidate();
 //		repaint();
 //		setWidth(JFXMain.mainStage.getWidth()-50);
 //		setHeight(JFXMain.mainStage.getHeight()-32);
 		
-		todoScrollPane.setPrefSize(this.getWidth()*CNotePanel.paneToWin, this.getHeight());
-		doingScrollPane.setPrefSize(this.getWidth()*CNotePanel.paneToWin, this.getHeight());
-		doneScrollPane.setPrefSize(this.getWidth()*CNotePanel.paneToWin, this.getHeight());
+		todoScrollPane.setPrefSize(this.getWidth()*NotePanel.paneToWin, this.getHeight());
+		doingScrollPane.setPrefSize(this.getWidth()*NotePanel.paneToWin, this.getHeight());
+		doneScrollPane.setPrefSize(this.getWidth()*NotePanel.paneToWin, this.getHeight());
 
 		
 		controlPanel.c57run();

@@ -1,8 +1,8 @@
-package bytenote.cnote.types;
+package bytenote.note.types;
 
 import bytenote.JFXMain;
-import bytenote.cnote.types.table.CColor;
-import bytenote.cnote.types.typeeditor.CTypeEditorPanel;
+import bytenote.note.types.table.CColor;
+import bytenote.note.types.typeeditor.CTypeEditorPanel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ScrollPane;
@@ -79,19 +79,19 @@ public class CTypeManagerPanel extends BorderPane {
 	}
 	
 	/*public void loadData() {
-		data = new Object[CNoteTypes.typeMap.keySet().size()][columnNames.length];
-		for (int i = 0; i < CNoteTypes.typeMap.keySet().toArray().length; i++) {
-			data[i][0] = CNoteTypes.typeMap.keySet().toArray()[i];
-			data[i][1] = CNoteTypes.typeMap.get(CNoteTypes.typeMap.keySet().toArray()[i]);
+		data = new Object[NoteTypes.typeMap.keySet().size()][columnNames.length];
+		for (int i = 0; i < NoteTypes.typeMap.keySet().toArray().length; i++) {
+			data[i][0] = NoteTypes.typeMap.keySet().toArray()[i];
+			data[i][1] = NoteTypes.typeMap.get(NoteTypes.typeMap.keySet().toArray()[i]);
 		}
 		mainTable.setModel( new CTypeTableModel(data, columnNames) );
 	}*/
 	
 	public ObservableList<CColor> loadData() {
 		ObservableList<CColor> list = FXCollections.observableArrayList();
-		for(int i=0; i<CNoteTypes.typeMap.keySet().size(); i++) {
-			String[] keyArray = CNoteTypes.typeMap.keySet().toArray( new String[0] );
-			CColor newType = new CColor(keyArray[i], CNoteTypes.typeMap.get(keyArray[i]));
+		for(int i=0; i<NoteTypes.typeMap.keySet().size(); i++) {
+			String[] keyArray = NoteTypes.typeMap.keySet().toArray( new String[0] );
+			CColor newType = new CColor(keyArray[i], NoteTypes.typeMap.get(keyArray[i]));
 			list.add(newType);
 		}
 		return list;
@@ -123,9 +123,9 @@ public class CTypeManagerPanel extends BorderPane {
 	}
 	
 	public void saveData() {
-		CNoteTypes.typeMap.clear();
+		NoteTypes.typeMap.clear();
 		for (int i = 0; i < types.size(); i++) {
-			CNoteTypes.addToMap(types.get(i).getTypeName(), types.get(i).getTypeColor());
+			NoteTypes.addToMap(types.get(i).getTypeName(), types.get(i).getTypeColor());
 			
 		}
 	}

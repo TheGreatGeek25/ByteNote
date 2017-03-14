@@ -1,4 +1,4 @@
-package bytenote.cnote;
+package bytenote.note;
 
 import java.util.ArrayList;
 
@@ -16,17 +16,17 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
-public class CNotePanel extends GridPane {
+public class NotePanel extends GridPane {
 	
 	/*
 	 * 
-	 * CNote.cNotePrefHeight = 15;
+	 * Note.cNotePrefHeight = 15;
 	 * 
 	 */
 	
 	public static double paneToWin = 1.0/3.0;
 	
-	public ArrayList<CNote> notes = new ArrayList<CNote>();
+	public ArrayList<Note> notes = new ArrayList<Note>();
 	public int minShownIndex = 0;
 	
 	public static int hvgap = 15;
@@ -35,7 +35,7 @@ public class CNotePanel extends GridPane {
 	
 	public Label placeHolder;
 	
-	public CNotePanel() {
+	public NotePanel() {
 		super();
 		
 		ObservableList<ColumnConstraints> c = getColumnConstraints();
@@ -48,16 +48,16 @@ public class CNotePanel extends GridPane {
 			c.add(cc);
 		}
 		
-		setPrefSize((JFXMain.mainStage.getWidth()*paneToWin)-JFXMain.mainStage.getWidth()/42, Math.max(JFXMain.mainStage.getHeight()-CInfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*CNote.cNotePrefHeight));
+		setPrefSize((JFXMain.mainStage.getWidth()*paneToWin)-JFXMain.mainStage.getWidth()/42, Math.max(JFXMain.mainStage.getHeight()-CInfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*Note.cNotePrefHeight));
 		setHgap(hvgap);
 		setVgap(hvgap);
 		setBorder( new Border( new BorderStroke(null, BorderStrokeStyle.SOLID, null, new BorderWidths(8) ) ) );
 		
 		setVisible(true);
 		
-		/*CNoteTypes.addToMap("type1", Color.BLUE);
+		/*NoteTypes.addToMap("type1", Color.BLUE);
 		for (int i = 0; i < 16; i++) {
-			addNote( new CNote(i, "text"+i, "type1") );
+			addNote( new Note(i, "text"+i, "type1") );
 		}*/
 		
 		placeHolder = new Label();
@@ -76,7 +76,7 @@ public class CNotePanel extends GridPane {
 		ObservableList<Node> children = getChildren();
 		for (int i = 0; i < children.size(); i++) {
 			GridPane.setConstraints(children.get(i), i%columns, i/columns);
-//			( (CNote) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.floor(children.size()/2)-hvgap*Math.floor(children.size()/2) );
+//			( (Note) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.floor(children.size()/2)-hvgap*Math.floor(children.size()/2) );
 			( (Label) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.ceil(children.size()/2));
 		}
 	}
@@ -84,14 +84,14 @@ public class CNotePanel extends GridPane {
 	public void c57run() {
 		refreshLayout();
 		for (int i = 0; i < getChildren().size(); i++) {
-			if(getChildren().get(i) instanceof CNote) {
-				((CNote) getChildren().get(i)).c57run();
+			if(getChildren().get(i) instanceof Note) {
+				((Note) getChildren().get(i)).c57run();
 			}
 		}
-		setPrefSize((JFXMain.root.getWidth()*paneToWin)-JFXMain.root.getWidth()/42, Math.max(JFXMain.root.getHeight()-CInfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*CNote.cNotePrefHeight));
+		setPrefSize((JFXMain.root.getWidth()*paneToWin)-JFXMain.root.getWidth()/42, Math.max(JFXMain.root.getHeight()-CInfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*Note.cNotePrefHeight));
 			}
 	
-	public void addNote(CNote note) {
+	public void addNote(Note note) {
 		if(getChildren().size() >= note.priority && note.priority >= 0) {
 			getChildren().add(note.priority, note);
 			notes.add(note);
@@ -108,8 +108,8 @@ public class CNotePanel extends GridPane {
 		
 	}
 
-	public void remove(CNote cNote) {
-		this.getChildren().remove(cNote);
+	public void remove(Note note) {
+		this.getChildren().remove(note);
 	}
 	
 }

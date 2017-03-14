@@ -1,7 +1,7 @@
-package bytenote.cnote;
+package bytenote.note;
 
 import bytenote.JFXMain;
-import bytenote.cnote.types.CNoteTypes;
+import bytenote.note.types.NoteTypes;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -13,21 +13,21 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 
-public class CNote extends Label {
+public class Note extends Label {
 	
 	public static int cNotePrefHeight = 100;
 	
 	public int priority;
 	public String noteText;
 	public String type;
-	public CNotePanel panel;
+	public NotePanel panel;
 	
-	public CNote(int priority, String text, String type) {
+	public Note(int priority, String text, String type) {
 		super();
 		this.priority = priority;
 		this.noteText = text;
 		this.type = type;
-		setBackground( new Background( new BackgroundFill(CNoteTypes.typeMap.get(type), null, null) ) );
+		setBackground( new Background( new BackgroundFill(NoteTypes.typeMap.get(type), null, null) ) );
 		setText(this.noteText);
 //		setTextFill(Color.BLACK);
 //		setOpaque(true);
@@ -36,14 +36,14 @@ public class CNote extends Label {
 		setWrapText(true);
 	}
 	
-	public CNote(int priority, String text, String type, CNotePanel panel) {
+	public Note(int priority, String text, String type, NotePanel panel) {
 		this(priority, text, type);
 		this.panel = panel;
 	}
 	
 	public void c57run() {
 		Parent parent = getParent();
-		panel = (CNotePanel) parent;
+		panel = (NotePanel) parent;
 		for (int i = 0; i < parent.getChildrenUnmodifiable().size(); i++) {
 			if(parent.getChildrenUnmodifiable().get(i).equals(this)) {
 				this.priority = i;
@@ -51,14 +51,14 @@ public class CNote extends Label {
 		}
 		
 		setText(noteText);
-		setBackground( new Background( new BackgroundFill(CNoteTypes.typeMap.get(type), null, null/*new Insets(30)*/) ) );
+		setBackground( new Background( new BackgroundFill(NoteTypes.typeMap.get(type), null, null/*new Insets(30)*/) ) );
 		setSelectedBorder(getSelected());
 		
 	}
 	
 	public void setSelectedBorder(boolean selected) {
 		if(selected) {
-			setBorder(new Border(new BorderStroke(CNoteTypes.getPaintFromType(type, true), BorderStrokeStyle.SOLID, null, new BorderWidths(4)) ) );
+			setBorder(new Border(new BorderStroke(NoteTypes.getPaintFromType(type, true), BorderStrokeStyle.SOLID, null, new BorderWidths(4)) ) );
 //			setBorder(BorderFactory.createLineBorder( new Color(255-getBackground().getRed(), 255-getBackground().getGreen(), 255-getBackground().getBlue()) , 4));
 		} else {
 			setBorder(Border.EMPTY);
@@ -72,14 +72,14 @@ public class CNote extends Label {
 		return false;
 	}
 	
-	public void setPanel(CNotePanel newPanel) {
+	public void setPanel(NotePanel newPanel) {
 		delete();
 		this.panel = newPanel;
 		newPanel.addNote(this);
 	}
 	
 	public void delete() {
-		CNotePanel panel = (CNotePanel) this.getParent();
+		NotePanel panel = (NotePanel) this.getParent();
 		if(panel != null) {
 			panel.remove(this);
 			panel.notes.remove(this);
@@ -91,7 +91,7 @@ public class CNote extends Label {
 
 		@Override
 		public void handle(MouseEvent event) {
-			JFXMain.root.infoPanel.setNote(CNote.this);
+			JFXMain.root.infoPanel.setNote(Note.this);
 		}
 	}
 	

@@ -1,4 +1,4 @@
-package bytenote.cnote.types.table;
+package bytenote.note.types.table;
 
 import java.awt.Color;
 import java.awt.Component;

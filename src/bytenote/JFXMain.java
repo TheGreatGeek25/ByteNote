@@ -3,9 +3,9 @@ package bytenote;
 import java.io.File;
 import java.net.URISyntaxException;
 
-import bytenote.cnotefiles.CFileReader;
-import bytenote.cnotefiles.CFileWriter;
-import bytenote.cnotefiles.CNoteFileFilter;
+import bytenote.notefiles.CFileReader;
+import bytenote.notefiles.CFileWriter;
+import bytenote.notefiles.NoteFileFilter;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -75,8 +75,9 @@ public class JFXMain extends Application {
 	
 	public static File openFileView(Stage parent, String openORsave) {
 		FileChooser fc = new FileChooser();
-		fc.getExtensionFilters().add(CNoteFileFilter.cnoteFilter);
-		fc.setSelectedExtensionFilter(CNoteFileFilter.cnoteFilter);
+		fc.getExtensionFilters().add(NoteFileFilter.cnoteFilter);
+		fc.getExtensionFilters().add(NoteFileFilter.byntFilter);
+		fc.setSelectedExtensionFilter(NoteFileFilter.byntFilter);
 		if(openORsave.equals("open")) {
 			return fc.showOpenDialog(parent);
 		} else if (openORsave.equals("save")) {

@@ -1,8 +1,8 @@
-package bytenote.cnote.types.typeeditor;
+package bytenote.note.types.typeeditor;
 
 import bytenote.JFXMain;
-import bytenote.cnote.types.CNoteTypes;
-import bytenote.cnote.types.CTypeManagerPanel;
+import bytenote.note.types.NoteTypes;
+import bytenote.note.types.CTypeManagerPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -54,7 +54,7 @@ public class CTypeEditorPanel extends GridPane {
 	
 	protected void saveType() {
 //		System.out.println("Save type");
-		if(CNoteTypes.typeMap.containsKey(typeStr)) {
+		if(NoteTypes.typeMap.containsKey(typeStr)) {
 			for (int i = 0; i < JFXMain.root.todoPanel.notes.size(); i++) {
 				if(JFXMain.root.todoPanel.notes.get(i).type.equals(typeStr)) {
 					JFXMain.root.todoPanel.notes.get(i).type = typeStrEdit.getText();
@@ -70,10 +70,10 @@ public class CTypeEditorPanel extends GridPane {
 					JFXMain.root.donePanel.notes.get(i).type = typeStrEdit.getText();
 				}
 			}
-			CNoteTypes.typeMap.remove(typeStr);
+			NoteTypes.typeMap.remove(typeStr);
 		}
 		CTypeManagerPanel manager = JFXMain.root.controlPanel.typeManager;
-		CNoteTypes.addToMap(typeStrEdit.getText(), cp.getValue());
+		NoteTypes.addToMap(typeStrEdit.getText(), cp.getValue());
 		manager.types = manager.loadData();
 		manager.mainTable.setItems(manager.types);
 	}
@@ -81,7 +81,7 @@ public class CTypeEditorPanel extends GridPane {
 	public CTypeEditorPanel(String type) {
 		this();
 		typeStr = type;
-		typeColor = CNoteTypes.typeMap.get(type);
+		typeColor = NoteTypes.typeMap.get(type);
 		typeStrEdit.setText(typeStr);
 		cp.setValue(typeColor);;
 	}

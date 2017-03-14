@@ -1,4 +1,4 @@
-package bytenote.cnote.types.table;
+package bytenote.note.types.table;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
