@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 import bytenote.ByteNoteMain;
@@ -30,10 +31,16 @@ public class UpdateHandler {
 				out.close();
 				in.close();
 				
+				File tempDir = Files.createTempDirectory("ByteNoteUpdateConfig").toFile();
+				File byteNoteDir = new File(ClassLoader.getSystemClassLoader().getResource("bytenote").getFile());
+				for (File file : getConfigFiles(byteNoteDir)) {
+//					file.toPath().relativize(byteNoteDir.toPath())
+				}
+				
 				//TODO add update GUI
 				
 				if(JFXMain.confirmExit()) {
-					ProcessBuilder pb = new ProcessBuilder("TIMEOUT 8 & "+outputFile.getAbsolutePath());
+					ProcessBuilder pb = new ProcessBuilder("TIMEOUT 8 & \""+outputFile.getAbsolutePath()+"\"");
 					pb.start();
 					System.exit(0);
 				}
@@ -47,7 +54,7 @@ public class UpdateHandler {
 	public static ArrayList<File> getConfigFiles(File file) {
 		ArrayList<File> fileList = new ArrayList<>();
 		if(file.isFile()) {
-			if(file.getAbsolutePath().endsWith("config/"+file.getName())) {
+			if(file.getAbsolutePath().endsWith("config"+File.separatorChar+file.getName())) {
 				fileList.add(file);
 			}
 		} else if(file.isDirectory()) {

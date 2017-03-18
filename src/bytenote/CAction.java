@@ -8,6 +8,7 @@ import bytenote.note.editor.NoteEditPanel;
 import bytenote.note.types.CTypeManagerPanel;
 import bytenote.notefiles.CFileReader;
 import bytenote.notefiles.CFileWriter;
+import bytenote.update.UpdateHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -127,6 +128,10 @@ public class CAction implements EventHandler<ActionEvent> {
 				//TODO check for updates
 //				System.out.println("checkForUpdates");
 				System.out.println(JFXMain.confirmExit());
+				File byteNoteDir = new File(ClassLoader.getSystemClassLoader().getResource("bytenote").getFile());
+				for (File file : UpdateHandler.getConfigFiles(byteNoteDir)) {
+					file.toPath().relativize(byteNoteDir.toPath());
+				}
 				break;
 			default:
 				break;
