@@ -1,11 +1,15 @@
 package bytenote;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Scanner;
 
 import bytenote.note.Note;
 import bytenote.note.editor.NoteEditPanel;
 import bytenote.note.types.NoteTypeManagerPanel;
+import bytenote.notefiles.NoteFileWriter;
+import bytenote.notefiles.bynt.BYNTWriter;
 import bytenote.notefiles.oldio.CFileReader;
 import bytenote.notefiles.oldio.CFileWriter;
 import bytenote.update.UpdateHandler;
@@ -29,8 +33,29 @@ public class CAction implements EventHandler<ActionEvent> {
 			switch (action) {
 			case "saveAction":
 				try {
-					File cnoteFile = new File(ByteNoteMain.filePath);
-					CFileWriter.saveNoteFile(cnoteFile);
+					File noteFile = new File(ByteNoteMain.filePath);
+					if(noteFile.getAbsolutePath().endsWith(".cnote") || !(new Scanner(noteFile).nextLine().startsWith("BYNT"))) {
+						Alert rename = new Alert(AlertType.CONFIRMATION);
+						rename.initOwner(JFXMain.mainStage);
+						rename.initModality(Modality.WINDOW_MODAL);
+						rename.setContentText("You are using an obsolete file type. Would you like to update to the \".bynt\" file type?");
+						ButtonType result = rename.showAndWait().get();
+						if(result == ButtonType.OK) {
+							File newFile = new File(noteFile.getParentFile(), noteFile.getName().replaceAll(".cnote", ".bynt"));
+//							Files.move(inputFile1.toPath(), newFile.toPath());
+							noteFile.renameTo(newFile);
+							CFileReader.getNoteFileReader(newFile).noteFileMain(newFile);
+							BYNTWriter.writeDataToFile(NoteData.getCurrentData(), newFile);
+							rename = new Alert(AlertType.INFORMATION);
+							rename.initOwner(JFXMain.mainStage);
+							rename.initModality(Modality.WINDOW_MODAL);
+							rename.setContentText("\""+noteFile.getName()+"\" has been updated to: \""+newFile.getName()+"\"");
+							rename.show();
+							noteFile = newFile;
+						}
+					}
+					ByteNoteMain.filePath = noteFile.getAbsolutePath();
+					NoteFileWriter.writeToFile(noteFile);
 					ByteNoteMain.isSaved = true;
 					System.out.println("File saved to "+ByteNoteMain.filePath);
 				} catch (Exception e) {
@@ -64,8 +89,6 @@ public class CAction implements EventHandler<ActionEvent> {
 						if(inputFile != null) {
 							ByteNoteMain.filePath = inputFile.getAbsolutePath();
 							try {
-								CFileWriter.makeDefaultNoteFile(inputFile);
-								CFileReader.getNoteFileReader(inputFile).noteFileMain(inputFile);
 								CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
 							} catch (URISyntaxException e) {
 								e.printStackTrace();
@@ -83,29 +106,31 @@ public class CAction implements EventHandler<ActionEvent> {
 					File inputFile1 = null;
 					inputFile1 = JFXMain.openFileView(JFXMain.mainStage, "open");
 					if(inputFile1 != null) {
-						if(inputFile1.getAbsolutePath().endsWith(".cnote")) {
-							/*Alert rename = new Alert(AlertType.CONFIRMATION); TODO
-							rename.initOwner(JFXMain.mainStage); TODO
-							rename.initModality(Modality.WINDOW_MODAL); TODO
-							rename.setContentText("The \".cnote\" file type is obsolete. Would you like to update to the \".bynt\" file type?");
+						if(inputFile1.getAbsolutePath().endsWith(".cnote") || !(new Scanner(inputFile1).nextLine().startsWith("BYNT"))) {
+							Alert rename = new Alert(AlertType.CONFIRMATION);
+							rename.initOwner(JFXMain.mainStage);
+							rename.initModality(Modality.WINDOW_MODAL);
+							rename.setContentText("You are using an obsolete file type. Would you like to update to the \".bynt\" file type?");
 							ButtonType result = rename.showAndWait().get();
 							if(result == ButtonType.OK) {
 								File newFile = new File(inputFile1.getParentFile(), inputFile1.getName().replaceAll(".cnote", ".bynt"));
 //								Files.move(inputFile1.toPath(), newFile.toPath());
 								inputFile1.renameTo(newFile);
+								CFileReader.getNoteFileReader(newFile).noteFileMain(newFile);
+								BYNTWriter.writeDataToFile(NoteData.getCurrentData(), newFile);
 								rename = new Alert(AlertType.INFORMATION);
 								rename.initOwner(JFXMain.mainStage);
 								rename.initModality(Modality.WINDOW_MODAL);
-								rename.setContentText("\""+inputFile1.getName()+"\" has been renamed to: \""+newFile.getName()+"\"");
+								rename.setContentText("\""+inputFile1.getName()+"\" has been updated to: \""+newFile.getName()+"\"");
 								rename.show();
 								inputFile1 = newFile;
-							}*/
+							}
 						}
 						ByteNoteMain.filePath = inputFile1.getAbsolutePath();
 						CFileReader.getNoteFileReader(inputFile1).noteFileMain(inputFile1);
 						CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
 					}
-				} catch (URISyntaxException e) {
+				} catch (URISyntaxException | IOException e) {
 					e.printStackTrace();
 				}
 				break;
@@ -114,11 +139,10 @@ public class CAction implements EventHandler<ActionEvent> {
 				inputFile2 = JFXMain.openFileView(JFXMain.mainStage, "save");
 				try {
 					ByteNoteMain.filePath = inputFile2.getAbsolutePath();
-					CFileWriter.makeDefaultNoteFile(inputFile2);
-					CFileWriter.saveNoteFile(inputFile2);
+					NoteFileWriter.writeToFile(inputFile2);
 					ByteNoteMain.isSaved = true;
 					CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
-				} catch (URISyntaxException e) {
+				} catch (URISyntaxException | IOException e) {
 					e.printStackTrace();
 				} catch (NullPointerException e) {
 //					e.printStackTrace();
