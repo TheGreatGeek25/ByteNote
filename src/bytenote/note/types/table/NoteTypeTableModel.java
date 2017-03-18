@@ -3,12 +3,12 @@ package bytenote.note.types.table;
 import javax.swing.table.AbstractTableModel;
 
 @SuppressWarnings("serial")
-public class CTypeTableModel extends AbstractTableModel {
+public class NoteTypeTableModel extends AbstractTableModel {
 	
 	public Object[][] data;
 	public String[] columnNames;
 	
-	public CTypeTableModel(Object[][] data, String[] columnnames) {
+	public NoteTypeTableModel(Object[][] data, String[] columnnames) {
 		this.data = data;
 		this.columnNames = columnnames;
 	}

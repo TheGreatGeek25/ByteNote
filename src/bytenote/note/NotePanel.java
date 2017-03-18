@@ -2,7 +2,7 @@ package bytenote.note;
 
 import java.util.ArrayList;
 
-import bytenote.CInfoPanel;
+import bytenote.InfoPanel;
 import bytenote.JFXMain;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -48,7 +48,7 @@ public class NotePanel extends GridPane {
 			c.add(cc);
 		}
 		
-		setPrefSize((JFXMain.mainStage.getWidth()*paneToWin)-JFXMain.mainStage.getWidth()/42, Math.max(JFXMain.mainStage.getHeight()-CInfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*Note.cNotePrefHeight));
+		setPrefSize((JFXMain.mainStage.getWidth()*paneToWin)-JFXMain.mainStage.getWidth()/42, Math.max(JFXMain.mainStage.getHeight()-InfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*Note.cNotePrefHeight));
 		setHgap(hvgap);
 		setVgap(hvgap);
 		setBorder( new Border( new BorderStroke(null, BorderStrokeStyle.SOLID, null, new BorderWidths(8) ) ) );
@@ -88,7 +88,7 @@ public class NotePanel extends GridPane {
 				((Note) getChildren().get(i)).c57run();
 			}
 		}
-		setPrefSize((JFXMain.root.getWidth()*paneToWin)-JFXMain.root.getWidth()/42, Math.max(JFXMain.root.getHeight()-CInfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*Note.cNotePrefHeight));
+		setPrefSize((JFXMain.root.getWidth()*paneToWin)-JFXMain.root.getWidth()/42, Math.max(JFXMain.root.getHeight()-InfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*Note.cNotePrefHeight));
 			}
 	
 	public void addNote(Note note) {

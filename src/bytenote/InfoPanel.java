@@ -12,7 +12,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
-public class CInfoPanel extends HBox {
+public class InfoPanel extends HBox {
 	
 	public static final int defaultHeight = 32;
 	
@@ -26,7 +26,7 @@ public class CInfoPanel extends HBox {
 	
 	public NoteEditPanel noteEditor;
 	
-	public CInfoPanel() {
+	public InfoPanel() {
 		super();
 		setPrefSize(JFXMain.mainStage.getWidth(), defaultHeight);
 		setBackground( new Background( new BackgroundFill(Color.web("rgb(0,255,255)"), null, null) ) );
@@ -56,9 +56,9 @@ public class CInfoPanel extends HBox {
 			@Override
 			public void handle(ActionEvent event) {
 				ByteNoteMain.isSaved = false;
-				CInfoPanel.this.noteEditor = new NoteEditPanel(note);
-				JFXMain.showView(JFXMain.mainStage, CInfoPanel.this.noteEditor, "Edit note", 300, 300);
-//				CInfoPanel.this.noteEditor = new CNoteEdit(C57note64Main_OLD.c57main, "Edit note", note);
+				InfoPanel.this.noteEditor = new NoteEditPanel(note);
+				JFXMain.showView(JFXMain.mainStage, InfoPanel.this.noteEditor, "Edit note", 300, 300);
+//				InfoPanel.this.noteEditor = new CNoteEdit(C57note64Main_OLD.c57main, "Edit note", note);
 			}
 		});
 		getChildren().add(editNote);

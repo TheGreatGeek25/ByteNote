@@ -21,7 +21,7 @@ import javafx.stage.WindowEvent;
 
 public class JFXMain extends Application {
 	
-	public static CMainPanel root;
+	public static MainPanel root;
 	
 	public static Stage mainStage;
 	
@@ -46,7 +46,7 @@ public class JFXMain extends Application {
 				}
 			});
 						
-			root = new CMainPanel();
+			root = new MainPanel();
 			
 			Scene scene = new Scene(root, primaryStage.getWidth(), primaryStage.getHeight());
 			primaryStage.setScene(scene);

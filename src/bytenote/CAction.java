@@ -5,7 +5,7 @@ import java.net.URISyntaxException;
 
 import bytenote.note.Note;
 import bytenote.note.editor.NoteEditPanel;
-import bytenote.note.types.CTypeManagerPanel;
+import bytenote.note.types.NoteTypeManagerPanel;
 import bytenote.notefiles.CFileReader;
 import bytenote.notefiles.CFileWriter;
 import bytenote.update.UpdateHandler;
@@ -48,7 +48,7 @@ public class CAction implements EventHandler<ActionEvent> {
 				JFXMain.root.infoPanel.note.delete();
 				break;
 			case "manageTypeAction":
-				CTypeManagerPanel ctmp = new CTypeManagerPanel();
+				NoteTypeManagerPanel ctmp = new NoteTypeManagerPanel();
 				JFXMain.root.controlPanel.typeManager = ctmp;
 				JFXMain.showView(JFXMain.mainStage, ctmp, "Manage types", 300, 300);
 				break;

@@ -2,7 +2,7 @@ package bytenote.note.types.typeeditor;
 
 import bytenote.JFXMain;
 import bytenote.note.types.NoteTypes;
-import bytenote.note.types.CTypeManagerPanel;
+import bytenote.note.types.NoteTypeManagerPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
-public class CTypeEditorPanel extends GridPane {
+public class NoteTypeEditorPanel extends GridPane {
 	
 	public String typeStr;
 	public Color typeColor;
@@ -24,7 +24,7 @@ public class CTypeEditorPanel extends GridPane {
 	public TextField typeStrEdit;
 	public Button doneButton;
 		
-	public CTypeEditorPanel() {
+	public NoteTypeEditorPanel() {
 		super();
 		
 		
@@ -43,7 +43,7 @@ public class CTypeEditorPanel extends GridPane {
 			@Override
 			public void handle(ActionEvent event) {
 				saveType();
-				CTypeEditorPanel.this.getScene().getWindow().hide();
+				NoteTypeEditorPanel.this.getScene().getWindow().hide();
 			}
 
 		});
@@ -72,13 +72,13 @@ public class CTypeEditorPanel extends GridPane {
 			}
 			NoteTypes.typeMap.remove(typeStr);
 		}
-		CTypeManagerPanel manager = JFXMain.root.controlPanel.typeManager;
+		NoteTypeManagerPanel manager = JFXMain.root.controlPanel.typeManager;
 		NoteTypes.addToMap(typeStrEdit.getText(), cp.getValue());
 		manager.types = manager.loadData();
 		manager.mainTable.setItems(manager.types);
 	}
 
-	public CTypeEditorPanel(String type) {
+	public NoteTypeEditorPanel(String type) {
 		this();
 		typeStr = type;
 		typeColor = NoteTypes.typeMap.get(type);

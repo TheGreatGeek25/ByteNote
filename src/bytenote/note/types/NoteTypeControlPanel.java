@@ -2,7 +2,7 @@ package bytenote.note.types;
 
 import bytenote.ByteNoteMain;
 import bytenote.JFXMain;
-import bytenote.note.types.typeeditor.CTypeEditorPanel;
+import bytenote.note.types.typeeditor.NoteTypeEditorPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -10,13 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class CTypeControlPanel extends VBox {
+public class NoteTypeControlPanel extends VBox {
 	
 	public Button deleteButton;
 	public Button addButton;
 	public Button editButton;
 	
-	public CTypeControlPanel() {
+	public NoteTypeControlPanel() {
 		super();
 		
 		setAlignment(Pos.CENTER);
@@ -30,8 +30,8 @@ public class CTypeControlPanel extends VBox {
 			@Override
 			public void handle(ActionEvent event) {
 				ByteNoteMain.isSaved = false;
-				( (CTypeManagerPanel) getParent()).typeEditor = new CTypeEditorPanel();
-				JFXMain.showView((Stage) CTypeControlPanel.this.getScene().getWindow(), ( (CTypeManagerPanel) getParent()).typeEditor, "Edit type", 300, 300);
+				( (NoteTypeManagerPanel) getParent()).typeEditor = new NoteTypeEditorPanel();
+				JFXMain.showView((Stage) NoteTypeControlPanel.this.getScene().getWindow(), ( (NoteTypeManagerPanel) getParent()).typeEditor, "Edit type", 300, 300);
 			}
 		});
 		getChildren().add(addButton);
@@ -42,9 +42,9 @@ public class CTypeControlPanel extends VBox {
 			@Override
 			public void handle(ActionEvent event) {
 				ByteNoteMain.isSaved = false;
-				String type = (String) ( (CTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem().getTypeName();
-				( (CTypeManagerPanel) getParent()).typeEditor = new CTypeEditorPanel(type);
-				JFXMain.showView((Stage) CTypeControlPanel.this.getScene().getWindow(), ( (CTypeManagerPanel) getParent()).typeEditor, "Edit type", 300, 300);
+				String type = (String) ( (NoteTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem().getTypeName();
+				( (NoteTypeManagerPanel) getParent()).typeEditor = new NoteTypeEditorPanel(type);
+				JFXMain.showView((Stage) NoteTypeControlPanel.this.getScene().getWindow(), ( (NoteTypeManagerPanel) getParent()).typeEditor, "Edit type", 300, 300);
 			}
 		});
 		editButton.setDisable(true);
@@ -55,8 +55,8 @@ public class CTypeControlPanel extends VBox {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				C57note64Main.isSaved = false;
-				( (CTypeManagerPanel) getParent()).deleteType(( (CTypeManagerPanel) getParent()).mainTable.getSelectedRow());
-				( (CTypeManagerPanel) getParent()).mainTable.setModel( new CTypeTableModel(( (CTypeManagerPanel) getParent()).data, ( (CTypeManagerPanel) getParent()).columnNames) );
+				( (NoteTypeManagerPanel) getParent()).deleteType(( (NoteTypeManagerPanel) getParent()).mainTable.getSelectedRow());
+				( (NoteTypeManagerPanel) getParent()).mainTable.setModel( new NoteTypeTableModel(( (NoteTypeManagerPanel) getParent()).data, ( (NoteTypeManagerPanel) getParent()).columnNames) );
 			}
 		} );*/
 		deleteButton = new Button("Delete");
@@ -64,8 +64,8 @@ public class CTypeControlPanel extends VBox {
 			@Override
 			public void handle(ActionEvent event) {
 				ByteNoteMain.isSaved = false;
-				( (CTypeManagerPanel) getParent()).deleteType(( (CTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem());
-//				( (CTypeManagerPanel) getParent()).mainTable.setModel( new CTypeTableModel(( (CTypeManagerPanel) getParent()).data, ( (CTypeManagerPanel) getParent()).columnNames) );
+				( (NoteTypeManagerPanel) getParent()).deleteType(( (NoteTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem());
+//				( (NoteTypeManagerPanel) getParent()).mainTable.setModel( new NoteTypeTableModel(( (NoteTypeManagerPanel) getParent()).data, ( (NoteTypeManagerPanel) getParent()).columnNames) );
 			}
 		});
 		deleteButton.setDisable(true);
@@ -76,8 +76,8 @@ public class CTypeControlPanel extends VBox {
 	}
 	
 	public void c57run() {
-//		System.out.println(( (CTypeManagerPanel) getParent()).mainTable.getSelectedRow());
-		if(!( (CTypeManagerPanel) getParent()).mainTable.getSelectionModel().isEmpty() && !( (CTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem().getTypeName().equals("(default)")) {
+//		System.out.println(( (NoteTypeManagerPanel) getParent()).mainTable.getSelectedRow());
+		if(!( (NoteTypeManagerPanel) getParent()).mainTable.getSelectionModel().isEmpty() && !( (NoteTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem().getTypeName().equals("(default)")) {
 			deleteButton.setDisable(false);
 			editButton.setDisable(false);
 		} else {

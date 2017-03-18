@@ -121,7 +121,7 @@ public class NoteEditPanel extends GridPane {
 		
 		
 //		this.parent.dispatchEvent(new WindowEvent(this.parent, WindowEvent.WINDOW_CLOSING));
-//		((CMainPanel) C57note64Main.c57main.getContentPane()).infoPanel.noteEditor = null;
+//		((MainPanel) C57note64Main.c57main.getContentPane()).infoPanel.noteEditor = null;
 	}
 	
 	public void c57run() {

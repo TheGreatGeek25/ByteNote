@@ -1,6 +1,6 @@
 package bytenote;
 
-import bytenote.note.types.CTypeManagerPanel;
+import bytenote.note.types.NoteTypeManagerPanel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -12,7 +12,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
-public class CControlPanel extends HBox {
+public class ControlPanel extends HBox {
 	
 	public MenuBar menuBar;
 	
@@ -25,16 +25,16 @@ public class CControlPanel extends HBox {
 	public Menu settings;
 	public MenuItem checkUpdates;
 	
-	public CTypeManagerPanel typeManager;
+	public NoteTypeManagerPanel typeManager;
 
 	
 
 	
 	
-	public CControlPanel() {
+	public ControlPanel() {
 		super();
 //		setName("ControlPanel");
-		setPrefSize(JFXMain.mainStage.getWidth(), CInfoPanel.defaultHeight);
+		setPrefSize(JFXMain.mainStage.getWidth(), InfoPanel.defaultHeight);
 		setBackground( new Background( new BackgroundFill(Color.web("#00ffff"), null, null) ) );
 		
 		menuBar = new MenuBar();

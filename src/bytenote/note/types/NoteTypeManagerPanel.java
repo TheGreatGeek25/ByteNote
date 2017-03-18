@@ -2,7 +2,7 @@ package bytenote.note.types;
 
 import bytenote.JFXMain;
 import bytenote.note.types.table.CColor;
-import bytenote.note.types.typeeditor.CTypeEditorPanel;
+import bytenote.note.types.typeeditor.NoteTypeEditorPanel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ScrollPane;
@@ -16,19 +16,19 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
-public class CTypeManagerPanel extends BorderPane {
+public class NoteTypeManagerPanel extends BorderPane {
 	
 	public ScrollPane mainScrollPane;
-	public CTypeControlPanel controlPanel;
+	public NoteTypeControlPanel controlPanel;
 	
 	public ObservableList<CColor> types;
 	public TableView<CColor> mainTable = new TableView<>();
 	public TableColumn<CColor, String> typeNameColumn;
 	public TableColumn<CColor, Color> colorColumn;
 	
-	public CTypeEditorPanel typeEditor;
+	public NoteTypeEditorPanel typeEditor;
 
-	public CTypeManagerPanel() {
+	public NoteTypeManagerPanel() {
 		super();
 		
 		types = loadData();
@@ -66,7 +66,7 @@ public class CTypeManagerPanel extends BorderPane {
 //		mainScrollPane.setPreferredSize(new Dimension(cTypeManager.getWidth()-17, cTypeManager.getHeight()) );
 		setCenter(mainScrollPane);
 		
-		controlPanel = new CTypeControlPanel();
+		controlPanel = new NoteTypeControlPanel();
 		controlPanel.setBackground( new Background( new BackgroundFill(Color.RED, null, null) ) );
 		controlPanel.setPrefSize(100, 200); 
 		setRight(controlPanel);
@@ -84,7 +84,7 @@ public class CTypeManagerPanel extends BorderPane {
 			data[i][0] = NoteTypes.typeMap.keySet().toArray()[i];
 			data[i][1] = NoteTypes.typeMap.get(NoteTypes.typeMap.keySet().toArray()[i]);
 		}
-		mainTable.setModel( new CTypeTableModel(data, columnNames) );
+		mainTable.setModel( new NoteTypeTableModel(data, columnNames) );
 	}*/
 	
 	public ObservableList<CColor> loadData() {

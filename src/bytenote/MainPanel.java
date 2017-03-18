@@ -12,7 +12,7 @@ import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 
-public class CMainPanel extends BorderPane {
+public class MainPanel extends BorderPane {
 	
 	public C57runService c57run;
 	
@@ -24,21 +24,21 @@ public class CMainPanel extends BorderPane {
 	public ScrollPane doneScrollPane;
 	
 	
-	public CInfoPanel infoPanel;
-	public CControlPanel controlPanel;
+	public InfoPanel infoPanel;
+	public ControlPanel controlPanel;
 	
-	public CMainPanel() {
+	public MainPanel() {
 		super();
 //		setWidth(JFXMain.mainStage.getWidth()-50);
 //		setHeight(JFXMain.mainStage.getHeight()-50);
 		
 		setVisible(true);
 		
-		controlPanel = new CControlPanel();
+		controlPanel = new ControlPanel();
 		todoPanel = new NotePanel();
 		doingPanel = new NotePanel();
 		donePanel = new NotePanel();
-		infoPanel = new CInfoPanel();
+		infoPanel = new InfoPanel();
 		
 		todoScrollPane = new ScrollPane(todoPanel);
 		todoScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -106,7 +106,7 @@ public class CMainPanel extends BorderPane {
 					Platform.runLater( new Runnable() {
 						@Override
 						public void run() {
-							CMainPanel.this.c57run();
+							MainPanel.this.c57run();
 						}
 					});
 					return null;
