@@ -3,9 +3,9 @@ package bytenote;
 import java.io.File;
 import java.net.URISyntaxException;
 
-import bytenote.notefiles.CFileReader;
-import bytenote.notefiles.CFileWriter;
 import bytenote.notefiles.NoteFileFilter;
+import bytenote.notefiles.oldio.CFileReader;
+import bytenote.notefiles.oldio.CFileWriter;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;

@@ -2,7 +2,7 @@ package bytenote;
 
 import java.io.File;
 
-import bytenote.notefiles.CFileReader;
+import bytenote.notefiles.oldio.CFileReader;
 
 public class ByteNoteMain {
 		

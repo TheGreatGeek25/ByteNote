@@ -5,7 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import bytenote.ByteNoteMain;
-import bytenote.notefiles.CFileReader;
+import bytenote.notefiles.oldio.CFileReader;
 
 public class UpdateChecker {
 	
