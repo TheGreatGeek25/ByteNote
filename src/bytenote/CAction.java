@@ -84,9 +84,9 @@ public class CAction implements EventHandler<ActionEvent> {
 					inputFile1 = JFXMain.openFileView(JFXMain.mainStage, "open");
 					if(inputFile1 != null) {
 						if(inputFile1.getAbsolutePath().endsWith(".cnote")) {
-							Alert rename = new Alert(AlertType.CONFIRMATION);
-							rename.initOwner(JFXMain.mainStage);
-							rename.initModality(Modality.WINDOW_MODAL);
+							/*Alert rename = new Alert(AlertType.CONFIRMATION); TODO
+							rename.initOwner(JFXMain.mainStage); TODO
+							rename.initModality(Modality.WINDOW_MODAL); TODO
 							rename.setContentText("The \".cnote\" file type is obsolete. Would you like to update to the \".bynt\" file type?");
 							ButtonType result = rename.showAndWait().get();
 							if(result == ButtonType.OK) {
@@ -99,7 +99,7 @@ public class CAction implements EventHandler<ActionEvent> {
 								rename.setContentText("\""+inputFile1.getName()+"\" has been renamed to: \""+newFile.getName()+"\"");
 								rename.show();
 								inputFile1 = newFile;
-							}
+							}*/
 						}
 						ByteNoteMain.filePath = inputFile1.getAbsolutePath();
 						CFileReader.getNoteFileReader(inputFile1).noteFileMain(inputFile1);
