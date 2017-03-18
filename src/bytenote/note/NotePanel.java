@@ -1,6 +1,8 @@
 package bytenote.note;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 import bytenote.InfoPanel;
 import bytenote.JFXMain;
@@ -85,7 +87,11 @@ public class NotePanel extends GridPane {
 		refreshLayout();
 		for (int i = 0; i < getChildren().size(); i++) {
 			if(getChildren().get(i) instanceof Note) {
-				((Note) getChildren().get(i)).c57run();
+				if(notes.contains((Note) getChildren().get(i))) {
+					((Note) getChildren().get(i)).c57run();
+				} else {
+					((Note) getChildren().get(i)).delete();
+				}
 			}
 		}
 		setPrefSize((JFXMain.root.getWidth()*paneToWin)-JFXMain.root.getWidth()/42, Math.max(JFXMain.root.getHeight()-InfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*Note.cNotePrefHeight));
@@ -108,6 +114,13 @@ public class NotePanel extends GridPane {
 		
 	}
 
+	public void addNotes(Collection<Note> newNotes) {
+		Iterator<Note> notesI = newNotes.iterator();
+		while (notesI.hasNext()) {
+			addNote(notesI.next());
+		}
+	}
+	
 	public void remove(Note note) {
 		this.getChildren().remove(note);
 	}
