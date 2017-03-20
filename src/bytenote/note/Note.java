@@ -35,7 +35,8 @@ public class Note extends Label implements Serializable {
 //		setTextFill(Color.BLACK);
 //		setOpaque(true);
 //		addMouseListener( new CMouseListener() );
-		addEventFilter(MouseEvent.MOUSE_CLICKED, new CMouseListener() );
+//		addEventFilter(MouseEvent.MOUSE_CLICKED, new CMouseListener() );
+		setOnMousePressed( new CMouseListener() );
 		setWrapText(true);
 	}
 	
@@ -45,14 +46,16 @@ public class Note extends Label implements Serializable {
 	}
 	
 	public void c57run() {
+		if(getOnMousePressed() == null) {
+			setOnMousePressed( new CMouseListener() );
+		}
 		Parent parent = getParent();
 		panel = (NotePanel) parent;
 		for (int i = 0; i < parent.getChildrenUnmodifiable().size(); i++) {
-			if(parent.getChildrenUnmodifiable().get(i).equals(this)) {
+			if(parent.getChildrenUnmodifiable().get(i) == this ) {
 				this.priority = i;
 			}
 		}
-		
 		setText(noteText);
 		setBackground( new Background( new BackgroundFill(NoteTypes.typeMap.get(type), null, null/*new Insets(30)*/) ) );
 		setSelectedBorder(getSelected());

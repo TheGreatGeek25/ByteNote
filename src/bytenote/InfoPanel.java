@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
@@ -19,6 +20,8 @@ public class InfoPanel extends HBox {
 	public Label noteText;
 	public Label noteType;
 	public Label notePriority;
+	private String noteTextStr;
+	private String noteTypeStr;
 	
 	public Note note;
 	
@@ -32,12 +35,16 @@ public class InfoPanel extends HBox {
 		setBackground( new Background( new BackgroundFill(Color.web("rgb(0,255,255)"), null, null) ) );
 		
 		noteText = new Label("Note text: No note selected");
+		noteTextStr = noteText.getText();
+		noteText.setTooltip( new Tooltip(noteTextStr) );
 		getChildren().add(noteText);
 		
 		notePriority = new Label("Note priority: No note selected");
 		getChildren().add(notePriority);
 		
 		noteType = new Label("Note type: No note selected");
+		noteTypeStr = noteType.getText();
+		noteType.setTooltip( new Tooltip(noteTypeStr) );
 		getChildren().add(noteType);
 		
 		setSpacing(20);
@@ -94,7 +101,15 @@ public class InfoPanel extends HBox {
 				noteEditor = null;
 			}
 		}
-		
+		if(!noteTextStr.equals(noteText.getText())) {
+			noteTextStr = noteText.getText();
+			noteText.setTooltip( new Tooltip(noteTextStr) );
+		}
+		if(!noteTypeStr.equals(noteType.getText())) {
+			noteTypeStr = noteType.getText();
+			noteType.setTooltip( new Tooltip(noteTypeStr) );
+		}
+
 	}
 	
 }

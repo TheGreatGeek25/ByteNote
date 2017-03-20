@@ -95,7 +95,7 @@ public class NotePanel extends GridPane {
 			}
 		}
 		setPrefSize((JFXMain.root.getWidth()*paneToWin)-JFXMain.root.getWidth()/42, Math.max(JFXMain.root.getHeight()-InfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*Note.cNotePrefHeight));
-			}
+	}
 	
 	public void addNote(Note note) {
 		if(getChildren().size() >= note.priority && note.priority >= 0) {
