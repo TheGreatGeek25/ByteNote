@@ -1,5 +1,7 @@
 package bytenote.note;
 
+import java.io.Serializable;
+
 import bytenote.JFXMain;
 import bytenote.note.types.NoteTypes;
 import javafx.event.EventHandler;
@@ -13,14 +15,15 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 
-public class Note extends Label {
-	
+public class Note extends Label implements Serializable {
+	private static final long serialVersionUID = -5075470174637277651L;
+
 	public static int cNotePrefHeight = 100;
 	
 	public int priority;
 	public String noteText;
 	public String type;
-	public NotePanel panel;
+	public transient NotePanel panel;
 	
 	public Note(int priority, String text, String type) {
 		super();

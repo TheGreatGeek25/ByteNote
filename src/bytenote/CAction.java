@@ -3,22 +3,17 @@ package bytenote;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Scanner;
 
 import bytenote.note.Note;
 import bytenote.note.editor.NoteEditPanel;
 import bytenote.note.types.NoteTypeManagerPanel;
+import bytenote.notefiles.NoteFileFilter;
+import bytenote.notefiles.NoteFileReader;
 import bytenote.notefiles.NoteFileWriter;
-import bytenote.notefiles.bynt.BYNTWriter;
-import bytenote.notefiles.oldio.CFileReader;
 import bytenote.notefiles.oldio.CFileWriter;
 import bytenote.update.UpdateHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.stage.Modality;
 
 public class CAction implements EventHandler<ActionEvent> {
 		
@@ -34,26 +29,7 @@ public class CAction implements EventHandler<ActionEvent> {
 			case "saveAction":
 				try {
 					File noteFile = new File(ByteNoteMain.filePath);
-					if(noteFile.getAbsolutePath().endsWith(".cnote") || !(new Scanner(noteFile).nextLine().startsWith("BYNT"))) {
-						Alert rename = new Alert(AlertType.CONFIRMATION);
-						rename.initOwner(JFXMain.mainStage);
-						rename.initModality(Modality.WINDOW_MODAL);
-						rename.setContentText("You are using an obsolete file type. Would you like to update to the \".bynt\" file type?");
-						ButtonType result = rename.showAndWait().get();
-						if(result == ButtonType.OK) {
-							File newFile = new File(noteFile.getParentFile(), noteFile.getName().replaceAll(".cnote", ".bynt"));
-//							Files.move(inputFile1.toPath(), newFile.toPath());
-							noteFile.renameTo(newFile);
-							CFileReader.getNoteFileReader(newFile).noteFileMain(newFile);
-							BYNTWriter.writeDataToFile(NoteData.getCurrentData(), newFile);
-							rename = new Alert(AlertType.INFORMATION);
-							rename.initOwner(JFXMain.mainStage);
-							rename.initModality(Modality.WINDOW_MODAL);
-							rename.setContentText("\""+noteFile.getName()+"\" has been updated to: \""+newFile.getName()+"\"");
-							rename.show();
-							noteFile = newFile;
-						}
-					}
+					noteFile = NoteFileFilter.requestFormatUpdate(noteFile);
 					ByteNoteMain.filePath = noteFile.getAbsolutePath();
 					NoteFileWriter.writeToFile(noteFile);
 					ByteNoteMain.isSaved = true;
@@ -81,24 +57,20 @@ public class CAction implements EventHandler<ActionEvent> {
 				JFXMain.root.infoPanel.setNote(null);
 				break;
 			case "newFileAction":
-				Thread t = new Thread( new Runnable() {
-					@Override
-					public void run() {
-						File inputFile = null;
-						inputFile = JFXMain.openFileView(JFXMain.mainStage, "save");
-						if(inputFile != null) {
-							ByteNoteMain.filePath = inputFile.getAbsolutePath();
-							try {
-								CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
-							} catch (URISyntaxException e) {
-								e.printStackTrace();
-							}
-						}
+				File inputFile = null;
+				inputFile = JFXMain.openFileView(JFXMain.mainStage, "save");
+				if(inputFile != null) {
+//					try {
+//								inputFile = NoteFileFilter.requestFormatUpdate(inputFile);
+//					} catch (IOException e1) {}
+					ByteNoteMain.filePath = inputFile.getAbsolutePath();
+					try {
+						NoteFileReader.loadDataFromFile(inputFile, NoteData.getBlankNoteData());
+						CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
+					} catch (URISyntaxException | ClassNotFoundException | IOException e) {
+						e.printStackTrace();
 					}
-				});
-				t.setDaemon(true);
-				t.start();
-				
+				}
 				
 				break;
 			case "openAction":
@@ -106,31 +78,12 @@ public class CAction implements EventHandler<ActionEvent> {
 					File inputFile1 = null;
 					inputFile1 = JFXMain.openFileView(JFXMain.mainStage, "open");
 					if(inputFile1 != null) {
-						if(inputFile1.getAbsolutePath().endsWith(".cnote") || !(new Scanner(inputFile1).nextLine().startsWith("BYNT"))) {
-							Alert rename = new Alert(AlertType.CONFIRMATION);
-							rename.initOwner(JFXMain.mainStage);
-							rename.initModality(Modality.WINDOW_MODAL);
-							rename.setContentText("You are using an obsolete file type. Would you like to update to the \".bynt\" file type?");
-							ButtonType result = rename.showAndWait().get();
-							if(result == ButtonType.OK) {
-								File newFile = new File(inputFile1.getParentFile(), inputFile1.getName().replaceAll(".cnote", ".bynt"));
-//								Files.move(inputFile1.toPath(), newFile.toPath());
-								inputFile1.renameTo(newFile);
-								CFileReader.getNoteFileReader(newFile).noteFileMain(newFile);
-								BYNTWriter.writeDataToFile(NoteData.getCurrentData(), newFile);
-								rename = new Alert(AlertType.INFORMATION);
-								rename.initOwner(JFXMain.mainStage);
-								rename.initModality(Modality.WINDOW_MODAL);
-								rename.setContentText("\""+inputFile1.getName()+"\" has been updated to: \""+newFile.getName()+"\"");
-								rename.show();
-								inputFile1 = newFile;
-							}
-						}
+						inputFile1 = NoteFileFilter.requestFormatUpdate(inputFile1);
 						ByteNoteMain.filePath = inputFile1.getAbsolutePath();
-						CFileReader.getNoteFileReader(inputFile1).noteFileMain(inputFile1);
+						NoteFileReader.loadDataFromFile(inputFile1, NoteData.getBlankNoteData());
 						CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
 					}
-				} catch (URISyntaxException | IOException e) {
+				} catch (URISyntaxException | IOException | ClassNotFoundException e) {
 					e.printStackTrace();
 				}
 				break;
@@ -138,6 +91,7 @@ public class CAction implements EventHandler<ActionEvent> {
 				File inputFile2 = null;
 				inputFile2 = JFXMain.openFileView(JFXMain.mainStage, "save");
 				try {
+//					inputFile2 = NoteFileFilter.requestFormatUpdate(inputFile2);
 					ByteNoteMain.filePath = inputFile2.getAbsolutePath();
 					NoteFileWriter.writeToFile(inputFile2);
 					ByteNoteMain.isSaved = true;

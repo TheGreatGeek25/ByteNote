@@ -13,15 +13,21 @@ public class NoteFileWriter {
 		if(file.getName().endsWith(".bynt")) {
 			BYNTWriter.writeDataToFile(NoteData.getCurrentData(), file);
 		} else {
-			Scanner scan = new Scanner(file);
-			String line = scan.nextLine();
-			if(line.startsWith("BYNT")) {
-				BYNTWriter.writeDataToFile(NoteData.getCurrentData(), file);
+			if(file.exists()) {
+				Scanner scan = new Scanner(file);
+				scan.useDelimiter("\n");
+				String line = scan.next();
+				if(line.startsWith("BYNT")) {
+					BYNTWriter.writeDataToFile(NoteData.getCurrentData(), file);
+				} else {
+					CFileWriter.makeDefaultNoteFile(file);
+					CFileWriter.saveNoteFile(file);
+				}
+				scan.close();
 			} else {
 				CFileWriter.makeDefaultNoteFile(file);
 				CFileWriter.saveNoteFile(file);
 			}
-			scan.close();
 		}
 	}
 }

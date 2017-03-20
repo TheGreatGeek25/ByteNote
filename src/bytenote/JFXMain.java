@@ -1,10 +1,11 @@
 package bytenote;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 
 import bytenote.notefiles.NoteFileFilter;
-import bytenote.notefiles.oldio.CFileReader;
+import bytenote.notefiles.NoteFileReader;
 import bytenote.notefiles.oldio.CFileWriter;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -54,20 +55,20 @@ public class JFXMain extends Application {
 			
 			primaryStage.show();
 			
-			File cnotefile = new File(ByteNoteMain.filePath);
-			while(!ByteNoteMain.isFileValid(cnotefile)) {
-				System.err.println("File at \""+cnotefile.getAbsolutePath()+"\" is invalid.");
-				cnotefile = openFileView(mainStage, "open");
-				ByteNoteMain.filePath = cnotefile.getAbsolutePath();
+			File notefile = new File(ByteNoteMain.filePath);
+			while(!ByteNoteMain.isFileValid(notefile)) {
+				System.err.println("File at \""+notefile.getAbsolutePath()+"\" is invalid.");
+				notefile = openFileView(mainStage, "open");
+				notefile = NoteFileFilter.requestFormatUpdate(notefile);
 			}
-			CFileWriter.makeDefaultNoteFile(cnotefile);
-			CFileReader.getNoteFileReader(cnotefile).noteFileMain(cnotefile);
+			ByteNoteMain.filePath = notefile.getAbsolutePath();
+			NoteFileReader.loadDataFromFile(notefile, NoteData.getBlankNoteData());
 			CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
 			
 			root.c57run = root.new C57runService();
 			root.c57run.setRestartOnFailure(true);	
 			root.c57run.start();
-		} catch(URISyntaxException e) {
+		} catch(URISyntaxException | IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 

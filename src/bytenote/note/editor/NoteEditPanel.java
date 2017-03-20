@@ -31,6 +31,7 @@ public class NoteEditPanel extends GridPane {
 	public Label prioritySpinnerLabel;
 	
 	public Note editNote;
+	private String notePanel;
 	
 	public Button doneButton;
 		
@@ -65,10 +66,13 @@ public class NoteEditPanel extends GridPane {
 		notePanelBox.setEditable(false);
 		if(this.editNote.panel == JFXMain.root.todoPanel) {
 			notePanelBox.setValue(panels.get(0));
+			notePanel = (String) panels.get(0);
 		} else if(this.editNote.panel == JFXMain.root.doingPanel) {
 			notePanelBox.setValue(panels.get(1));
+			notePanel = (String) panels.get(1);
 		} else if(this.editNote.panel == JFXMain.root.donePanel) {
 			notePanelBox.setValue(panels.get(2));
+			notePanel = (String) panels.get(2);
 		}
 		add(notePanelBox, 0, 6);
 		
@@ -124,24 +128,31 @@ public class NoteEditPanel extends GridPane {
 //		((MainPanel) C57note64Main.c57main.getContentPane()).infoPanel.noteEditor = null;
 	}
 	
+	
 	public void c57run() {
-		switch ((String)notePanelBox.getValue()) {
-		case "To do":
-			getChildren().remove(notePrioritySpinner);
-			notePrioritySpinner = new Spinner<>(0, JFXMain.root.todoPanel.notes.size(), Math.min(this.editNote.priority, JFXMain.root.todoPanel.notes.size()));
-			add(notePrioritySpinner, 0, 8);
-			break;
-		case "Doing":
-			getChildren().remove(notePrioritySpinner);
-			notePrioritySpinner = new Spinner<>(0, JFXMain.root.doingPanel.notes.size(), Math.min(this.editNote.priority, JFXMain.root.doingPanel.notes.size()));
-			add(notePrioritySpinner, 0, 8);
-			break;
-		case "Done":
-			getChildren().remove(notePrioritySpinner);
-			notePrioritySpinner = new Spinner<>(0, JFXMain.root.donePanel.notes.size(), Math.min(this.editNote.priority, JFXMain.root.donePanel.notes.size()));
-			add(notePrioritySpinner, 0, 8);
-			break;
+		if(!notePanel.equals((String)notePanelBox.getValue())) {
+			switch ((String)notePanelBox.getValue()) {
+			case "To do":
+				getChildren().remove(notePrioritySpinner);
+				notePrioritySpinner = new Spinner<>(0, JFXMain.root.todoPanel.notes.size(), Math.min(this.editNote.priority, JFXMain.root.todoPanel.notes.size()));
+				add(notePrioritySpinner, 0, 8);
+				notePanel = "To do";
+				break;
+			case "Doing":
+				getChildren().remove(notePrioritySpinner);
+				notePrioritySpinner = new Spinner<>(0, JFXMain.root.doingPanel.notes.size(), Math.min(this.editNote.priority, JFXMain.root.doingPanel.notes.size()));
+				add(notePrioritySpinner, 0, 8);
+				notePanel = "Doing";
+				break;
+			case "Done":
+				getChildren().remove(notePrioritySpinner);
+				notePrioritySpinner = new Spinner<>(0, JFXMain.root.donePanel.notes.size(), Math.min(this.editNote.priority, JFXMain.root.donePanel.notes.size()));
+				add(notePrioritySpinner, 0, 8);
+				notePanel = "Done";
+				break;
+			}
 		}
+		
 	}
 	
 }
