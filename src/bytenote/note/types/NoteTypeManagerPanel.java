@@ -9,6 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -34,6 +35,7 @@ public class NoteTypeManagerPanel extends BorderPane {
 		types = loadData();
 //		mainTable.setPreferredSize(new Dimension(cTypeManager.getWidth()-17, cTypeManager.getHeight()) );
 		mainTable.setEditable(false);
+		mainTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		typeNameColumn = new TableColumn<>("Type Name");
 		typeNameColumn.setCellValueFactory( new PropertyValueFactory<>("typeName"));
 		mainTable.getColumns().add(typeNameColumn);
@@ -49,6 +51,11 @@ public class NoteTypeManagerPanel extends BorderPane {
 						super.updateItem(item, empty);
 						setText(null);
 						setBackground( new Background( new BackgroundFill(item, null, null) ) );
+						if(item != null) {
+							setTooltip( new Tooltip("RGB: "+(int) Math.floor(item.getRed()*255)+", "+(int) Math.floor(item.getGreen()*255)+", "+(int) Math.floor(item.getBlue()*255)+"\n"
+													+ "HSB: "+item.getHue()+", "+item.getSaturation()+", "+item.getBrightness()+"\n"
+													+ "web: "+item.toString()) );
+						}
 					}
 				};
 			}
@@ -113,11 +120,6 @@ public class NoteTypeManagerPanel extends BorderPane {
 				JFXMain.root.donePanel.notes.get(i).type = "(default)";
 			}
 		}
-		/*ArrayList<Object[]> asList = new ArrayList<Object[]>(Arrays.asList(data));
-		asList.remove(row);
-		Object[][] newData = new Object[asList.size()][data[0].length];
-		asList.toArray(newData);
-		data = newData.clone();*/
 		types.remove(type);
 		
 	}
