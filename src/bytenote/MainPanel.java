@@ -86,10 +86,11 @@ public class MainPanel extends BorderPane {
 		donePanel.c57run();
 		infoPanel.c57run();
 		
-		if(ByteNoteMain.isSaved) {
+		if(ByteNoteMain.savedData != null && ByteNoteMain.savedData.isEqual(NoteData.getCurrentData())) {
+			ByteNoteMain.isSaved = true;
 			JFXMain.mainStage.setTitle(ByteNoteMain.name+"   "+new File(ByteNoteMain.filePath).getAbsolutePath());
 		} else {
-//			setTitle("C57note64 *UNSAVED*");
+			ByteNoteMain.isSaved = false;
 			JFXMain.mainStage.setTitle(ByteNoteMain.name+"   *"+new File(ByteNoteMain.filePath).getAbsolutePath()+"*");
 		}
 		

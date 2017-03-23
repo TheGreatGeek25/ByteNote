@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import bytenote.ByteNoteMain;
 import bytenote.JFXMain;
+import bytenote.NoteData;
 import bytenote.note.Note;
 import bytenote.note.types.NoteTypes;
 
@@ -46,6 +47,10 @@ public class CFileWriter {
 		}
 	}
 	
+	/**
+	 * @param saveFile
+	 * @deprecated Use {@link #saveNoteFile(File, NoteData)} instead.
+	 */
 	public static void saveNoteFile(File saveFile) {
 		String writeString = ByteNoteMain.syntaxVersion+"\n"
 				+ "notes\n"
@@ -120,6 +125,14 @@ public class CFileWriter {
 			e.printStackTrace();
 		}
 		
+	}
+
+	public static void saveNoteFile(File file, NoteData data) {
+		try {
+			Files.write(Paths.get(file.getAbsolutePath()), data.toString().getBytes(), StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

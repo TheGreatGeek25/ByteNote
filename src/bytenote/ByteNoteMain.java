@@ -19,6 +19,7 @@ public class ByteNoteMain {
 	public static final double prefWidth = 700;
 	public static final double prefHeight = 700;
 	
+	public static NoteData savedData;
 	
 	public static String filePath;
 	

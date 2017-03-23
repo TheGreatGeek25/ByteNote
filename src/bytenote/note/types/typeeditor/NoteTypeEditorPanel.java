@@ -5,6 +5,8 @@ import bytenote.note.types.NoteTypes;
 import bytenote.note.types.NoteTypeManagerPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -26,17 +28,22 @@ public class NoteTypeEditorPanel extends GridPane {
 		
 	public NoteTypeEditorPanel() {
 		super();
+		setAlignment(Pos.CENTER);
+		setVgap(42);
 		
 		
 		typeStr = "Enter type name here";
 		typeColor = Color.BLUE;
 		
-		
-		typeStrEdit = new TextField(typeStr);
+		typeStrEdit = new TextField();
+		typeStrEdit.setPromptText(typeStr);
+		typeStrEdit.focusTraversableProperty().set(false);
 		add(typeStrEdit, 0, 0);
+		setHalignment(typeStrEdit, HPos.CENTER);
 		
 		cp = new ColorPicker(typeColor);
-		add(cp, 2, 0);
+		add(cp, 0, 1);
+		setHalignment(cp, HPos.CENTER);
 		
 		doneButton = new Button("Done");
 		doneButton.setOnAction( new EventHandler<ActionEvent>() {
@@ -47,7 +54,8 @@ public class NoteTypeEditorPanel extends GridPane {
 			}
 
 		});
-		add(doneButton, 1, 1);
+		add(doneButton, 0, 2);
+		setHalignment(doneButton, HPos.CENTER);
 		
 		setVisible(true);
 	}

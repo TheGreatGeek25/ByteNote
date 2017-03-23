@@ -62,7 +62,6 @@ public class InfoPanel extends HBox {
 		editNote.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				ByteNoteMain.isSaved = false;
 				InfoPanel.this.noteEditor = new NoteEditPanel(note);
 				JFXMain.showView(JFXMain.mainStage, InfoPanel.this.noteEditor, "Edit note", 300, 300);
 //				InfoPanel.this.noteEditor = new CNoteEdit(C57note64Main_OLD.c57main, "Edit note", note);

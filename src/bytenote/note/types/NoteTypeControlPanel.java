@@ -1,6 +1,5 @@
 package bytenote.note.types;
 
-import bytenote.ByteNoteMain;
 import bytenote.JFXMain;
 import bytenote.note.types.typeeditor.NoteTypeEditorPanel;
 import javafx.event.ActionEvent;
@@ -29,7 +28,6 @@ public class NoteTypeControlPanel extends VBox {
 		addButton.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				ByteNoteMain.isSaved = false;
 				( (NoteTypeManagerPanel) getParent()).typeEditor = new NoteTypeEditorPanel();
 				JFXMain.showView((Stage) NoteTypeControlPanel.this.getScene().getWindow(), ( (NoteTypeManagerPanel) getParent()).typeEditor, "Edit type", 300, 300);
 			}
@@ -41,7 +39,6 @@ public class NoteTypeControlPanel extends VBox {
 		editButton.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				ByteNoteMain.isSaved = false;
 				String type = (String) ( (NoteTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem().getTypeName();
 				( (NoteTypeManagerPanel) getParent()).typeEditor = new NoteTypeEditorPanel(type);
 				JFXMain.showView((Stage) NoteTypeControlPanel.this.getScene().getWindow(), ( (NoteTypeManagerPanel) getParent()).typeEditor, "Edit type", 300, 300);
@@ -63,7 +60,6 @@ public class NoteTypeControlPanel extends VBox {
 		deleteButton.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				ByteNoteMain.isSaved = false;
 				( (NoteTypeManagerPanel) getParent()).deleteType(( (NoteTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem());
 //				( (NoteTypeManagerPanel) getParent()).mainTable.setModel( new NoteTypeTableModel(( (NoteTypeManagerPanel) getParent()).data, ( (NoteTypeManagerPanel) getParent()).columnNames) );
 			}

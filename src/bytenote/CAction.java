@@ -31,19 +31,18 @@ public class CAction implements EventHandler<ActionEvent> {
 					File noteFile = new File(ByteNoteMain.filePath);
 					noteFile = NoteFileFilter.requestFormatUpdate(noteFile);
 					ByteNoteMain.filePath = noteFile.getAbsolutePath();
+					ByteNoteMain.savedData = NoteData.getCurrentData();
 					NoteFileWriter.writeToFile(noteFile);
-					ByteNoteMain.isSaved = true;
 					System.out.println("File saved to "+ByteNoteMain.filePath);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				break;
 			case "newNoteAction":
-				ByteNoteMain.isSaved = false;
 				NoteEditPanel cnep = new NoteEditPanel( new Note(0, "Note Text", "(default)", JFXMain.root.todoPanel) );
 				JFXMain.root.infoPanel.noteEditor = cnep;
 //				C57View.showView(JFXMain.mainStage, new BorderPane(new CustomColorDialog(JFXMain.mainStage)), "Hello", 500, 500);
-				JFXMain.showView(JFXMain.mainStage, cnep, "testing", 300, 300);
+				JFXMain.showView(JFXMain.mainStage, cnep, "New Note", 300, 300);
 				break;
 			case "deleteNoteAction":
 				JFXMain.root.infoPanel.note.delete();
@@ -93,8 +92,8 @@ public class CAction implements EventHandler<ActionEvent> {
 				try {
 //					inputFile2 = NoteFileFilter.requestFormatUpdate(inputFile2);
 					ByteNoteMain.filePath = inputFile2.getAbsolutePath();
+					ByteNoteMain.savedData = NoteData.getCurrentData();
 					NoteFileWriter.writeToFile(inputFile2);
-					ByteNoteMain.isSaved = true;
 					CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
 				} catch (URISyntaxException | IOException e) {
 					e.printStackTrace();

@@ -10,7 +10,7 @@ import bytenote.notefiles.oldio.CFileReader;
 import bytenote.notefiles.oldio.CFileWriter;
 
 public class NoteFileReader {
-	public static <D extends NoteData> void loadDataFromFile(File file, D loadOnFail) throws ClassNotFoundException, IOException {
+	public static void loadDataFromFile(File file, NoteData loadOnFail) throws ClassNotFoundException, IOException {
 		if(file.getName().endsWith(".bynt")) {
 			BYNTReader.readBYNTFile(file, loadOnFail);
 		} else {
