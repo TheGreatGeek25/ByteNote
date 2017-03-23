@@ -64,7 +64,7 @@ public class JFXMain extends Application {
 			ByteNoteMain.filePath = notefile.getAbsolutePath();
 			NoteFileReader.loadDataFromFile(notefile, NoteData.getBlankNoteData());
 			ByteNoteMain.savedData = NoteData.getCurrentData();
-			CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
+			CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toExternalForm()) );
 			
 			root.c57run = root.new C57runService();
 			root.c57run.setRestartOnFailure(true);	

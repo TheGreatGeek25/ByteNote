@@ -14,8 +14,8 @@
 
 
 
-	<path id="${ant.project.name}.classpath">
-		<pathelement location="${build.bin}"/>
+	<path id="ByteNote.classpath">
+		<pathelement location="${build.bin}/"/>
 	</path>
 	
 	<target depends="buildJar" name="default">
@@ -45,7 +45,7 @@
 		<echo message="${ant.project.name}: ${ant.file}"/>
 		<javac debug="true" debuglevel="${debuglevel}" destdir="${build.bin}" includeantruntime="false" source="${source}" target="${target}">
 			<src path="${build.src}"/>
-		    <classpath refid="${ant.project.name}.classpath"/>
+		    <classpath refid="ByteNote.classpath"/>
 		</javac>
 	</target>
 	
