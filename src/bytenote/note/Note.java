@@ -45,6 +45,14 @@ public class Note extends Label implements Serializable {
 		this.panel = panel;
 	}
 	
+	public Note copy(boolean includePanel) {
+		if(includePanel) {
+			return new Note(priority, noteText, type, panel);
+		} else {
+			return new Note(priority, noteText, type);
+		}
+	}
+	
 	public void c57run() {
 		if(getOnMousePressed() == null) {
 			setOnMousePressed( new CMouseListener() );

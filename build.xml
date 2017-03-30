@@ -18,6 +18,10 @@
 		<pathelement location="${build.bin}/"/>
 	</path>
 	
+	<target depends="buildJar" name="runJar">
+		<java jar="${build.jar.dir}/${build.jar.name}" fork="true" />
+	</target>
+	
 	<target depends="buildJar" name="default">
 		
 	</target>

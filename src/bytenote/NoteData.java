@@ -1,17 +1,18 @@
 package bytenote;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+
 import bytenote.note.Note;
 import bytenote.note.types.NoteTypes;
 import javafx.scene.paint.Color;
 
 public abstract class NoteData implements Serializable {
 	private static final long serialVersionUID = 287788144153840368L;
-
+	
 	public static NoteData getCurrentData() {
 		return new V1_0(JFXMain.root.todoPanel.notes, JFXMain.root.doingPanel.notes, JFXMain.root.donePanel.notes, NoteTypes.typeMap);
 	}
@@ -24,21 +25,22 @@ public abstract class NoteData implements Serializable {
 	public abstract String toOldFormat();
 	public abstract boolean isEqual(NoteData data);
 	
-	public static class V1_0  extends NoteData {
+	public final static class V1_0  extends NoteData {
 		private static final long serialVersionUID = 2831267637881320671L;
-		protected ArrayList<Note> todoNotes = new ArrayList<>();
-		protected ArrayList<Note> doingNotes = new ArrayList<>();
-		protected ArrayList<Note> doneNotes = new ArrayList<>();
-		protected HashMap<String, int[]> noteTypes = new HashMap<>();
+		private ArrayList<Note> todoNotes = new ArrayList<>();
+		private ArrayList<Note> doingNotes = new ArrayList<>();
+		private ArrayList<Note> doneNotes = new ArrayList<>();
+		private HashMap<String, int[]> noteTypes = new HashMap<>();
 		
 		V1_0() {
 			
 		}
 		
+		@SuppressWarnings("unchecked")
 		V1_0(ArrayList<Note> todoNotes, ArrayList<Note> doingNotes, ArrayList<Note> doneNotes, HashMap<String, Color> noteTypes) {
-			this.todoNotes = todoNotes;
-			this.doingNotes = doingNotes;
-			this.doneNotes = doneNotes;
+			this.todoNotes = (ArrayList<Note>) todoNotes.clone();
+			this.doingNotes = (ArrayList<Note>) doingNotes.clone();
+			this.doneNotes = (ArrayList<Note>) doneNotes.clone();
 			for(String s:noteTypes.keySet()) {
 				this.noteTypes.put(s, new int[] {(int) noteTypes.get(s).getRed(), (int) noteTypes.get(s).getGreen(), (int) noteTypes.get(s).getBlue()});
 			}
@@ -123,72 +125,54 @@ public abstract class NoteData implements Serializable {
 
 		@Override
 		public boolean isEqual(NoteData data) {
-			try {
-				return isEqual(this, data);
-			} catch (IllegalArgumentException | IllegalAccessException e) {
-//				e.printStackTrace();
+			if(!this.getClass().equals(data.getClass())) {
 				return false;
 			}
-		}
-		
-		
-	}
-	
-	public static <T> boolean isEqual(T a, T b) throws IllegalArgumentException, IllegalAccessException {
-		if(!a.getClass().equals(b.getClass())) {
-			return false;
-		}
-		if(a.equals(b)) {
+			V1_0 dataV1_0 = (V1_0) data;
+			if(!(this.getTodoNotes().equals(dataV1_0.getTodoNotes()) &&
+					this.getDoingNotes().equals(dataV1_0.getDoingNotes()) &&
+					this.getDoneNotes().equals(dataV1_0.getDoneNotes()) &&
+					this.getNoteTypes().keySet().equals(dataV1_0.getNoteTypes().keySet()))) {
+				return false;
+			}
+			Collection<int[]> thisTypes = this.getNoteTypes().values();
+			Collection<int[]> dataTypes = dataV1_0.getNoteTypes().values();
+			if(thisTypes.size() != dataTypes.size()) {
+				return false;
+			}
+			Iterator<int[]> thisIt = thisTypes.iterator();
+			Iterator<int[]> dataIt = dataTypes.iterator();
+			while(thisIt.hasNext()) {
+				int[] thisArray = thisIt.next();
+				int[] dataArray = dataIt.next();
+				if(thisArray.length == dataArray.length) {
+					for (int i = 0; i < thisArray.length; i++) {
+						if(thisArray[i] != dataArray[i]) {
+							return false;
+						}
+					}
+				}
+			}
 			return true;
 		}
-		boolean out = true;
-		ArrayList<Field> fields = getAllFields(a.getClass());
-		for(Field field: fields) {
-			field.setAccessible(true);
-			if(field.getType().isPrimitive()) {
-				switch(field.getType().getName()) {
-					case "boolean":
-						out = out && field.getBoolean(a) == field.getBoolean(b);
-						break;
-					case "byte":
-						out = out && field.getByte(a) == field.getByte(b);
-						break;
-					case "short":
-						out = out && field.getShort(a) == field.getShort(b);
-						break;
-					case "int":
-						out = out && field.getInt(a) == field.getInt(b);
-						break;
-					case "long":
-						out = out && field.getLong(a) == field.getLong(b);
-						break;
-					case "float":
-						out = out && field.getFloat(a) == field.getFloat(b);
-						break;
-					case "double":
-						out = out && field.getDouble(a) == field.getDouble(b);
-						break;
-					case "char":
-						out = out && field.getChar(a) == field.getChar(b);
-						break;
-				}
-			} else {
-				out = out && isEqual(field.get(a), field.get(b));
-			}
+		
+		public ArrayList<Note> getTodoNotes() {
+			return todoNotes;
 		}
-		return out;
+		
+		public ArrayList<Note> getDoingNotes() {
+			return doingNotes;
+		}
+		
+		public ArrayList<Note> getDoneNotes() {
+			return doneNotes;
+		}
+		
+		public HashMap<String, int[]> getNoteTypes() {
+			return noteTypes;
+		}
+		
 	}
 	
-	public static ArrayList<Field> getAllFields(Class<?> clazz) {
-		ArrayList<Field> list = new ArrayList<>();
-		list.addAll(Arrays.asList(clazz.getFields()));
-		if(clazz.getSuperclass() != null) {
-			list.addAll(getAllFields(clazz.getSuperclass()));
-		}
-		for(int i=0; i<clazz.getInterfaces().length; i++) {
-			list.addAll(getAllFields(clazz.getInterfaces()[i]));
-		}
-		return list;
-	}
 	
 }

@@ -97,35 +97,35 @@ public class NoteEditPanel extends GridPane {
 
 	private void saveNote() {
 		NotePanel notePanel = (NotePanel) this.editNote.getParent();
+		
 		//remove note from notePanel
 		if(notePanel != null) {
 			notePanel.remove(this.editNote);
 			notePanel.notes.remove(this.editNote);
 		}
+		
 		//update note data
-		this.editNote.noteText = noteTextField.getText();
-		this.editNote.type = (String) noteTypeBox.getValue();
-		this.editNote.priority = (int) notePrioritySpinner.getValue();
+		Note noteToSave = this.editNote.copy(false);
+		noteToSave.noteText = noteTextField.getText();
+		noteToSave.type = (String) noteTypeBox.getValue();
+		noteToSave.priority = (int) notePrioritySpinner.getValue();
+		
 		//add note to notePanel
-//		notePanel.addNote(this.editNote);
-
 		switch (notePanelBox.getValue().toString()) {
 		case "To do":
-			this.editNote.setPanel(JFXMain.root.todoPanel);
+			noteToSave.setPanel(JFXMain.root.todoPanel);
 			break;
 		case "Doing":
-			this.editNote.setPanel(JFXMain.root.doingPanel);
+			noteToSave.setPanel(JFXMain.root.doingPanel);
 			break;
 		case "Done":
-			this.editNote.setPanel(JFXMain.root.donePanel);
+			noteToSave.setPanel(JFXMain.root.donePanel);
 			break;
 		}
 		//close edit dialog
 		this.getScene().getWindow().hide();
 		
 		
-//		this.parent.dispatchEvent(new WindowEvent(this.parent, WindowEvent.WINDOW_CLOSING));
-//		((MainPanel) C57note64Main.c57main.getContentPane()).infoPanel.noteEditor = null;
 	}
 	
 	
