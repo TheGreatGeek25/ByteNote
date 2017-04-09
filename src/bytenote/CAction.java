@@ -10,10 +10,16 @@ import bytenote.note.types.NoteTypeManagerPanel;
 import bytenote.notefiles.NoteFileFilter;
 import bytenote.notefiles.NoteFileReader;
 import bytenote.notefiles.NoteFileWriter;
-import bytenote.notefiles.oldio.CFileWriter;
+import bytenote.update.UpdateChecker;
 import bytenote.update.UpdateHandler;
+import bytenote.update.UpdateHandler.UpdateType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 
 public class CAction implements EventHandler<ActionEvent> {
 		
@@ -65,8 +71,9 @@ public class CAction implements EventHandler<ActionEvent> {
 					ByteNoteMain.filePath = inputFile.getAbsolutePath();
 					try {
 						NoteFileReader.loadDataFromFile(inputFile, NoteData.getBlankNoteData());
-						CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
-					} catch (URISyntaxException | ClassNotFoundException | IOException e) {
+//						CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
+						NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
+					} catch (ClassNotFoundException | IOException e) {
 						e.printStackTrace();
 					}
 				}
@@ -80,7 +87,8 @@ public class CAction implements EventHandler<ActionEvent> {
 						inputFile1 = NoteFileFilter.requestFormatUpdate(inputFile1);
 						ByteNoteMain.filePath = inputFile1.getAbsolutePath();
 						NoteFileReader.loadDataFromFile(inputFile1, NoteData.getBlankNoteData());
-						CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
+						NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
+//						CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
 					}
 				} catch (URISyntaxException | IOException | ClassNotFoundException e) {
 					e.printStackTrace();
@@ -94,21 +102,47 @@ public class CAction implements EventHandler<ActionEvent> {
 					ByteNoteMain.filePath = inputFile2.getAbsolutePath();
 					ByteNoteMain.savedData = NoteData.getCurrentData();
 					NoteFileWriter.writeToFile(inputFile2);
-					CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
-				} catch (URISyntaxException | IOException e) {
+					NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
+//					CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
+				} catch (IOException e) {
 					e.printStackTrace();
-				} catch (NullPointerException e) {
-//					e.printStackTrace();
-				}
+				} catch (NullPointerException e) {}
 				break;
 			case "checkForUpdatesAction":
 				//TODO check for updates
-//				System.out.println("checkForUpdates");
-				System.out.println(JFXMain.confirmExit());
-				File byteNoteDir = new File(ClassLoader.getSystemClassLoader().getResource("bytenote").getFile());
-				for (File file : UpdateHandler.getConfigFiles(byteNoteDir)) {
-					file.toPath().relativize(byteNoteDir.toPath());
+				try {
+					boolean updateAvailable = UpdateChecker.check(ByteNoteMain.updateSite);
+					boolean updateCompat = false;
+					if(updateAvailable) {
+						if(UpdateHandler.getUpdateType() == UpdateType.JAR) {
+							updateCompat = UpdateChecker.isJRECompatible(ByteNoteMain.updateSite);
+						} else if (UpdateHandler.getUpdateType() == UpdateType.WIN32BIT) {
+							updateCompat = true;
+						}
+					}
+					if(updateAvailable) {
+						if(updateCompat) {
+							WebView wv = new WebView();
+							BorderPane wvbp = new BorderPane(wv);
+							JFXMain.showView(JFXMain.mainStage, wvbp, "Update", 400, 600);
+						} else {
+							
+						}
+					}
+					
+					
+				} catch (IOException e) {
+//					e.printStackTrace();
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.initModality(Modality.APPLICATION_MODAL);
+					alert.initOwner(JFXMain.mainStage);
+					alert.setContentText("Error code: ucf010 \nPlease check your internet connection and try again.");
+					alert.setHeaderText("Failed to check for updates.");
+					alert.showAndWait();
+				} catch (URISyntaxException e) {
+					e.printStackTrace();
 				}
+				
 				break;
 			default:
 				break;

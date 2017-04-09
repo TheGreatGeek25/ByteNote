@@ -1,8 +1,11 @@
 package bytenote;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
-import bytenote.notefiles.oldio.CFileReader;
+import bytenote.notefiles.NoteFileReader;
 
 public class ByteNoteMain {
 		
@@ -11,22 +14,26 @@ public class ByteNoteMain {
 	public static final String name = "ByteNote";
 	public static final String version = "v2.0.0-alpha";
 	public static final String syntaxVersion = "v1.0";
-	public static final String BYNTSyntaxVersion = "BYNTv1.0";
+	public static final String BYNTVersion = "BYNTv1.0";
 	
 	public static final double minWidth = 400;
 	public static final double minHeight = 400;
 	
 	public static final double prefWidth = 700;
 	public static final double prefHeight = 700;
+
+	public static URL updateSite;
+	private static String updateSiteString = "https://thegreatgeek25.github.io/ByteNote/update";
 	
 	public static NoteData savedData;
 	
 	public static String filePath;
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws URISyntaxException, IOException {
 		
 		System.out.println("Starting "+name+version);
+		updateSite = new URL(updateSiteString);	
 		
 		if(args.length == 1) {
 			try {
@@ -40,8 +47,7 @@ public class ByteNoteMain {
 			}
 		} else {
 			try {
-				File pathFile = new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI());
-				filePath = CFileReader.readFile(pathFile).replace("\n", "");
+				filePath = NoteFileReader.readConfigFile("lastOpenedPath.txt").replaceAll("\n", "");
 				new File(filePath).toURI();
 			} catch (Exception e) {
 //				e.printStackTrace();

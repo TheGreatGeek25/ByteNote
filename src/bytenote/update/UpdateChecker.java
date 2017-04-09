@@ -1,26 +1,20 @@
 package bytenote.update;
 
-import java.io.File;
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.net.URL;
 
 import bytenote.ByteNoteMain;
-import bytenote.notefiles.oldio.CFileReader;
 
 public class UpdateChecker {
 	
-	public static URL getUpdateURL(URL updateSite) {
-		String latestVersion = CFileReader.readFile(new File(updateSite.toString()+"/latestVersion"));
-		if(!compareVersions(ByteNoteMain.version, latestVersion)) {
-			return null;
-		} else {
-			try {
-				return new URL(updateSite.toString()+latestVersion);
-			} catch (MalformedURLException e) {
-				return null;
-			}
-		}
-		
+	public static boolean check(URL updateSite) throws IOException {
+		URL url = new URL(updateSite.toString()+"/versionName");
+		return compareVersions(ByteNoteMain.version, UpdateHandler.getStringFromURL(url).replaceAll("\n", ""));
+	}
+	
+	public static boolean isJRECompatible(URL updateSite) throws IOException {
+		URL url = new URL(updateSite.toString()+"/requiredJREVersion");
+		return UpdateHandler.getStringFromURL(url).replaceAll("\n", "").equals(getJavaVersion());
 	}
 	
 	/**
@@ -43,13 +37,10 @@ public class UpdateChecker {
 		} else {
 			v1Split = v1.split(".");
 		}
-		if(Integer.parseInt(v1Split[0]) > Integer.parseInt(v0Split[0]) ||
-				Integer.parseInt(v1Split[1]) > Integer.parseInt(v0Split[1]) ||
-				Integer.parseInt(v1Split[2]) > Integer.parseInt(v0Split[2])) {
-			return true;
-		}
-		
-		return false;
+		return Integer.parseInt(v1Split[0]) > Integer.parseInt(v0Split[0]) ||
+				(Integer.parseInt(v1Split[0]) == Integer.parseInt(v0Split[0]) && Integer.parseInt(v1Split[1]) > Integer.parseInt(v0Split[1])) ||
+				((Integer.parseInt(v1Split[0]) == Integer.parseInt(v0Split[0]) && (Integer.parseInt(v1Split[1]) == Integer.parseInt(v0Split[1]))) && Integer.parseInt(v1Split[2]) > Integer.parseInt(v0Split[2]));
+			
 	}
 	
 	public static String getJavaVersion() {

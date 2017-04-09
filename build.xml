@@ -5,12 +5,20 @@
 	<property name="debuglevel" value="source,lines,vars"/>
 	<property name="target" value="1.8"/>
 	<property name="source" value="1.8"/>
-	<property name="build.src" value="src"/>
+	<property name="build.src" value="${basedir}/src"/>
 	<property name="build.version" value="v2.0.0-alpha"/>
-	<property name="build.dir" value="build"/>
-	<property name="build.bin" value="bin"/>
+	<property name="build.dir" value="${basedir}/build"/>
+	<property name="build.bin" value="${basedir}/bin"/>
+	<property name="build.src.releaseNotes" value="${build.src}/bytenote/releaseNotes.html"/>
 	<property name="build.jar.dir" value="${build.dir}/jar"/>
 	<property name="build.jar.name" value="${ant.project.name}_${build.version}.jar"/>
+	<property name="build.updateSite.url" value="https://thegreatgeek25.github.io/ByteNote/update"/>
+	<property name="build.updateSite.dir" value="${build.dir}/updateSite"/>
+	<property name="build.win32bit.dir" value="${build.dir}/Windows/32bit"/>
+	<property name="build.win32bit.exeInstaller.dir" value="${build.win32bit.dir}/exeInstaller"/>
+	<property name="build.win32bit.exeInstaller.name" value="${ant.project.name}_${build.version}-windows-32bit"/>
+	<property name="build.win32bit.exeUpdate.dir" value="${build.win32bit.dir}/exeUpdate"/>
+	<property name="build.win32bit.exeUpdate.name" value="${ant.project.name}_${build.version}-windows-32bit-update"/>
 
 
 
@@ -18,15 +26,43 @@
 		<pathelement location="${build.bin}/"/>
 	</path>
 	
+	<target depends="buildWin32bitUpdateEXE" name="buildUpdateSite">
+		<mkdir dir="${build.updateSite.dir}"/>
+		<echo file="${build.updateSite.dir}/requiredJREVersion" message="${java.specification.version}"/>
+		<echo file="${build.updateSite.dir}/versionName" message="${build.version}"/>
+		<copyfile src="${build.src.releaseNotes}" dest="${build.updateSite.dir}/releaseNotes.html" />
+		<copyfile src="${build.jar.dir}/${build.jar.name}" dest="${build.updateSite.dir}/updateJar.jar"/>
+		<copyfile src="${build.win32bit.exeInstaller.dir}/${build.win32bit.exeInstaller.name}.exe" dest="${build.updateSite.dir}/windows32bit.exe"/>
+	</target>
+	
+	<target depends="buildJar" name="buildWin32bitUpdateEXE">
+		<!--
+			TODO: Add stuff here
+		 -->
+	</target>
+	
+	<target depends="buildJar" name="buildWin32bitEXEInstaller">
+		<!--
+			TODO: Add stuff here
+		-->
+	</target>
+	
 	<target depends="buildJar" name="runJar">
 		<java jar="${build.jar.dir}/${build.jar.name}" fork="true" />
+	</target>
+	
+	<target depends="buildJar" name="debugJar">
+		<java jar="${build.jar.dir}/${build.jar.name}" fork="true" >
+			<jvmarg value="-Xdebug"/>
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5432"/>
+		</java>
 	</target>
 	
 	<target depends="buildJar" name="default">
 		
 	</target>
 	
-	<target depends="clean,initBin,compile" name="buildJar">
+	<target depends="initBin,compile" name="buildJar">
 		<jar destfile="${build.jar.dir}/${build.jar.name}" filesetmanifest="mergewithoutmain">
 			<manifest>
 		    	<attribute name="Main-Class" value="bytenote.ByteNoteMain"/>
@@ -36,7 +72,7 @@
 		</jar>
 	</target>
 	
-	<target name="initBin">
+	<target depends="clean" name="initBin">
 		<mkdir dir="${build.bin}"/>
 		<copy includeemptydirs="false" todir="${build.bin}">
 			<fileset dir="${build.src}">

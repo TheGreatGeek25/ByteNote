@@ -11,7 +11,6 @@ import bytenote.JFXMain;
 import bytenote.NoteData;
 import bytenote.notefiles.bynt.BYNTWriter;
 import bytenote.notefiles.oldio.CFileReader;
-import bytenote.notefiles.oldio.CFileWriter;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -40,7 +39,8 @@ public class NoteFileFilter {
 				rename.setContentText("\""+notefile.getName()+"\" has been updated to: \""+newFile.getName()+"\"");
 				rename.show();
 				ByteNoteMain.filePath = newFile.getAbsolutePath();
-				CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
+				NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
+//				CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
 				return newFile;
 			}
 		}

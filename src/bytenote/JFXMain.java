@@ -6,7 +6,7 @@ import java.net.URISyntaxException;
 
 import bytenote.notefiles.NoteFileFilter;
 import bytenote.notefiles.NoteFileReader;
-import bytenote.notefiles.oldio.CFileWriter;
+import bytenote.notefiles.NoteFileWriter;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -64,7 +64,8 @@ public class JFXMain extends Application {
 			ByteNoteMain.filePath = notefile.getAbsolutePath();
 			NoteFileReader.loadDataFromFile(notefile, NoteData.getBlankNoteData());
 			ByteNoteMain.savedData = NoteData.getCurrentData();
-			CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toExternalForm()) );
+			NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
+//			CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toExternalForm()) );
 			
 			root.c57run = root.new C57runService();
 			root.c57run.setRestartOnFailure(true);	

@@ -24,6 +24,7 @@ public class CFileWriter {
 			+ "types\n"
 			+ "(default)255,255,150";
 	
+	@Deprecated
 	public static void writePathFile(File file) {
 		try {
 			file.createNewFile();

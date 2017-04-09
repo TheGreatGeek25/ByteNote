@@ -11,7 +11,7 @@ import bytenote.NoteData;
 public class BYNTWriter {
 	public static <D extends NoteData> void writeDataToFile(D data, File file) throws IOException {
 		FileOutputStream out = new FileOutputStream(file);
-		out.write((ByteNoteMain.BYNTSyntaxVersion+"\n").getBytes());
+		out.write((ByteNoteMain.BYNTVersion+"\n").getBytes());
 		
 		ObjectOutputStream oos = new ObjectOutputStream(out);
 		oos.writeObject(data);
