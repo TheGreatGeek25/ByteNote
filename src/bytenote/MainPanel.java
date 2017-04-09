@@ -4,6 +4,7 @@ import java.io.File;
 
 import bytenote.note.NotePanel;
 import bytenote.note.types.NoteTypes;
+import bytenote.update.UpdateHandler;
 import javafx.application.Platform;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
@@ -70,10 +71,6 @@ public class MainPanel extends BorderPane {
 	
 	public void c57run() {
 		NoteTypes.addToMap("(default)", Color.rgb(255, 255, 150) );
-//		revalidate();
-//		repaint();
-//		setWidth(JFXMain.mainStage.getWidth()-50);
-//		setHeight(JFXMain.mainStage.getHeight()-32);
 		
 		todoScrollPane.setPrefSize(this.getWidth()*NotePanel.paneToWin, this.getHeight());
 		doingScrollPane.setPrefSize(this.getWidth()*NotePanel.paneToWin, this.getHeight());
@@ -93,6 +90,8 @@ public class MainPanel extends BorderPane {
 			ByteNoteMain.isSaved = false;
 			JFXMain.mainStage.setTitle(ByteNoteMain.name+"   *"+new File(ByteNoteMain.filePath).getAbsolutePath()+"*");
 		}
+		
+		UpdateHandler.c57run();
 		
 	}
 	

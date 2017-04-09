@@ -19,7 +19,7 @@ public class NoteFileReader {
 	 * @throws FileNotFoundException
 	 */
 	public static FileInputStream getConfigFileStream(String path) throws FileNotFoundException {
-		return new FileInputStream( new File(System.getProperty("user.home")+".bytenote/"+path) );
+		return new FileInputStream( new File(System.getProperty("user.home")+"/.bytenote/"+path) );
 	}
 	
 	/**

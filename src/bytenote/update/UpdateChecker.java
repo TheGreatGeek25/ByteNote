@@ -13,8 +13,17 @@ public class UpdateChecker {
 	}
 	
 	public static boolean isJRECompatible(URL updateSite) throws IOException {
+		String required = getRequiredJREVersion(updateSite);
+		String current = getJavaVersion();
+		String[] reqSplit = required.split("\\.");
+		String[] currSplit = current.split("\\.");
+		return !(Integer.parseInt(reqSplit[0]) > Integer.parseInt(currSplit[0]) ||
+				Integer.parseInt(reqSplit[0]) == Integer.parseInt(currSplit[0]) && Integer.parseInt(reqSplit[1]) > Integer.parseInt(currSplit[1]));
+	}
+	
+	public static String getRequiredJREVersion(URL updateSite) throws IOException {
 		URL url = new URL(updateSite.toString()+"/requiredJREVersion");
-		return UpdateHandler.getStringFromURL(url).replaceAll("\n", "").equals(getJavaVersion());
+		return UpdateHandler.getStringFromURL(url).replaceAll("\n", "");
 	}
 	
 	/**
@@ -26,16 +35,18 @@ public class UpdateChecker {
 	public static boolean compareVersions(String v0, String v1) {
 		String[] v0Split;
 		String[] v1Split;
+		v0 = v0.replaceFirst("v", "");
+		v1 = v1.replaceFirst("v", "");
 		if(v0.contains("-")) {
-			v0Split = new String[] {v0.split(".")[0], v0.split(".")[1], v0.split(".")[2].split("-")[0], v0.split(".")[2].split("-")[1]};
+			v0Split = new String[] {v0.split("\\.")[0], v0.split("\\.")[1], v0.split("\\.")[2].split("-")[0], v0.split("\\.")[2].split("-")[1]};
 		} else {
-			v0Split = v0.split(".");
+			v0Split = v0.split("\\.");
 		}
 		
 		if(v1.contains("-")) {
-			v1Split = new String[] {v1.split(".")[0], v1.split(".")[1], v1.split(".")[2].split("-")[0], v1.split(".")[2].split("-")[1]};	
+			v1Split = new String[] {v1.split("\\.")[0], v1.split("\\.")[1], v1.split("\\.")[2].split("-")[0], v1.split("\\.")[2].split("-")[1]};	
 		} else {
-			v1Split = v1.split(".");
+			v1Split = v1.split("\\.");
 		}
 		return Integer.parseInt(v1Split[0]) > Integer.parseInt(v0Split[0]) ||
 				(Integer.parseInt(v1Split[0]) == Integer.parseInt(v0Split[0]) && Integer.parseInt(v1Split[1]) > Integer.parseInt(v0Split[1])) ||

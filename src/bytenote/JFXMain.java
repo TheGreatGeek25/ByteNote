@@ -102,11 +102,16 @@ public class JFXMain extends Application {
 		stage.setMinWidth(minWidth);
 		stage.setScene( new Scene(paneToShow) );
 		stage.show();
+		
 	}
 
 	public static boolean confirmExit() {
+		return confirmExit("exit");
+	}
+	
+	public static boolean confirmExit(String replaceExit) {
 		if(!ByteNoteMain.isSaved) {
-			Alert a = new Alert(AlertType.CONFIRMATION, "Are you sure you want to exit? Unsaved changes will be lost.");
+			Alert a = new Alert(AlertType.CONFIRMATION, "Are you sure you want to "+replaceExit+"? Unsaved changes will be lost.");
 			a.initOwner(mainStage);
 			a.initModality(Modality.WINDOW_MODAL);
 			ButtonType bt = a.showAndWait().get();

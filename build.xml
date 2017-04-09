@@ -26,13 +26,13 @@
 		<pathelement location="${build.bin}/"/>
 	</path>
 	
-	<target depends="buildWin32bitUpdateEXE" name="buildUpdateSite">
+	<target depends="buildJar" name="buildUpdateSite">
 		<mkdir dir="${build.updateSite.dir}"/>
 		<echo file="${build.updateSite.dir}/requiredJREVersion" message="${java.specification.version}"/>
 		<echo file="${build.updateSite.dir}/versionName" message="${build.version}"/>
-		<copyfile src="${build.src.releaseNotes}" dest="${build.updateSite.dir}/releaseNotes.html" />
-		<copyfile src="${build.jar.dir}/${build.jar.name}" dest="${build.updateSite.dir}/updateJar.jar"/>
-		<copyfile src="${build.win32bit.exeInstaller.dir}/${build.win32bit.exeInstaller.name}.exe" dest="${build.updateSite.dir}/windows32bit.exe"/>
+		<copy file="${build.src.releaseNotes}"  tofile="${build.updateSite.dir}/releaseNotes.html"/>
+		<copy file="${build.jar.dir}/${build.jar.name}" tofile="${build.updateSite.dir}/updateJar.jar"/>
+		<copy file="${build.win32bit.exeUpdate.dir}/${build.win32bit.exeUpdate.name}.exe" tofile="${build.updateSite.dir}/windows32bit.exe"/>
 	</target>
 	
 	<target depends="buildJar" name="buildWin32bitUpdateEXE">

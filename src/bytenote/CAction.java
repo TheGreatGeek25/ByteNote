@@ -11,14 +11,11 @@ import bytenote.notefiles.NoteFileFilter;
 import bytenote.notefiles.NoteFileReader;
 import bytenote.notefiles.NoteFileWriter;
 import bytenote.update.UpdateChecker;
-import bytenote.update.UpdateHandler;
-import bytenote.update.UpdateHandler.UpdateType;
+import bytenote.update.UpdatePane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 
 public class CAction implements EventHandler<ActionEvent> {
@@ -112,24 +109,10 @@ public class CAction implements EventHandler<ActionEvent> {
 				//TODO check for updates
 				try {
 					boolean updateAvailable = UpdateChecker.check(ByteNoteMain.updateSite);
-					boolean updateCompat = false;
 					if(updateAvailable) {
-						if(UpdateHandler.getUpdateType() == UpdateType.JAR) {
-							updateCompat = UpdateChecker.isJRECompatible(ByteNoteMain.updateSite);
-						} else if (UpdateHandler.getUpdateType() == UpdateType.WIN32BIT) {
-							updateCompat = true;
-						}
+						UpdatePane up = new UpdatePane(ByteNoteMain.updateSite);
+						JFXMain.showView(JFXMain.mainStage, up, "Update", 400, 600);
 					}
-					if(updateAvailable) {
-						if(updateCompat) {
-							WebView wv = new WebView();
-							BorderPane wvbp = new BorderPane(wv);
-							JFXMain.showView(JFXMain.mainStage, wvbp, "Update", 400, 600);
-						} else {
-							
-						}
-					}
-					
 					
 				} catch (IOException e) {
 //					e.printStackTrace();
@@ -139,8 +122,6 @@ public class CAction implements EventHandler<ActionEvent> {
 					alert.setContentText("Error code: ucf010 \nPlease check your internet connection and try again.");
 					alert.setHeaderText("Failed to check for updates.");
 					alert.showAndWait();
-				} catch (URISyntaxException e) {
-					e.printStackTrace();
 				}
 				
 				break;

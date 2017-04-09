@@ -15,6 +15,9 @@ import bytenote.ByteNoteMain;
 import bytenote.JFXMain;
 
 public class UpdateHandler {
+	
+	public static UpdatePane up;
+	
 	public static enum UpdateType {
 		JAR, WIN32BIT
 	}
@@ -92,6 +95,12 @@ public class UpdateHandler {
 			}
 		}
 		return fileList;
+	}
+	
+	public static void c57run() {
+		if(up != null) {
+			up.c57run();
+		}
 	}
 	
 }
