@@ -17,6 +17,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class CAction implements EventHandler<ActionEvent> {
 		
@@ -106,16 +107,16 @@ public class CAction implements EventHandler<ActionEvent> {
 				} catch (NullPointerException e) {}
 				break;
 			case "checkForUpdatesAction":
-				//TODO check for updates
 				try {
 					boolean updateAvailable = UpdateChecker.check(ByteNoteMain.updateSite);
 					if(updateAvailable) {
 						UpdatePane up = new UpdatePane(ByteNoteMain.updateSite);
-						JFXMain.showView(JFXMain.mainStage, up, "Update", 400, 600);
+						Stage s = JFXMain.showView(JFXMain.mainStage, up, "Update", 600, 700);
+						s.setWidth(600);
+						s.setHeight(700);
 					}
 					
 				} catch (IOException e) {
-//					e.printStackTrace();
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.initModality(Modality.APPLICATION_MODAL);
 					alert.initOwner(JFXMain.mainStage);

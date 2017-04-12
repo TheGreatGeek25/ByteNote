@@ -15,10 +15,23 @@ public class DownloadTask extends Task<Void> {
 	protected File dest;
 	protected InputStream in;
 	protected FileOutputStream out;
+	protected long totalBytes;
+	protected long bytesLoaded = 0;
 	
 	public DownloadTask(URL downloadUrl, File destFile) {
 		this.download = downloadUrl;
 		this.dest = destFile;
+		try {
+			this.totalBytes = downloadUrl.openConnection().getContentLengthLong();
+		} catch (IOException e) {e.printStackTrace();}
+	}
+	
+	public long getTotalBytes() {
+		return totalBytes;
+	}
+	
+	public long getBytesLoaded() {
+		return bytesLoaded;
 	}
 	
 	@Override
@@ -26,8 +39,12 @@ public class DownloadTask extends Task<Void> {
 		if(mayInterruptIfRunning) {
 			if(isRunning()) {
 				try {
-					in.close();
-					out.close();
+					if(in != null) {
+						in.close();
+					}
+					if(out != null) {
+						out.close();
+					}
 					dest.delete();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -42,16 +59,17 @@ public class DownloadTask extends Task<Void> {
 		URLConnection connect = download.openConnection();
 		connect.setConnectTimeout(2000);
 		in = connect.getInputStream();
-		int total = in.available();
 		out = new FileOutputStream(dest);
-		while(in.available() > 0) {
-			out.write(in.read());
-			this.updateProgress(total-in.available(), total);
+		int inInt = in.read();
+		while(inInt != -1) {
+			out.write(inInt);
+			bytesLoaded++;
+			this.updateProgress(bytesLoaded, totalBytes);
+			inInt = in.read();
 		}
 		out.close();
 		in.close();
 		return null;
 	}
 	
-
 }

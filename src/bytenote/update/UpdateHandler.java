@@ -39,8 +39,10 @@ public class UpdateHandler {
 		connect.setConnectTimeout(2000);
 		InputStream in = connect.getInputStream();
 		String out = "";
-		while(in.available() > 0) {
-			out += new String( new byte[] {(byte) in.read()});
+		int inInt = in.read();
+		while(inInt != -1) {
+			out += new String( new byte[] {(byte) inInt});
+			inInt = in.read();
 		}
 		return out;
 	}

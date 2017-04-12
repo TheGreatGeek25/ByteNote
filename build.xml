@@ -82,7 +82,6 @@
 	</target>
 	
 	<target name="compile">
-		<echo message="${ant.project.name}: ${ant.file}"/>
 		<javac debug="true" debuglevel="${debuglevel}" destdir="${build.bin}" includeantruntime="false" source="${source}" target="${target}">
 			<src path="${build.src}"/>
 		    <classpath refid="ByteNote.classpath"/>

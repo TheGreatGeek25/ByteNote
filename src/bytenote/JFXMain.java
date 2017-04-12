@@ -91,7 +91,7 @@ public class JFXMain extends Application {
 		return null;
 	}
 	
-	public static void showView(Stage parent, Pane paneToShow, String title, int minWidth, int minHeight) {
+	public static Stage showView(Stage parent, Pane paneToShow, String title, int minWidth, int minHeight) {
 		Stage stage = new Stage();
 		stage.initOwner(parent);
 		stage.initModality(Modality.WINDOW_MODAL);
@@ -102,7 +102,7 @@ public class JFXMain extends Application {
 		stage.setMinWidth(minWidth);
 		stage.setScene( new Scene(paneToShow) );
 		stage.show();
-		
+		return stage;
 	}
 
 	public static boolean confirmExit() {
