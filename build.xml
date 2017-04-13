@@ -9,6 +9,7 @@
 	<property name="build.version" value="v2.0.0-alpha"/>
 	<property name="build.dir" value="${basedir}/build"/>
 	<property name="build.bin" value="${basedir}/bin"/>
+	<property name="build.logo" value="${build.src}/bytenote/logo32.png"/>
 	<property name="build.src.releaseNotes" value="${build.src}/bytenote/releaseNotes.html"/>
 	<property name="build.jar.dir" value="${build.dir}/jar"/>
 	<property name="build.jar.name" value="${ant.project.name}_${build.version}.jar"/>
@@ -31,6 +32,7 @@
 		<echo file="${build.updateSite.dir}/requiredJREVersion" message="${java.specification.version}"/>
 		<echo file="${build.updateSite.dir}/versionName" message="${build.version}"/>
 		<copy file="${build.src.releaseNotes}"  tofile="${build.updateSite.dir}/releaseNotes.html"/>
+		<copy file="" tofile=""/>
 		<copy file="${build.jar.dir}/${build.jar.name}" tofile="${build.updateSite.dir}/updateJar.jar"/>
 		<copy file="${build.win32bit.exeUpdate.dir}/${build.win32bit.exeUpdate.name}.exe" tofile="${build.updateSite.dir}/windows32bit.exe"/>
 	</target>
