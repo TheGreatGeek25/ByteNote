@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 
+import bytenote.ByteNoteMain;
 import bytenote.JFXMain;
 import bytenote.update.UpdateHandler.UpdateType;
 import javafx.concurrent.Task;
@@ -13,14 +14,17 @@ import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
 public class UpdatePane extends BorderPane {
@@ -66,7 +70,7 @@ public class UpdatePane extends BorderPane {
 						if(UpdateHandler.getUpdateType() == UpdateType.JAR) {
 							File dest = Files.createTempFile("ByteNoteUpdateJar", ".jar").toFile();
 							downloadFile = dest;
-							download = new DownloadTask(ClassLoader.getSystemResource("updateJar.jar"), dest);
+							download = new DownloadTask(ClassLoader.getSystemResource("ByteNoteJARUpdateModule.jar"), dest);
 							runTask(download);
 						} else if(UpdateHandler.getUpdateType() == UpdateType.WIN32BIT) {
 							File dest = Files.createTempFile("ByteNote32bitUpdate", ".exe").toFile();
@@ -135,14 +139,20 @@ public class UpdatePane extends BorderPane {
 			loadingLabel.setText(Long.toString(Math.round((float)download.getBytesLoaded()/download.getTotalBytes()*100))+"%   "+Long.toString(download.getBytesLoaded())+"/"+Long.toString(download.getTotalBytes())+" bytes");
 			if(download.isDone() && download.getState() == State.SUCCEEDED) {
 				if(UpdateHandler.getUpdateType() == UpdateType.JAR) {
-					ProcessBuilder pb = new ProcessBuilder(UpdateChecker.getJavaHome()+"/bin/java", "-jar", downloadFile.getAbsolutePath());
-					pb.start();
+					Runtime.getRuntime().exec(UpdateChecker.getJavaHome()+"/bin/java -jar "+downloadFile.getAbsolutePath()+" "+new File(ByteNoteMain.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath()+" "+ByteNoteMain.updateSite.toString());
 					System.exit(0);
 				} else if(UpdateHandler.getUpdateType() == UpdateType.WIN32BIT) {
-					ProcessBuilder pb = new ProcessBuilder("TIMEOUT 8 & \""+downloadFile.getAbsolutePath()+"\"");
-					pb.start();
+					Runtime.getRuntime().exec("TIMEOUT 3 & \""+downloadFile.getAbsolutePath()+"\"");
 					System.exit(0);
 				}
+			} else if(download.getState() == State.FAILED) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.initModality(Modality.APPLICATION_MODAL);
+				alert.initOwner(JFXMain.mainStage);
+				alert.setContentText("Please check your internet connection and try again.");
+				alert.setHeaderText("Download failed.");
+				alert.show();
+				cancelButton.fire();
 			}
 		}
 		} catch (URISyntaxException | IOException e) {

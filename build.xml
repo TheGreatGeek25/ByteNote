@@ -13,6 +13,8 @@
 	<property name="build.src.releaseNotes" value="${build.src}/bytenote/releaseNotes.html"/>
 	<property name="build.jar.dir" value="${build.dir}/jar"/>
 	<property name="build.jar.name" value="${ant.project.name}_${build.version}.jar"/>
+	<property name="build.jarUpdateModule.dir" value="ByteNoteJARUpdateModule/"/>
+	<property name="build.jarUpdateModule.jar" value="${build.jarUpdateModule.dir}/build/jar/ByteNoteJARUpdateModule.jar"/>
 	<property name="build.updateSite.url" value="https://thegreatgeek25.github.io/ByteNote/update"/>
 	<property name="build.updateSite.dir" value="${build.dir}/updateSite"/>
 	<property name="build.win32bit.dir" value="${build.dir}/Windows/32bit"/>
@@ -27,12 +29,19 @@
 		<pathelement location="${build.bin}/"/>
 	</path>
 	
-	<target depends="buildJar" name="buildUpdateSite">
+	<target name="buildJARUpdateModule">
+		<ant antfile="${build.jarUpdateModule.dir}/build.xml" >
+			<property name="build.jarUpdate.jar.file" value="${build.jarUpdateModule.jar}"/>
+			<property name="jarUpdateBasedir" value="${basedir}/ByteNoteJARUpdateModule"/>
+		</ant>
+	</target>
+	
+	<target depends="buildWin32bitUpdateEXE" name="buildUpdateSite">
 		<mkdir dir="${build.updateSite.dir}"/>
 		<echo file="${build.updateSite.dir}/requiredJREVersion" message="${java.specification.version}"/>
 		<echo file="${build.updateSite.dir}/versionName" message="${build.version}"/>
 		<copy file="${build.src.releaseNotes}"  tofile="${build.updateSite.dir}/releaseNotes.html"/>
-		<copy file="" tofile=""/>
+		<copy file="${build.logo}" tofile="${build.updateSite.dir}/logo.png"/>
 		<copy file="${build.jar.dir}/${build.jar.name}" tofile="${build.updateSite.dir}/updateJar.jar"/>
 		<copy file="${build.win32bit.exeUpdate.dir}/${build.win32bit.exeUpdate.name}.exe" tofile="${build.updateSite.dir}/windows32bit.exe"/>
 	</target>
@@ -49,28 +58,29 @@
 		-->
 	</target>
 	
-	<target depends="buildJar" name="runJar">
+	<target depends="default" name="runJar">
 		<java jar="${build.jar.dir}/${build.jar.name}" fork="true" />
 	</target>
 	
-	<target depends="buildJar" name="debugJar">
+	<target depends="default" name="debugJar">
 		<java jar="${build.jar.dir}/${build.jar.name}" fork="true" >
 			<jvmarg value="-Xdebug"/>
 			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5432"/>
 		</java>
 	</target>
 	
-	<target depends="buildJar" name="default">
+	<target depends="buildUpdateSite" name="default">
 		
 	</target>
 	
-	<target depends="initBin,compile" name="buildJar">
+	<target depends="initBin,compile,buildJARUpdateModule" name="buildJar">
 		<jar destfile="${build.jar.dir}/${build.jar.name}" filesetmanifest="mergewithoutmain">
 			<manifest>
 		    	<attribute name="Main-Class" value="bytenote.ByteNoteMain"/>
 		    	<attribute name="Class-Path" value="."/>
 			</manifest>
 		    <fileset dir="${build.bin}"/>
+			<fileset file="${build.jarUpdateModule.jar}"/>
 		</jar>
 	</target>
 	

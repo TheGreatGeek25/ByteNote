@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="buildJar" name="ByteNoteJARUpdateModule">
+	<property environment="env"/>
+	<property name="ECLIPSE_HOME" value="../../../../../eclipse/java-neon/eclipse/"/>
+	<property name="debuglevel" value="source,lines,vars"/>
+	<property name="target" value="1.8"/>
+	<property name="source" value="1.8"/>
+	<property name="build.jarUpdate.src" value="${jarUpdateBasedir}/src"/>
+	<property name="build.jarUpdate.dir" value="${jarUpdateBasedir}/build"/>
+	<property name="build.jarUpdate.bin" value="${jarUpdateBasedir}/bin"/>
+	<property name="build.jarUpdate.jar.file" value="${build.jarUpdate.dir}/jar/${ant.project.name}.jar"/>
+	
+	<path id="ByteNoteJARUpdateModule.classpath">
+		<pathelement location="${build.jarUpdate.bin}/"/>
+	</path>
+	
+	<target depends="initBin,compile" name="buildJar">
+		<jar destfile="${build.jarUpdate.jar.file}" filesetmanifest="mergewithoutmain">
+			<manifest>
+		    	<attribute name="Main-Class" value="bytenote.update.UpdateMain"/>
+		    	<attribute name="Class-Path" value="."/>
+			</manifest>
+		    <fileset dir="${build.jarUpdate.bin}"/>
+		</jar>
+	</target>
+	
+	<target depends="clean" name="initBin">
+		<mkdir dir="${build.jarUpdate.bin}"/>
+		<copy includeemptydirs="false" todir="${build.jarUpdate.bin}">
+			<fileset dir="${build.jarUpdate.src}">
+				<exclude name="**/*.java"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="compile">
+		<javac debug="true" debuglevel="${debuglevel}" destdir="${build.jarUpdate.bin}" includeantruntime="false" source="${source}" target="${target}">
+			<src path="${build.jarUpdate.src}"/>
+		    <classpath refid="ByteNoteJARUpdateModule.classpath"/>
+		</javac>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${build.jarUpdate.bin}"/>
+		<delete dir="${build.jarUpdate.dir}"/>
+		<delete file="${build.jarUpdate.jar.file}"/>
+	</target>
+	
+	<target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+		<copy todir="${ant.library.dir}">
+	    	<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+	    </copy>
+	    <unzip dest="${ant.library.dir}">
+	    	<patternset includes="jdtCompilerAdapter.jar"/>
+	        <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+	    </unzip>
+	</target>
+	<target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+		<antcall target="buildJar"/>
+	</target>
+</project>
