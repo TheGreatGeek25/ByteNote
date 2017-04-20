@@ -1,13 +1,10 @@
-# C57note64
+# ByteNote
 ##About
-C57note64 lets you plan by moving notes around a board.
+ByteNote is a note taking application.
 More information about this project is available [here](https://thegreatgeek25.github.io/Projects/C57note64)
 ##Requirements
 ### .jar (Executable jar file)
-* Java JRE 
-
-Tested on:
-* java 8
+* Java 8 
 
 ### .exe (Windows installer - 32 bit)
 * Windows

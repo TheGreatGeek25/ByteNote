@@ -1,3 +1,13 @@
+# v2.0.0
+Released [unknown]
+* C57note64 is now ByteNote
+* New file type: ".bynt" (The ".cnote" file type is still supported, but it is not recommended.)
+* Updates can now be installed from inside ByteNote
+* ByteNote will warn you if you try to exit without saving your notes
+* When you open a .cnote file, ByteNote will offer to update it to the .bynt file type
+* ByteNote will wrap text in notes if it cannot be displayed on a single line
+		
+
 #### v1.1.1
 Released 11/18/2016
 * Fixed bug causing notes in "Doing" and "Done" sections to be switched.
