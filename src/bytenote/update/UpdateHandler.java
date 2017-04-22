@@ -8,6 +8,9 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import bytenote.ByteNoteMain;
+import bytenote.JFXMain;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 
 public class UpdateHandler {
 	

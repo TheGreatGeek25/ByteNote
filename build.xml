@@ -16,12 +16,14 @@
 	<property name="build.jarUpdateModule.jar" value="${build.jarUpdateModule.dir}/build/jar/ByteNoteJARUpdateModule.jar"/>
 	<property name="build.updateSite.url" value="https://thegreatgeek25.github.io/ByteNote/update"/>
 	<property name="build.updateSite.dir" value="${build.dir}/updateSite"/>
+	<property name="build.data.dir" value="${basedir}/buildData"/>
 	<property name="build.win32bit.dir" value="${build.dir}/Windows/32bit"/>
 	<property name="build.win32bit.exeInstaller.dir" value="${build.win32bit.dir}/exeInstaller"/>
 	<property name="build.win32bit.exeInstaller.name" value="${ant.project.name}_${build.version}-windows-32bit"/>
 	<property name="build.win32bit.exeUpdate.dir" value="${build.win32bit.dir}/exeUpdate"/>
 	<property name="build.win32bit.exeUpdate.name" value="${ant.project.name}_${build.version}-windows-32bit-update"/>
-	<property name="build.data.dir" value="${basedir}/buildData"/>
+	<property name="build.win32bit.exeInstaller.script.file" value="${build.data.dir}/Windows/scripts/ByteNote-win32bit.iss"/>
+	<property name="build.win32bit.exeUpdate.script.file" value="${build.data.dir}/Windows/scripts/ByteNote-win32bit-update.iss"/>
 	<property name="build.logos.dir" value="${build.data.dir}/logos"/>
 	<target name="init-fx-tasks">
 		<path id="fxant">
@@ -59,11 +61,10 @@
 	</target>
 	
 	<target depends="buildJar,init-fx-tasks" name="buildWin32bitBundle">
-		<echo></echo>
-		<fx:deploy nativeBundles="image" outdir="${build.win32bit.dir}/bundle" outfile="ByteNote"> 
+		<fx:deploy verbose="true" nativeBundles="image" outdir="${build.win32bit.dir}/bundle" outfile="ByteNote"> 
 			<fx:application mainClass="bytenote.ByteNoteMain" name="ByteNote" version="${build.version}"/>
 			<fx:info title="ByteNote">
-				<fx:icon href="${build.data.dir}/logos.logoAll.ico"/>
+				<fx:icon href="${build.data.dir}/logos/logoAll.ico" />
 			</fx:info>
 			<fx:resources>
 				<fx:fileset type="jar" dir="${build.jar.dir}" >
@@ -71,18 +72,38 @@
 				</fx:fileset>
 			</fx:resources>
 		</fx:deploy>
+		<copy file="${basedir}/LICENSE" tofile="${build.win32bit.dir}/bundle/bundles/ByteNote/LICENSE.txt"/>
+	 	<echo message="win32bit" file="${build.win32bit.dir}/bundle/bundles/ByteNote/app/installationInfo"/>
 	</target>
 	
 	<target depends="buildWin32bitBundle" name="buildWin32bitUpdateEXE">
-		<!--
-			TODO: Add stuff here
-		 -->
+		<echo file="${build.dir}/Windows/32bit/temp/setupUpdate.iss">#define bundleDir &quot;${build.win32bit.dir}/bundle/bundles/ByteNote&quot;
+#define outputDir &quot;${build.win32bit.exeUpdate.dir}&quot;
+#define appName &quot;ByteNote&quot;
+#define appVersion &quot;${build.version}&quot;
+#define appExeName &quot;ByteNote.exe&quot;
+#define outputName &quot;${build.win32bit.exeUpdate.name}&quot;</echo>
+		<loadfile property="script" srcfile="${build.win32bit.exeUpdate.script.file}" />
+		<echo file="${build.dir}/Windows/32bit/temp/setupUpdate.iss" append="true" message="${script}"/>
+		<exec failonerror="true" executable="${env.INNOSETUP_HOME}/iscc" >
+					<arg value="&quot;${build.dir}/Windows/32bit/temp/setupUpdate.iss&quot;" />
+				</exec>
+		<delete dir="${build.dir}/Windows/32bit/temp"/>
 	</target>
 	
 	<target depends="buildWin32bitBundle" name="buildWin32bitEXEInstaller">
-		<!--
-			TODO: Add stuff here
-		-->
+		<echo file="${build.dir}/Windows/32bit/temp/setup.iss">#define bundleDir &quot;${build.win32bit.dir}/bundle/bundles/ByteNote&quot;
+#define outputDir &quot;${build.win32bit.exeUpdate.dir}&quot;
+#define appName &quot;ByteNote&quot;
+#define appVersion &quot;${build.version}&quot;
+#define appExeName &quot;ByteNote.exe&quot;
+#define outputName &quot;${build.win32bit.exeUpdate.name}&quot;</echo>
+		<loadfile property="script" srcfile="${build.win32bit.exeInstaller.script.file}" />
+		<echo file="${build.dir}/Windows/32bit/temp/setup.iss" append="true" message="${script}"/>
+		<exec failonerror="true" executable="${env.INNOSETUP_HOME}/iscc" >
+			<arg value="&quot;${build.dir}/Windows/32bit/temp/setup.iss&quot;" />
+		</exec>
+		<delete dir="${build.dir}/Windows/32bit/temp"/>
 	</target>
 	
 	<target depends="default" name="runJar">
