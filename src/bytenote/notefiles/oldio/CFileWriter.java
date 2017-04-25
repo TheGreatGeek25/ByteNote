@@ -130,7 +130,7 @@ public class CFileWriter {
 
 	public static void saveNoteFile(File file, NoteData data) {
 		try {
-			Files.write(Paths.get(file.getAbsolutePath()), data.toString().getBytes(), StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+			Files.write(Paths.get(file.getAbsolutePath()), data.toOldFormat().getBytes(), StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

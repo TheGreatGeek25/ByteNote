@@ -142,7 +142,7 @@ public class UpdatePane extends BorderPane {
 					Runtime.getRuntime().exec("\""+UpdateChecker.getJavaHome()+"/bin/java\" -jar \""+downloadFile.getAbsolutePath()+"\" \""+new File(ByteNoteMain.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath()+"\" \""+ByteNoteMain.updateSite.toString()+"\"");
 					System.exit(0);
 				} else if(UpdateHandler.getUpdateType() == UpdateType.WIN32BIT) {
-					Runtime.getRuntime().exec("TIMEOUT 3 & \""+downloadFile.getAbsolutePath()+"\"");
+					Runtime.getRuntime().exec("\""+downloadFile.getAbsolutePath()+"\" /SILENT /CLOSEAPPLICATIONS");
 					System.exit(0);
 				}
 			} else if(download.getState() == State.FAILED) {
