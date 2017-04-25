@@ -23,7 +23,7 @@ public class ByteNoteMain {
 	public static final double prefHeight = 700;
 
 	public static URL updateSite;
-	private static String updateSiteString = "file:C:/Users/MCH/Documents/Charlie's Stuff/ByteNote/ByteNote/test/updateSite"/*"https://thegreatgeek25.github.io/ByteNote/update"*/;
+	private static String updateSiteString = "https://thegreatgeek25.github.io/ByteNote/update";
 	
 	public static NoteData savedData;
 	

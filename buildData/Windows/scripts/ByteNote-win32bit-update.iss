@@ -32,7 +32,9 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 Name: "associate"; Description: "&Associate files"; GroupDescription: "Other tasks:"
-
+Name: "startup"; Description: "Run on startup"; GroupDescription: "Other tasks:"
+Name: "startup\common"; Description: "For all users"; Flags: exclusive unchecked
+Name: "startup\user"; Description: "For the current user"; Flags: exclusive
 
 [Files]
 Source: "{#bundleDir}\{#appName}.exe"; DestDir: "{app}"; Flags: ignoreversion
@@ -53,6 +55,9 @@ Root: HKCR; Subkey: "{#appName}NoteFile\shell\open\command"; ValueType: string; 
 Name: "{group}\{#appName}"; Filename: "{app}\{#appExeName}"
 Name: "{group}\{cm:UninstallProgram,{#appName}}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\{#appName}"; Filename: "{app}\{#appExeName}"; Tasks: desktopicon
+Name: "{commondesktop}\{#appName}"; Filename: "{app}\{#appExeName}"; Tasks: desktopicon
+Name: "{commonstartup}\{#appName}"; Filename: "{app}\{#appExeName}"; Tasks: startup\common
+Name: "{userstartup}\{#appName}"; Filename: "{app}\{#appExeName}"; Tasks: startup\user
 
 [Run]
 Filename: "{app}\{#appExeName}"; Description: "{cm:LaunchProgram,{#StringChange(appName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
