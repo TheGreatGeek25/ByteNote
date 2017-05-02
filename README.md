@@ -1,7 +1,7 @@
 # ByteNote
 ## About
 ByteNote is a note taking application.
-More information about this project is available [here](https://thegreatgeek25.github.io/Projects/C57note64)
+More information about this project is available [here](https://thegreatgeek25.github.io/Projects/ByteNote)
 ## Requirements
 ### .jar (Executable jar file)
 * Java 8 
