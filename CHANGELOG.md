@@ -1,5 +1,5 @@
 # v2.0.0
-Released [unknown]
+Released 5/2/2017
 * C57note64 is now ByteNote
 * New file type: ".bynt" (The ".cnote" file type is still supported, but it is not recommended.)
 * Updates can now be installed from inside ByteNote
