@@ -33,6 +33,7 @@ public class UpdatePane extends BorderPane {
 	
 	public Button installButton;
 	public Button cancelButton;
+	public Button exitButton;
 	public URL updateSite;
 	public WebView wv;
 	public ProgressBar loading;
@@ -50,6 +51,15 @@ public class UpdatePane extends BorderPane {
 		we.load(updateSite.toString()+"/releaseNotes.html");
 		setCenter(wv);
 		
+		exitButton = new Button("Exit");
+		exitButton.setOnAction( new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				UpdatePane.this.getScene().getWindow().hide();
+			}
+		});
+		setTop(exitButton);
+		
 		loading = new ProgressBar(0);
 		loading.setPrefHeight(30);
 		loadingLabel = new Label();
@@ -57,7 +67,6 @@ public class UpdatePane extends BorderPane {
 		loadingLabel.setAlignment(Pos.CENTER);
 		loadingVBox = new VBox(loading, loadingLabel);
 		loadingVBox.setVisible(false);
-		setTop(loadingVBox);
 		
 		installButton = new Button("Install");
 		installButton.setPrefSize(this.getWidth(), 50);
@@ -97,6 +106,7 @@ public class UpdatePane extends BorderPane {
 					download = null;
 				}
 				loadingVBox.setVisible(false);
+				UpdatePane.this.setTop(exitButton);
 				UpdatePane.this.setBottom(installButton);
 			}
 		});
@@ -115,7 +125,7 @@ public class UpdatePane extends BorderPane {
 			});
 			setOnClose = true;
 		}
-		
+		exitButton.setPrefWidth(this.getWidth());
 		installButton.setPrefWidth(this.getWidth());
 		cancelButton.setPrefWidth(this.getWidth());
 		loadingLabel.setPrefWidth(this.getWidth());
@@ -133,6 +143,7 @@ public class UpdatePane extends BorderPane {
 				installButton.setDisable(false);
 			}
 		if(download != null) {
+			setTop(loadingVBox);
 			loadingVBox.setVisible(true);
 			loading.setProgress(download.getProgress());
 			loading.setPrefWidth(this.getWidth());
@@ -159,8 +170,10 @@ public class UpdatePane extends BorderPane {
 			e.printStackTrace();
 		}
 		if (download != null && download.isRunning() && getChildren().contains(installButton)) {
+			setTop(loadingVBox);
 			setBottom(cancelButton);
 		} else if ((download == null || download.isCancelled()) && !getChildren().contains(installButton)) {
+			setTop(exitButton);
 			setBottom(installButton);
 		}
 	}

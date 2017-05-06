@@ -126,6 +126,9 @@ public class CAction implements EventHandler<ActionEvent> {
 				}
 				
 				break;
+			case "exit":
+				JFXMain.mainStage.hide();
+				break;
 			default:
 				break;
 			}

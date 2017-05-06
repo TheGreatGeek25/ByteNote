@@ -40,7 +40,6 @@ public class JavaFXNotFoundFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public JavaFXNotFoundFrame() {
-		setType(Type.POPUP);
 		setTitle("Error");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setMinimumSize( new Dimension(450, 300 ) );

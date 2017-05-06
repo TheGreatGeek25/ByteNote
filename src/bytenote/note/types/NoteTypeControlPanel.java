@@ -14,15 +14,13 @@ public class NoteTypeControlPanel extends VBox {
 	public Button deleteButton;
 	public Button addButton;
 	public Button editButton;
+	public Button exitButton;
 	
 	public NoteTypeControlPanel() {
 		super();
 		
 		setAlignment(Pos.CENTER);
 		setSpacing(20);
-		
-//		add(Box.createVerticalGlue());
-//		add(Box.createVerticalGlue());
 		
 		addButton = new Button("Add...");
 		addButton.setOnAction( new EventHandler<ActionEvent>() {
@@ -33,7 +31,6 @@ public class NoteTypeControlPanel extends VBox {
 			}
 		});
 		getChildren().add(addButton);
-//		add(Box.createVerticalGlue());
 		
 		editButton = new Button("Edit...");
 		editButton.setOnAction( new EventHandler<ActionEvent>() {
@@ -46,33 +43,29 @@ public class NoteTypeControlPanel extends VBox {
 		});
 		editButton.setDisable(true);
 		getChildren().add(editButton);
-//		add(Box.createVerticalGlue());
-		
-		/*deleteButton = new JButton(  new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				C57note64Main.isSaved = false;
-				( (NoteTypeManagerPanel) getParent()).deleteType(( (NoteTypeManagerPanel) getParent()).mainTable.getSelectedRow());
-				( (NoteTypeManagerPanel) getParent()).mainTable.setModel( new NoteTypeTableModel(( (NoteTypeManagerPanel) getParent()).data, ( (NoteTypeManagerPanel) getParent()).columnNames) );
-			}
-		} );*/
+
 		deleteButton = new Button("Delete");
 		deleteButton.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				( (NoteTypeManagerPanel) getParent()).deleteType(( (NoteTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem());
-//				( (NoteTypeManagerPanel) getParent()).mainTable.setModel( new NoteTypeTableModel(( (NoteTypeManagerPanel) getParent()).data, ( (NoteTypeManagerPanel) getParent()).columnNames) );
 			}
 		});
 		deleteButton.setDisable(true);
 		getChildren().add(deleteButton);
-//		add(Box.createVerticalGlue());
-//		add(Box.createVerticalGlue());
+		
+		exitButton = new Button("Exit");
+		exitButton.setOnAction( new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				NoteTypeControlPanel.this.getScene().getWindow().hide();
+			}
+		});
+		getChildren().add(exitButton);
 		
 	}
 	
 	public void c57run() {
-//		System.out.println(( (NoteTypeManagerPanel) getParent()).mainTable.getSelectedRow());
 		if(!( (NoteTypeManagerPanel) getParent()).mainTable.getSelectionModel().isEmpty() && !( (NoteTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem().getTypeName().equals("(default)")) {
 			deleteButton.setDisable(false);
 			editButton.setDisable(false);

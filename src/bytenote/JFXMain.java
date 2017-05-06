@@ -36,8 +36,10 @@ public class JFXMain extends Application {
 			primaryStage.setResizable(true);
 			primaryStage.setMinHeight(ByteNoteMain.minHeight);
 			primaryStage.setMinWidth(ByteNoteMain.minWidth);
-			primaryStage.setHeight(ByteNoteMain.prefHeight);
-			primaryStage.setWidth(ByteNoteMain.prefWidth);
+			if(!primaryStage.isFullScreen()) {
+				primaryStage.setHeight(ByteNoteMain.prefHeight);
+				primaryStage.setWidth(ByteNoteMain.prefWidth);
+			}
 			primaryStage.setOnCloseRequest( new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent event) {

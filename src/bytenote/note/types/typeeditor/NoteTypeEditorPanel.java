@@ -19,6 +19,8 @@ public class NoteTypeEditorPanel extends GridPane {
 	public String typeStr;
 	public Color typeColor;
 	
+	public Button exitButton;
+	
 	public Label typeStrLabel;
 	public Label typeColorLabel;
 	
@@ -35,14 +37,24 @@ public class NoteTypeEditorPanel extends GridPane {
 		typeStr = "Enter type name here";
 		typeColor = Color.BLUE;
 		
+		exitButton = new Button("Cancel");
+		exitButton.setOnAction( new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				NoteTypeEditorPanel.this.getScene().getWindow().hide();
+			}
+		});
+		add(exitButton, 0, 0);
+		setHalignment(exitButton, HPos.CENTER);
+		
 		typeStrEdit = new TextField();
 		typeStrEdit.setPromptText(typeStr);
 		typeStrEdit.focusTraversableProperty().set(false);
-		add(typeStrEdit, 0, 0);
+		add(typeStrEdit, 0, 1);
 		setHalignment(typeStrEdit, HPos.CENTER);
 		
 		cp = new ColorPicker(typeColor);
-		add(cp, 0, 1);
+		add(cp, 0, 2);
 		setHalignment(cp, HPos.CENTER);
 		
 		doneButton = new Button("Done");
@@ -54,7 +66,7 @@ public class NoteTypeEditorPanel extends GridPane {
 			}
 
 		});
-		add(doneButton, 0, 2);
+		add(doneButton, 0, 3);
 		setHalignment(doneButton, HPos.CENTER);
 		
 		setVisible(true);

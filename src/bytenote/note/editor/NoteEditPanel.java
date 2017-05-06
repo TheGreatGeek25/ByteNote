@@ -33,6 +33,7 @@ public class NoteEditPanel extends GridPane {
 	public Note editNote;
 	private String notePanel;
 	
+	public Button cancelButton;
 	public Button doneButton;
 		
 	public NoteEditPanel(Note editNote) {
@@ -40,7 +41,16 @@ public class NoteEditPanel extends GridPane {
 		this.editNote = editNote;
 				
 //		setBackground( new Color(200, 188, 255) );
-		setBackground( new Background( new BackgroundFill(Color.web("rgb(200,188,255)"), null, null) ) );
+		setBackground( new Background( new BackgroundFill(Color.rgb(200, 188, 255), null, null) ) );
+		
+		cancelButton = new Button("Cancel");
+		cancelButton.setOnAction( new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(javafx.event.ActionEvent event) {
+				NoteEditPanel.this.getScene().getWindow().hide();
+			}
+		});
+		add(cancelButton, 0, 0);
 		
 		textFieldLabel = new Label("Text");
 		add(textFieldLabel, 0, 1);

@@ -23,7 +23,7 @@ public class ControlPanel extends HBox {
 	public Menu selection;
 	public MenuItem deselect;
 	public Menu settings;
-	public MenuItem checkUpdates;
+	public MenuItem checkUpdates, exit;
 	
 	public NoteTypeManagerPanel typeManager;
 
@@ -98,6 +98,10 @@ public class ControlPanel extends HBox {
 		checkUpdates = new MenuItem("Check for Updates...");
 		checkUpdates.setOnAction( new CAction("checkForUpdatesAction") );
 		settings.getItems().add(checkUpdates);
+		
+		exit = new MenuItem("Exit");
+		exit.setOnAction( new CAction("exit") );
+		settings.getItems().add(exit);
 		
 		
 		getChildren().add(menuBar);
