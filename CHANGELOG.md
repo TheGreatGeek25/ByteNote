@@ -1,5 +1,5 @@
 #### v2.0.1
-Released [unknown]
+Released 5/6/2017
 * Minor changes to the GUI
 
 # v2.0.0
