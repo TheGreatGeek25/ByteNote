@@ -1,3 +1,7 @@
+#### v2.0.1
+Released [unknown]
+* Minor changes to the GUI
+
 # v2.0.0
 Released 5/2/2017
 * C57note64 is now ByteNote
