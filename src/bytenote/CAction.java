@@ -60,36 +60,39 @@ public class CAction implements EventHandler<ActionEvent> {
 				JFXMain.root.infoPanel.setNote(null);
 				break;
 			case "newFileAction":
-				File inputFile = null;
-				inputFile = JFXMain.openFileView(JFXMain.mainStage, "save");
-				if(inputFile != null) {
-//					try {
-//								inputFile = NoteFileFilter.requestFormatUpdate(inputFile);
-//					} catch (IOException e1) {}
-					ByteNoteMain.filePath = inputFile.getAbsolutePath();
-					try {
-						NoteFileReader.loadDataFromFile(inputFile, NoteData.getBlankNoteData());
-//						CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
-						NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
-					} catch (ClassNotFoundException | IOException e) {
-						e.printStackTrace();
+				if(JFXMain.confirmExit("continue")) {
+					File inputFile = null;
+					inputFile = JFXMain.openFileView(JFXMain.mainStage, "save");
+					if(inputFile != null) {
+						//					try {
+						//								inputFile = NoteFileFilter.requestFormatUpdate(inputFile);
+						//					} catch (IOException e1) {}
+						ByteNoteMain.filePath = inputFile.getAbsolutePath();
+						try {
+							NoteFileReader.loadDataFromFile(inputFile, NoteData.getBlankNoteData());
+							//						CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
+							NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
+						} catch (ClassNotFoundException | IOException e) {
+							e.printStackTrace();
+						}
 					}
 				}
-				
 				break;
 			case "openAction":
-				try {
-					File inputFile1 = null;
-					inputFile1 = JFXMain.openFileView(JFXMain.mainStage, "open");
-					if(inputFile1 != null) {
-						inputFile1 = NoteFileFilter.requestFormatUpdate(inputFile1);
-						ByteNoteMain.filePath = inputFile1.getAbsolutePath();
-						NoteFileReader.loadDataFromFile(inputFile1, NoteData.getBlankNoteData());
-						NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
-//						CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
+				if(JFXMain.confirmExit("continue")) {
+					try {
+						File inputFile1 = null;
+						inputFile1 = JFXMain.openFileView(JFXMain.mainStage, "open");
+						if(inputFile1 != null) {
+							inputFile1 = NoteFileFilter.requestFormatUpdate(inputFile1);
+							ByteNoteMain.filePath = inputFile1.getAbsolutePath();
+							NoteFileReader.loadDataFromFile(inputFile1, NoteData.getBlankNoteData());
+							NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
+							//						CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
+						}
+					} catch (URISyntaxException | IOException | ClassNotFoundException e) {
+						e.printStackTrace();
 					}
-				} catch (URISyntaxException | IOException | ClassNotFoundException e) {
-					e.printStackTrace();
 				}
 				break;
 			case "saveAsAction":
@@ -114,6 +117,12 @@ public class CAction implements EventHandler<ActionEvent> {
 						Stage s = JFXMain.showView(JFXMain.mainStage, up, "Update", 600, 700);
 						s.setWidth(600);
 						s.setHeight(700);
+					} else {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.initModality(Modality.APPLICATION_MODAL);
+						alert.initOwner(JFXMain.mainStage);
+						alert.setHeaderText("No updates available.");
+						alert.showAndWait();
 					}
 					
 				} catch (IOException e) {
