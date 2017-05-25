@@ -1,3 +1,7 @@
+#### v2.0.2
+Released 5/24/2017
+* Minor bug fixes
+
 #### v2.0.1
 Released 5/6/2017
 * Minor changes to the GUI
