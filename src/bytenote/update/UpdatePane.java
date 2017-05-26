@@ -150,7 +150,9 @@ public class UpdatePane extends BorderPane {
 			loadingLabel.setText(Long.toString(Math.round((float)download.getBytesLoaded()/download.getTotalBytes()*100))+"%   "+Long.toString(download.getBytesLoaded())+"/"+Long.toString(download.getTotalBytes())+" bytes");
 			if(download.isDone() && download.getState() == State.SUCCEEDED) {
 				if(UpdateHandler.getUpdateType() == UpdateType.JAR) {
-					Runtime.getRuntime().exec("\""+UpdateChecker.getJavaHome()+"/bin/java\" -jar \""+downloadFile.getAbsolutePath()+"\" \""+new File(ByteNoteMain.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath()+"\" \""+ByteNoteMain.updateSite.toString()+"\"");
+//					Runtime.getRuntime().exec("\""+UpdateChecker.getJavaHome()+"/bin/java\" -jar \""+downloadFile.getAbsolutePath()+"\" \""+new File(ByteNoteMain.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath()+"\" \""+ByteNoteMain.updateSite.toString()+"\"");
+					ProcessBuilder pb = new ProcessBuilder(UpdateChecker.getJavaHome()+"/bin/java", "-jar", downloadFile.getAbsolutePath(), new File(ByteNoteMain.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath(), ByteNoteMain.updateSite.toString());
+					pb.start();
 					System.exit(0);
 				} else if(UpdateHandler.getUpdateType() == UpdateType.WIN32BIT) {
 					Runtime.getRuntime().exec("\""+downloadFile.getAbsolutePath()+"\" /SILENT /CLOSEAPPLICATIONS");

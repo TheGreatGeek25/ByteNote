@@ -1,3 +1,7 @@
+### v2.0.3
+Released [unknown]
+* Fixed a bug that prevented updates while running on Linux
+
 #### v2.0.2
 Released 5/24/2017
 * Minor bug fixes
