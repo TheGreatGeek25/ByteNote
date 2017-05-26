@@ -1,5 +1,5 @@
 ### v2.0.3
-Released [unknown]
+Released 5/26/2017
 * Fixed a bug that prevented updates while running on Linux
 
 #### v2.0.2
