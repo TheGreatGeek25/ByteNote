@@ -12,7 +12,7 @@ public class ByteNoteMain {
 	public static boolean isSaved = true;
 	
 	public static final String name = "ByteNote";
-	public static final String version = "v2.0.4-alpha";
+	public static final String version = "v2.0.4";
 	public static final String syntaxVersion = "v1.0";
 	public static final String BYNTVersion = "BYNTv1.0";
 	
