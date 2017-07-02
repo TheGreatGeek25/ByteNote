@@ -40,7 +40,6 @@ public class NoteTypeTableModel extends AbstractTableModel {
 	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		// TODO Auto-generated method stub
 		return getValueAt(0, columnIndex).getClass();
 	}
 	

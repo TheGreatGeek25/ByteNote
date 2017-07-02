@@ -96,9 +96,9 @@ public class NoteTypeManagerPanel extends BorderPane {
 	
 	public ObservableList<CColor> loadData() {
 		ObservableList<CColor> list = FXCollections.observableArrayList();
-		for(int i=0; i<NoteTypes.typeMap.keySet().size(); i++) {
-			String[] keyArray = NoteTypes.typeMap.keySet().toArray( new String[0] );
-			CColor newType = new CColor(keyArray[i], NoteTypes.typeMap.get(keyArray[i]));
+		for(int i=0; i<NoteTypes.getTypeMap().keySet().size(); i++) {
+			String[] keyArray = NoteTypes.getTypeMap().keySet().toArray( new String[0] );
+			CColor newType = new CColor(keyArray[i], NoteTypes.getTypeMap().get(keyArray[i]));
 			list.add(newType);
 		}
 		return list;
@@ -125,7 +125,7 @@ public class NoteTypeManagerPanel extends BorderPane {
 	}
 	
 	public void saveData() {
-		NoteTypes.typeMap.clear();
+		NoteTypes.getTypeMap().clear();
 		for (int i = 0; i < types.size(); i++) {
 			NoteTypes.addToMap(types.get(i).getTypeName(), types.get(i).getTypeColor());
 			

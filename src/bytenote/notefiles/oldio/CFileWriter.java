@@ -103,15 +103,15 @@ public class CFileWriter {
 		 */
 		writeString += "settings\n"
 				+ "types\n";
-		for (int i = 0; i < NoteTypes.typeMap.keySet().toArray().length; i++) {
-			writeString += NoteTypes.typeMap.keySet().toArray()[i]+"";
+		for (int i = 0; i < NoteTypes.getTypeMap().keySet().toArray().length; i++) {
+			writeString += NoteTypes.getTypeMap().keySet().toArray()[i]+"";
 			String color;
 			//red
-			color = ( (int) Math.floor(NoteTypes.typeMap.get(NoteTypes.typeMap.keySet().toArray()[i]).getRed()*255))+",";
+			color = ( (int) Math.floor(NoteTypes.getColor(NoteTypes.getTypeMap().keySet().toArray(new String[0])[i]).getRed()*255))+",";
 			//green
-			color += ( (int) Math.floor(NoteTypes.typeMap.get(NoteTypes.typeMap.keySet().toArray()[i]).getGreen()*255))+",";
+			color += ( (int) Math.floor(NoteTypes.getColor(NoteTypes.getTypeMap().keySet().toArray(new String[0])[i]).getGreen()*255))+",";
 			//blue
-			color += ( (int) Math.floor(NoteTypes.typeMap.get(NoteTypes.typeMap.keySet().toArray()[i]).getBlue()*255));
+			color += ( (int) Math.floor(NoteTypes.getColor(NoteTypes.getTypeMap().keySet().toArray(new String[0])[i]).getBlue()*255));
 			writeString += color+"\n";
 		}
 		

@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
 
 import bytenote.ByteNoteMain;
 import bytenote.JFXMain;
@@ -15,10 +18,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
@@ -39,9 +42,11 @@ public class UpdatePane extends BorderPane {
 	public ProgressBar loading;
 	public VBox loadingVBox;
 	public Label loadingLabel;
+	public Label loadingTimeLabel;
 	public DownloadTask download;
 	
 	private File downloadFile;
+	private String time = "  Calculating time remaining.";
 	
 	public UpdatePane(URL updateSite) throws IOException {
 		this.updateSite = updateSite;
@@ -65,7 +70,10 @@ public class UpdatePane extends BorderPane {
 		loadingLabel = new Label();
 		loadingLabel.setPrefHeight(20);
 		loadingLabel.setAlignment(Pos.CENTER);
-		loadingVBox = new VBox(loading, loadingLabel);
+		loadingTimeLabel = new Label();
+		loadingTimeLabel.setPrefHeight(20);
+		loadingTimeLabel.setAlignment(Pos.CENTER);
+		loadingVBox = new VBox(loading, loadingLabel, loadingTimeLabel);
 		loadingVBox.setVisible(false);
 		
 		installButton = new Button("Install");
@@ -129,6 +137,7 @@ public class UpdatePane extends BorderPane {
 		installButton.setPrefWidth(this.getWidth());
 		cancelButton.setPrefWidth(this.getWidth());
 		loadingLabel.setPrefWidth(this.getWidth());
+		loadingTimeLabel.setPrefWidth(this.getWidth());
 		try {
 			if(UpdateHandler.getUpdateType() == UpdateType.JAR) {
 				if(UpdateChecker.isJRECompatible(updateSite)) {
@@ -143,19 +152,31 @@ public class UpdatePane extends BorderPane {
 				installButton.setDisable(false);
 			}
 		if(download != null) {
-			setTop(loadingVBox);
-			loadingVBox.setVisible(true);
+			if(getChildrenUnmodifiable().contains(loadingVBox)) {
+				setTop(loadingVBox);
+				loadingVBox.setVisible(true);
+			}
 			loading.setProgress(download.getProgress());
 			loading.setPrefWidth(this.getWidth());
+			if(download.getBytesLoaded() != 0) {
+				long secondsLoading = (long) Duration.between(download.getStartTime(), Instant.now()).getSeconds();
+				long secondsLeft = (long) ((download.getTotalBytes()-download.getBytesLoaded())/((float)download.getBytesLoaded()/secondsLoading));
+				time = String.format("  %d hours %d minutes %d seconds",
+						TimeUnit.SECONDS.toHours(secondsLeft), 
+						TimeUnit.SECONDS.toMinutes(secondsLeft)-TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(secondsLeft)),
+						secondsLeft-TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(secondsLeft)-TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(secondsLeft)))
+				);
+			}
 			loadingLabel.setText(Long.toString(Math.round((float)download.getBytesLoaded()/download.getTotalBytes()*100))+"%   "+Long.toString(download.getBytesLoaded())+"/"+Long.toString(download.getTotalBytes())+" bytes");
+			loadingTimeLabel.setText("Time remaining: "+time);
 			if(download.isDone() && download.getState() == State.SUCCEEDED) {
 				if(UpdateHandler.getUpdateType() == UpdateType.JAR) {
-//					Runtime.getRuntime().exec("\""+UpdateChecker.getJavaHome()+"/bin/java\" -jar \""+downloadFile.getAbsolutePath()+"\" \""+new File(ByteNoteMain.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath()+"\" \""+ByteNoteMain.updateSite.toString()+"\"");
 					ProcessBuilder pb = new ProcessBuilder(UpdateChecker.getJavaHome()+"/bin/java", "-jar", downloadFile.getAbsolutePath(), new File(ByteNoteMain.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath(), ByteNoteMain.updateSite.toString());
 					pb.start();
 					System.exit(0);
 				} else if(UpdateHandler.getUpdateType() == UpdateType.WIN32BIT) {
-					Runtime.getRuntime().exec("\""+downloadFile.getAbsolutePath()+"\" /SILENT /CLOSEAPPLICATIONS");
+					ProcessBuilder pb = new ProcessBuilder(downloadFile.getAbsolutePath(), "/SILENT", "/CLOSEAPPLICATIONS");
+					pb.start();
 					System.exit(0);
 				}
 			} else if(download.getState() == State.FAILED) {

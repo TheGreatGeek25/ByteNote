@@ -74,7 +74,7 @@ public class NoteTypeEditorPanel extends GridPane {
 	
 	protected void saveType() {
 //		System.out.println("Save type");
-		if(NoteTypes.typeMap.containsKey(typeStr)) {
+		if(NoteTypes.getTypeMap().containsKey(typeStr)) {
 			for (int i = 0; i < JFXMain.root.todoPanel.notes.size(); i++) {
 				if(JFXMain.root.todoPanel.notes.get(i).type.equals(typeStr)) {
 					JFXMain.root.todoPanel.notes.get(i).type = typeStrEdit.getText();
@@ -90,7 +90,7 @@ public class NoteTypeEditorPanel extends GridPane {
 					JFXMain.root.donePanel.notes.get(i).type = typeStrEdit.getText();
 				}
 			}
-			NoteTypes.typeMap.remove(typeStr);
+			NoteTypes.getTypeMap().remove(typeStr);
 		}
 		NoteTypeManagerPanel manager = JFXMain.root.controlPanel.typeManager;
 		NoteTypes.addToMap(typeStrEdit.getText(), cp.getValue());
@@ -101,7 +101,7 @@ public class NoteTypeEditorPanel extends GridPane {
 	public NoteTypeEditorPanel(String type) {
 		this();
 		typeStr = type;
-		typeColor = NoteTypes.typeMap.get(type);
+		typeColor = NoteTypes.getColor(type);
 		typeStrEdit.setText(typeStr);
 		cp.setValue(typeColor);;
 	}

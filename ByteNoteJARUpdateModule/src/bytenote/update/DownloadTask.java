@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.time.Instant;
 
 import javafx.concurrent.Task;
 
@@ -17,12 +18,14 @@ public class DownloadTask extends Task<Void> {
 	protected FileOutputStream out;
 	protected long totalBytes;
 	protected long bytesLoaded = 0;
+	private Instant startTime;
 	
 	public DownloadTask(URL downloadUrl, File destFile) {
 		this.download = downloadUrl;
 		this.dest = destFile;
 		try {
 			this.totalBytes = downloadUrl.openConnection().getContentLengthLong();
+			this.startTime = Instant.now();
 		} catch (IOException e) {e.printStackTrace();}
 	}
 	
@@ -70,6 +73,10 @@ public class DownloadTask extends Task<Void> {
 		out.close();
 		in.close();
 		return null;
+	}
+
+	public Instant getStartTime() {
+		return startTime;
 	}
 	
 }

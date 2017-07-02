@@ -6,6 +6,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -46,11 +49,13 @@ public class UpdateMain extends Application {
 	public DownloadTask download;
 	public Button cancelButton;
 	public Label loadingLabel;
+	public Label loadingTimeLabel;
 	public VBox loadingVBox;
 	public Stage stage;
 	
 	private boolean setOnClose;
-	
+	private String time = "  Calculating time remaining.";
+
 
 	public static void main(String[] args) throws MalformedURLException {
 		try {
@@ -83,7 +88,10 @@ public class UpdateMain extends Application {
 		loadingLabel = new Label();
 		loadingLabel.setPrefHeight(20);
 		loadingLabel.setAlignment(Pos.CENTER);
-		loadingVBox = new VBox(loading, loadingLabel);
+		loadingTimeLabel = new Label();
+		loadingTimeLabel.setPrefHeight(20);
+		loadingTimeLabel.setAlignment(Pos.CENTER);
+		loadingVBox = new VBox(loading, loadingLabel, loadingTimeLabel);
 		loadingVBox.setVisible(true);
 		bp.setCenter(loadingVBox);
 //		jarFile.delete();
@@ -130,10 +138,21 @@ public class UpdateMain extends Application {
 		}
 		cancelButton.setPrefWidth(stage.getWidth());
 		loadingLabel.setPrefWidth(stage.getWidth());
+		loadingTimeLabel.setPrefWidth(stage.getWidth());
 		loading.setPrefWidth(stage.getWidth());
 		if(download != null) {
 			loading.setProgress(download.getProgress());
+			if(download.getBytesLoaded() != 0) {
+				long secondsLoading = (long) Duration.between(download.getStartTime(), Instant.now()).getSeconds();
+				long secondsLeft = (long) ((download.getTotalBytes()-download.getBytesLoaded())/((float)download.getBytesLoaded()/secondsLoading));
+				time = String.format("  %d hours %d minutes %d seconds",
+						TimeUnit.SECONDS.toHours(secondsLeft), 
+						TimeUnit.SECONDS.toMinutes(secondsLeft)-TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(secondsLeft)),
+						secondsLeft-TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(secondsLeft)-TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(secondsLeft)))
+				);
+			}
 			loadingLabel.setText(Long.toString(Math.round((float)download.getBytesLoaded()/download.getTotalBytes()*100))+"%   "+Long.toString(download.getBytesLoaded())+"/"+Long.toString(download.getTotalBytes())+" bytes");
+			loadingTimeLabel.setText("Time remaining: "+time);
 			try {
 				if(download.isDone() && download.getState() == State.SUCCEEDED) {
 					Files.move(downloadFile.toPath(), jarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);

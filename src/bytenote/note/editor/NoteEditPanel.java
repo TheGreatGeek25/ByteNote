@@ -62,7 +62,7 @@ public class NoteEditPanel extends GridPane {
 		typeBoxLabel = new Label("Type");
 		add(typeBoxLabel, 0, 3);
 		
-		ObservableList<Object> types = FXCollections.observableArrayList(NoteTypes.typeMap.keySet().toArray());
+		ObservableList<Object> types = FXCollections.observableArrayList(NoteTypes.getTypeMap().keySet().toArray());
 		noteTypeBox = new ComboBox<>(types);
 		noteTypeBox.setEditable(false);
 		noteTypeBox.setValue(this.editNote.type);

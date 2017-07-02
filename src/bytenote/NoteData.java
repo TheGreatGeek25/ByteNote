@@ -14,7 +14,7 @@ public abstract class NoteData implements Serializable {
 	private static final long serialVersionUID = 287788144153840368L;
 	
 	public static NoteData getCurrentData() {
-		return new V1_0(JFXMain.root.todoPanel.notes, JFXMain.root.doingPanel.notes, JFXMain.root.donePanel.notes, NoteTypes.typeMap);
+		return new V1_0(JFXMain.root.todoPanel.notes, JFXMain.root.doingPanel.notes, JFXMain.root.donePanel.notes, NoteTypes.getTypeMap());
 	}
 	
 	public static NoteData getBlankNoteData() {
@@ -54,7 +54,7 @@ public abstract class NoteData implements Serializable {
 			JFXMain.root.doingPanel.addNotes(doingNotes);
 			JFXMain.root.donePanel.notes.clear();
 			JFXMain.root.donePanel.addNotes(doneNotes);
-			NoteTypes.typeMap.clear();
+			NoteTypes.getTypeMap().clear();
 			for(String s:noteTypes.keySet()) {
 				NoteTypes.addToMap(s, Color.color(noteTypes.get(s)[0], noteTypes.get(s)[1], noteTypes.get(s)[2]));
 			}

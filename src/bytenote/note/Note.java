@@ -30,7 +30,7 @@ public class Note extends Label implements Serializable {
 		this.priority = priority;
 		this.noteText = text;
 		this.type = type;
-		setBackground( new Background( new BackgroundFill(NoteTypes.typeMap.get(type), null, null) ) );
+		setBackground( new Background( new BackgroundFill(NoteTypes.getColor(type), null, null) ) );
 		setText(this.noteText);
 //		setTextFill(Color.BLACK);
 //		setOpaque(true);
@@ -65,14 +65,14 @@ public class Note extends Label implements Serializable {
 			}
 		}
 		setText(noteText);
-		setBackground( new Background( new BackgroundFill(NoteTypes.typeMap.get(type), null, null/*new Insets(30)*/) ) );
+		setBackground( new Background( new BackgroundFill(NoteTypes.getColor(type), null, null/*new Insets(30)*/) ) );
 		setSelectedBorder(getSelected());
 		
 	}
 	
 	public void setSelectedBorder(boolean selected) {
 		if(selected) {
-			setBorder(new Border(new BorderStroke(NoteTypes.getPaintFromType(type, true), BorderStrokeStyle.SOLID, null, new BorderWidths(4)) ) );
+			setBorder(new Border(new BorderStroke(NoteTypes.getColor(type).invert(), BorderStrokeStyle.SOLID, null, new BorderWidths(4)) ) );
 //			setBorder(BorderFactory.createLineBorder( new Color(255-getBackground().getRed(), 255-getBackground().getGreen(), 255-getBackground().getBlue()) , 4));
 		} else {
 			setBorder(Border.EMPTY);
