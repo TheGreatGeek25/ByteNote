@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 public class NoteTypes {
 	protected static HashMap<String, Color> typeMap = new HashMap<String, Color>();
-	protected static Color defaultColor = Color.rgb(255, 255, 150);
+	protected static Color defaultColor = Color.rgb(255, 255, 127);
 	
 	public static Color getColor(String name) {
 		return typeMap.get(name);
@@ -22,6 +22,7 @@ public class NoteTypes {
 		for (int i = 0; i < newMap.keySet().toArray().length; i++) {
 			addToMap((String) newMap.keySet().toArray()[i], newMap.get(newMap.keySet().toArray()[i]));
 		}
+		addDefaultColor();
 	}
 	
 	public static void setDefault(Color c) {

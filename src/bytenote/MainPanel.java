@@ -70,7 +70,7 @@ public class MainPanel extends BorderPane {
 	}
 	
 	public void c57run() {
-		NoteTypes.addToMap("(default)", Color.rgb(255, 255, 150) );
+		NoteTypes.addDefaultColor();
 		
 		todoScrollPane.setPrefSize(this.getWidth()*NotePanel.paneToWin, this.getHeight());
 		doingScrollPane.setPrefSize(this.getWidth()*NotePanel.paneToWin, this.getHeight());
