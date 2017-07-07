@@ -26,6 +26,16 @@
 	<property name="build.win32bit.exeUpdate.script.file" value="${build.data.dir}/Windows/scripts/ByteNote-win32bit-update.iss"/>
 	<property name="build.logos.dir" value="${build.data.dir}/logos"/>
 	
+	<property name="build.isVersionComplete" value="false"/>
+	
+	<condition property="isVersionComplete">
+		<equals arg1="${build.isVersionComplete}" arg2="false" />
+	</condition>
+		
+	<target name="echoIsVersionComplete" if="isVersionComplete">
+		<echo level="warning">This version of ${ant.project.name} is not complete!</echo>
+	</target>
+		
 	<target name="init-fx-tasks">
 		<path id="fxant">
 			<filelist>
@@ -139,7 +149,7 @@
 		</jar>
 	</target>
 	
-	<target depends="clean" name="initBin">
+	<target depends="echoIsVersionComplete,clean" name="initBin">
 		<mkdir dir="${build.bin}"/>
 		<copy includeemptydirs="false" todir="${build.bin}">
 			<fileset dir="${build.src}">
