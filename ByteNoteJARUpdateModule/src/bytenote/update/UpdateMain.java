@@ -152,7 +152,7 @@ public class UpdateMain extends Application {
 				);
 			}
 			loadingLabel.setText(Long.toString(Math.round((float)download.getBytesLoaded()/download.getTotalBytes()*100))+"%   "+Long.toString(download.getBytesLoaded())+"/"+Long.toString(download.getTotalBytes())+" bytes");
-			loadingTimeLabel.setText("Time remaining: "+time);
+			loadingTimeLabel.setText("Download Speed: "+download.getDownloadSpeedString()+"  Time remaining: "+time);
 			try {
 				if(download.isDone() && download.getState() == State.SUCCEEDED) {
 					Files.move(downloadFile.toPath(), jarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);

@@ -168,7 +168,7 @@ public class UpdatePane extends BorderPane {
 				);
 			}
 			loadingLabel.setText(Long.toString(Math.round((float)download.getBytesLoaded()/download.getTotalBytes()*100))+"%   "+Long.toString(download.getBytesLoaded())+"/"+Long.toString(download.getTotalBytes())+" bytes");
-			loadingTimeLabel.setText("Time remaining: "+time);
+			loadingTimeLabel.setText("Download Speed: "+download.getDownloadSpeedString()+"  Time remaining: "+time);
 			if(download.isDone() && download.getState() == State.SUCCEEDED) {
 				if(UpdateHandler.getUpdateType() == UpdateType.JAR) {
 					ProcessBuilder pb = new ProcessBuilder(UpdateChecker.getJavaHome()+"/bin/java", "-jar", downloadFile.getAbsolutePath(), new File(ByteNoteMain.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath(), ByteNoteMain.updateSite.toString());
