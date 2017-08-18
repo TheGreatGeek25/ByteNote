@@ -23,7 +23,7 @@ public class ControlPanel extends HBox {
 	public Menu selection;
 	public MenuItem deselect;
 	public Menu settings;
-	public MenuItem checkUpdates, exit;
+	public MenuItem checkUpdates, exit, releaseNotes;
 	
 	public NoteTypeManagerPanel typeManager;
 
@@ -33,7 +33,6 @@ public class ControlPanel extends HBox {
 	
 	public ControlPanel() {
 		super();
-//		setName("ControlPanel");
 		setPrefSize(JFXMain.mainStage.getWidth(), InfoPanel.defaultHeight);
 		setBackground( new Background( new BackgroundFill(Color.web("#00ffff"), null, null) ) );
 		
@@ -103,17 +102,18 @@ public class ControlPanel extends HBox {
 		exit.setOnAction( new CAction("exit") );
 		settings.getItems().add(exit);
 		
+		releaseNotes = new MenuItem("Show Release Notes...");
+		releaseNotes.setOnAction( new CAction("showReleaseNotes") );
+		settings.getItems().add(releaseNotes);
+		
 		
 		getChildren().add(menuBar);
 		
-//		setEnabled(true);
 		setVisible(true);
 		
 	}
 	
 	public void c57run() {
-//		revalidate();
-//		repaint();
 		if(typeManager != null) {
 			typeManager.c57run();
 			

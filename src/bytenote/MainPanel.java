@@ -11,7 +11,6 @@ import javafx.concurrent.Task;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 
 public class MainPanel extends BorderPane {
 	
@@ -30,8 +29,6 @@ public class MainPanel extends BorderPane {
 	
 	public MainPanel() {
 		super();
-//		setWidth(JFXMain.mainStage.getWidth()-50);
-//		setHeight(JFXMain.mainStage.getHeight()-50);
 		
 		setVisible(true);
 		
