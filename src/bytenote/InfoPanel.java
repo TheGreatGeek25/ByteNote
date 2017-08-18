@@ -53,19 +53,9 @@ public class InfoPanel extends HBox {
 		
 		editNote = new Button("Edit");
 		editNote.setDisable(true);
-		/*editNote.addActionListener( new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});*/
-		editNote.setOnAction( new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
+		editNote.setOnAction( (ActionEvent event) -> {
 				InfoPanel.this.noteEditor = new NoteEditPanel(note);
 				JFXMain.showView(JFXMain.mainStage, InfoPanel.this.noteEditor, "Edit note", 300, 300);
-//				InfoPanel.this.noteEditor = new CNoteEdit(C57note64Main_OLD.c57main, "Edit note", note);
-			}
 		});
 		getChildren().add(editNote);
 		
@@ -92,10 +82,10 @@ public class InfoPanel extends HBox {
 		
 	}
 	
-	public void c57run() {
+	public void _run() {
 		if(noteEditor != null) {
 			if(noteEditor.getScene().getWindow().isShowing()) {
-				noteEditor.c57run();
+				noteEditor._run();
 			} else {
 				noteEditor = null;
 			}

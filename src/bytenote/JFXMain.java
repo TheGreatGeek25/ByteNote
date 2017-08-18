@@ -8,7 +8,6 @@ import bytenote.notefiles.NoteFileFilter;
 import bytenote.notefiles.NoteFileReader;
 import bytenote.notefiles.NoteFileWriter;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -40,13 +39,10 @@ public class JFXMain extends Application {
 				primaryStage.setHeight(ByteNoteMain.prefHeight);
 				primaryStage.setWidth(ByteNoteMain.prefWidth);
 			}
-			primaryStage.setOnCloseRequest( new EventHandler<WindowEvent>() {
-				@Override
-				public void handle(WindowEvent event) {
+			primaryStage.setOnCloseRequest((WindowEvent event) -> {
 					if(!confirmExit()) {
 						event.consume();
 					}
-				}
 			});
 						
 			root = new MainPanel();
@@ -68,9 +64,9 @@ public class JFXMain extends Application {
 			ByteNoteMain.savedData = NoteData.getCurrentData();
 			NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
 			
-			root.c57run = root.new C57runService();
-			root.c57run.setRestartOnFailure(true);	
-			root.c57run.start();
+			root._run = root.new _runService();
+			root._run.setRestartOnFailure(true);	
+			root._run.start();
 		} catch(URISyntaxException | IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}

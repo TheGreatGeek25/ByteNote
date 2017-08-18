@@ -113,9 +113,9 @@ public class ControlPanel extends HBox {
 		
 	}
 	
-	public void c57run() {
+	public void _run() {
 		if(typeManager != null) {
-			typeManager.c57run();
+			typeManager._run();
 			
 		}
 		if(JFXMain.root.infoPanel.note != null) {

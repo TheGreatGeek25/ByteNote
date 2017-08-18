@@ -14,7 +14,7 @@ import javafx.scene.layout.BorderPane;
 
 public class MainPanel extends BorderPane {
 	
-	public C57runService c57run;
+	public _runService _run;
 	
 	public NotePanel todoPanel;
 	public NotePanel doingPanel;
@@ -66,7 +66,7 @@ public class MainPanel extends BorderPane {
 		
 	}
 	
-	public void c57run() {
+	public void _run() {
 		NoteTypes.addDefaultColor();
 		
 		todoScrollPane.setPrefSize(this.getWidth()*NotePanel.paneToWin, this.getHeight());
@@ -74,11 +74,11 @@ public class MainPanel extends BorderPane {
 		doneScrollPane.setPrefSize(this.getWidth()*NotePanel.paneToWin, this.getHeight());
 
 		
-		controlPanel.c57run();
-		todoPanel.c57run();
-		doingPanel.c57run();
-		donePanel.c57run();
-		infoPanel.c57run();
+		controlPanel._run();
+		todoPanel._run();
+		doingPanel._run();
+		donePanel._run();
+		infoPanel._run();
 		
 		if(ByteNoteMain.savedData != null && ByteNoteMain.savedData.isEqual(NoteData.getCurrentData())) {
 			ByteNoteMain.isSaved = true;
@@ -88,24 +88,22 @@ public class MainPanel extends BorderPane {
 			JFXMain.mainStage.setTitle(ByteNoteMain.name+"   *"+new File(ByteNoteMain.filePath).getAbsolutePath()+"*");
 		}
 		
-		UpdateHandler.c57run();
+		UpdateHandler._run();
 		
 	}
 	
 	
-	public class C57runService extends ScheduledService<Void> {
+	public class _runService extends ScheduledService<Void> {
 
 		@Override
 		protected Task<Void> createTask() {
 			return new Task<Void>() {
 				@Override
 				protected Void call() throws Exception {
-					Platform.runLater( new Runnable() {
-						@Override
-						public void run() {
-							MainPanel.this.c57run();
+					Platform.runLater( () -> {
+							MainPanel.this._run();
 						}
-					});
+					);
 					return null;
 				}
 			};
