@@ -65,7 +65,7 @@ public class NoteTypeControlPanel extends VBox {
 		
 	}
 	
-	public void c57run() {
+	public void _run() {
 		if(!( (NoteTypeManagerPanel) getParent()).mainTable.getSelectionModel().isEmpty() && !( (NoteTypeManagerPanel) getParent()).mainTable.getSelectionModel().getSelectedItem().getTypeName().equals("(default)")) {
 			deleteButton.setDisable(false);
 			editButton.setDisable(false);

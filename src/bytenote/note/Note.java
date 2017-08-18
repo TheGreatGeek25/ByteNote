@@ -32,10 +32,6 @@ public class Note extends Label implements Serializable {
 		this.type = type;
 		setBackground( new Background( new BackgroundFill(NoteTypes.getColor(type), null, null) ) );
 		setText(this.noteText);
-//		setTextFill(Color.BLACK);
-//		setOpaque(true);
-//		addMouseListener( new CMouseListener() );
-//		addEventFilter(MouseEvent.MOUSE_CLICKED, new CMouseListener() );
 		setOnMousePressed( new CMouseListener() );
 		setWrapText(true);
 	}
@@ -53,7 +49,7 @@ public class Note extends Label implements Serializable {
 		}
 	}
 	
-	public void c57run() {
+	public void _run() {
 		if(getOnMousePressed() == null) {
 			setOnMousePressed( new CMouseListener() );
 		}
@@ -73,7 +69,6 @@ public class Note extends Label implements Serializable {
 	public void setSelectedBorder(boolean selected) {
 		if(selected) {
 			setBorder(new Border(new BorderStroke(NoteTypes.getColor(type).invert(), BorderStrokeStyle.SOLID, null, new BorderWidths(4)) ) );
-//			setBorder(BorderFactory.createLineBorder( new Color(255-getBackground().getRed(), 255-getBackground().getGreen(), 255-getBackground().getBlue()) , 4));
 		} else {
 			setBorder(Border.EMPTY);
 		}

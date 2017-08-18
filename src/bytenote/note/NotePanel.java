@@ -46,7 +46,6 @@ public class NotePanel extends GridPane {
 			ColumnConstraints cc = new ColumnConstraints();
 			cc.setHalignment(HPos.CENTER);
 			cc.setHgrow(Priority.ALWAYS);
-//			cc.setMinWidth(50*columns/*-(columns-1*15)*/);
 			c.add(cc);
 		}
 		
@@ -56,11 +55,6 @@ public class NotePanel extends GridPane {
 		setBorder( new Border( new BorderStroke(null, BorderStrokeStyle.SOLID, null, new BorderWidths(8) ) ) );
 		
 		setVisible(true);
-		
-		/*NoteTypes.addToMap("type1", Color.BLUE);
-		for (int i = 0; i < 16; i++) {
-			addNote( new Note(i, "text"+i, "type1") );
-		}*/
 		
 		placeHolder = new Label();
 		placeHolder.setVisible(false);
@@ -78,17 +72,16 @@ public class NotePanel extends GridPane {
 		ObservableList<Node> children = getChildren();
 		for (int i = 0; i < children.size(); i++) {
 			GridPane.setConstraints(children.get(i), i%columns, i/columns);
-//			( (Note) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.floor(children.size()/2)-hvgap*Math.floor(children.size()/2) );
 			( (Label) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.ceil(children.size()/2));
 		}
 	}
 	
-	public void c57run() {
+	public void _run() {
 		refreshLayout();
 		for (int i = 0; i < getChildren().size(); i++) {
 			if(getChildren().get(i) instanceof Note) {
 				if(notes.contains((Note) getChildren().get(i))) {
-					((Note) getChildren().get(i)).c57run();
+					((Note) getChildren().get(i))._run();
 				} else {
 					((Note) getChildren().get(i)).delete();
 				}
@@ -102,11 +95,9 @@ public class NotePanel extends GridPane {
 			getChildren().add(note.priority, note);
 			notes.add(note);
 		} else if(note.priority < 0) {
-//			System.err.println("Priority invalid. Setting priority to 0");
 			note.priority = 0;
 			addNote(note);
 		} else {
-//			System.err.println("Priority too low. Setting priority to "+getComponentCount());
 			note.priority = getChildren().size();
 			addNote(note);
 		}

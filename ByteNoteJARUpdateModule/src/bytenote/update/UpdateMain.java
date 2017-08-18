@@ -119,14 +119,14 @@ public class UpdateMain extends Application {
 		
 		primaryStage.show();
 		
-		C57runService c57run = new C57runService();
-		c57run.setRestartOnFailure(true);	
-		c57run.start();
+		_runService _run = new _runService();
+		_run.setRestartOnFailure(true);	
+		_run.start();
 		
 		runTask(download);
 	}
 	
-	public void c57run() {
+	public void _run() {
 		if(!setOnClose) {
 			stage.setOnCloseRequest( new EventHandler<WindowEvent>() {
 				@Override
@@ -187,7 +187,7 @@ public class UpdateMain extends Application {
 		return home;
 	}
 	
-	public class C57runService extends ScheduledService<Void> {
+	public class _runService extends ScheduledService<Void> {
 
 		@Override
 		protected Task<Void> createTask() {
@@ -197,7 +197,7 @@ public class UpdateMain extends Application {
 					Platform.runLater( new Runnable() {
 						@Override
 						public void run() {
-							UpdateMain.this.c57run();
+							UpdateMain.this._run();
 						}
 					});
 					return null;

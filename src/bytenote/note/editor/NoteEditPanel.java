@@ -40,15 +40,11 @@ public class NoteEditPanel extends GridPane {
 		super();
 		this.editNote = editNote;
 				
-//		setBackground( new Color(200, 188, 255) );
 		setBackground( new Background( new BackgroundFill(Color.rgb(200, 188, 255), null, null) ) );
 		
 		cancelButton = new Button("Cancel");
-		cancelButton.setOnAction( new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(javafx.event.ActionEvent event) {
+		cancelButton.setOnAction( (javafx.event.ActionEvent event) -> {
 				NoteEditPanel.this.getScene().getWindow().hide();
-			}
 		});
 		add(cancelButton, 0, 0);
 		
@@ -139,7 +135,7 @@ public class NoteEditPanel extends GridPane {
 	}
 	
 	
-	public void c57run() {
+	public void _run() {
 		if(!notePanel.equals((String)notePanelBox.getValue())) {
 			switch ((String)notePanelBox.getValue()) {
 			case "To do":

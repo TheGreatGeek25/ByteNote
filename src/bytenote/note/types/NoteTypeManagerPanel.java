@@ -33,7 +33,6 @@ public class NoteTypeManagerPanel extends BorderPane {
 		super();
 		
 		types = loadData();
-//		mainTable.setPreferredSize(new Dimension(cTypeManager.getWidth()-17, cTypeManager.getHeight()) );
 		mainTable.setEditable(false);
 		mainTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		typeNameColumn = new TableColumn<>("Type Name");
@@ -42,9 +41,7 @@ public class NoteTypeManagerPanel extends BorderPane {
 		
 		colorColumn = new TableColumn<>("Color");
 		colorColumn.setCellValueFactory( new PropertyValueFactory<>("typeColor"));
-		colorColumn.setCellFactory( new Callback<TableColumn<CColor,Color>, TableCell<CColor,Color>>() {
-			@Override
-			public TableCell<CColor, Color> call(TableColumn<CColor, Color> param) {
+		colorColumn.setCellFactory( (TableColumn<CColor, Color> param) -> {
 				return new TableCell<CColor, Color>() {
 					@Override
 					protected void updateItem(Color item, boolean empty) {
@@ -58,19 +55,14 @@ public class NoteTypeManagerPanel extends BorderPane {
 						}
 					}
 				};
-			}
 		});
 		mainTable.getColumns().add(colorColumn);
 		
 		mainTable.setItems(types);
 		
-//		mainTable.setFillsViewportHeight(true);
-//		mainTable.setDefaultRenderer(Color.class, new CColorRenderer() );
-//		mainTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		mainScrollPane = new ScrollPane(mainTable);
 		mainScrollPane.setFitToWidth(true);
-//		mainScrollPane.setPreferredSize(new Dimension(cTypeManager.getWidth()-17, cTypeManager.getHeight()) );
 		setCenter(mainScrollPane);
 		
 		controlPanel = new NoteTypeControlPanel();
@@ -80,19 +72,11 @@ public class NoteTypeManagerPanel extends BorderPane {
 
 	}
 
-	public void c57run() {
+	public void _run() {
 		saveData();
-		controlPanel.c57run();
+		controlPanel._run();
 	}
 	
-	/*public void loadData() {
-		data = new Object[NoteTypes.typeMap.keySet().size()][columnNames.length];
-		for (int i = 0; i < NoteTypes.typeMap.keySet().toArray().length; i++) {
-			data[i][0] = NoteTypes.typeMap.keySet().toArray()[i];
-			data[i][1] = NoteTypes.typeMap.get(NoteTypes.typeMap.keySet().toArray()[i]);
-		}
-		mainTable.setModel( new NoteTypeTableModel(data, columnNames) );
-	}*/
 	
 	public ObservableList<CColor> loadData() {
 		ObservableList<CColor> list = FXCollections.observableArrayList();

@@ -42,9 +42,9 @@ public class UpdateHandler {
 		return out;
 	}
 	
-	public static void c57run() {
+	public static void _run() {
 		if(up != null) {
-			up.c57run();
+			up._run();
 		}
 	}
 	

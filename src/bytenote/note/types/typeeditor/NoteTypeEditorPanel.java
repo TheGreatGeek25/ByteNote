@@ -38,11 +38,8 @@ public class NoteTypeEditorPanel extends GridPane {
 		typeColor = Color.BLUE;
 		
 		exitButton = new Button("Cancel");
-		exitButton.setOnAction( new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
+		exitButton.setOnAction( (ActionEvent event) -> {
 				NoteTypeEditorPanel.this.getScene().getWindow().hide();
-			}
 		});
 		add(exitButton, 0, 0);
 		setHalignment(exitButton, HPos.CENTER);
@@ -58,13 +55,9 @@ public class NoteTypeEditorPanel extends GridPane {
 		setHalignment(cp, HPos.CENTER);
 		
 		doneButton = new Button("Done");
-		doneButton.setOnAction( new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
+		doneButton.setOnAction( (ActionEvent event) -> {
 				saveType();
 				NoteTypeEditorPanel.this.getScene().getWindow().hide();
-			}
-
 		});
 		add(doneButton, 0, 3);
 		setHalignment(doneButton, HPos.CENTER);
@@ -106,7 +99,7 @@ public class NoteTypeEditorPanel extends GridPane {
 		cp.setValue(typeColor);;
 	}
 
-	public void c57run() {
+	public void _run() {
 		
 	}
 

@@ -123,7 +123,7 @@ public class UpdatePane extends BorderPane {
 		UpdateHandler.up = this;
 	}
 
-	public void c57run() {
+	public void _run() {
 		if(!setOnClose) {
 			this.getScene().getWindow().setOnCloseRequest( new EventHandler<WindowEvent>() {
 				@Override
