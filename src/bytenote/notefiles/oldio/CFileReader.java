@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import bytenote.ByteNoteMain;
 import bytenote.JFXMain;
 import bytenote.note.Note;
 import bytenote.note.types.NoteTypes;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 
 public class CFileReader {
 	
@@ -187,7 +191,13 @@ public class CFileReader {
 		case "v1.0":
 			return new v1_0();
 		default:
-			throw new IllegalArgumentException(fileVersionStr+" is not a compatible note file syntax version!");
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.initModality(Modality.APPLICATION_MODAL);
+			alert.initOwner(JFXMain.mainStage);
+			alert.setContentText("Error code: io0001 \nNote file syntax version \""+fileVersionStr+"\" is not compatible with "+ByteNoteMain.name+" "+ByteNoteMain.version);
+			alert.setHeaderText("Failed to load file.");
+			alert.showAndWait();
+			return null;
 		}
 		
 	}

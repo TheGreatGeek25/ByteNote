@@ -5,7 +5,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import bytenote.ByteNoteMain;
+import bytenote.JFXMain;
 import bytenote.NoteData;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Modality;
 
 public class BYNTReader {
 	public static <D extends NoteData> void readBYNTFile(File file, D loadOnFail) throws IOException, ClassNotFoundException {
@@ -25,7 +30,12 @@ public class BYNTReader {
 				break;
 			default:
 				ois.close();
-				throw new IOException("\""+version+"\" is not a recognized version.");
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.initModality(Modality.APPLICATION_MODAL);
+				alert.initOwner(JFXMain.mainStage);
+				alert.setContentText("Error code: io0000 \nBYNT file version \""+version+"\" is not compatible with "+ByteNoteMain.name+" "+ByteNoteMain.version);
+				alert.setHeaderText("Failed to load file.");
+				alert.showAndWait();
 			}
 			ois.close();
 		} else {

@@ -43,10 +43,12 @@ public class CAction implements EventHandler<ActionEvent> {
 			try {
 				File noteFile = new File(ByteNoteMain.filePath);
 				noteFile = NoteFileFilter.requestFormatUpdate(noteFile);
-				ByteNoteMain.filePath = noteFile.getAbsolutePath();
-				ByteNoteMain.savedData = NoteData.getCurrentData();
-				NoteFileWriter.writeToFile(noteFile);
-				System.out.println("File saved to "+ByteNoteMain.filePath);
+				if(noteFile != null) {
+					ByteNoteMain.filePath = noteFile.getAbsolutePath();
+					ByteNoteMain.savedData = NoteData.getCurrentData();
+					NoteFileWriter.writeToFile(noteFile);
+					System.out.println("File saved to "+ByteNoteMain.filePath);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -94,10 +96,11 @@ public class CAction implements EventHandler<ActionEvent> {
 					inputFile1 = JFXMain.openFileView(JFXMain.mainStage, "open");
 					if(inputFile1 != null) {
 						inputFile1 = NoteFileFilter.requestFormatUpdate(inputFile1);
-						ByteNoteMain.filePath = inputFile1.getAbsolutePath();
-						NoteFileReader.loadDataFromFile(inputFile1, NoteData.getBlankNoteData());
-						NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
-						//						CFileWriter.writePathFile( new File(ByteNoteMain.class.getResource("config/lastOpenedPath.txt").toURI()) );
+						if(inputFile1 != null) {
+							ByteNoteMain.filePath = inputFile1.getAbsolutePath();
+							NoteFileReader.loadDataFromFile(inputFile1, NoteData.getBlankNoteData());
+							NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
+						}
 					}
 				} catch (URISyntaxException | IOException | ClassNotFoundException e) {
 					e.printStackTrace();

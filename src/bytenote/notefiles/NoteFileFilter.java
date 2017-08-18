@@ -11,6 +11,7 @@ import bytenote.JFXMain;
 import bytenote.NoteData;
 import bytenote.notefiles.bynt.BYNTWriter;
 import bytenote.notefiles.oldio.CFileReader;
+import bytenote.notefiles.oldio.CFileReader.Reader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -31,7 +32,11 @@ public class NoteFileFilter {
 				File newFile = new File(notefile.getParentFile(), notefile.getName().replaceAll(".cnote", ".bynt"));
 //				Files.move(inputFile1.toPath(), newFile.toPath());
 				notefile.renameTo(newFile);
-				CFileReader.getNoteFileReader(newFile).noteFileMain(newFile);
+				Reader reader = CFileReader.getNoteFileReader(newFile);
+				if(reader == null) {
+					return null;
+				}
+				reader.noteFileMain(newFile);
 				BYNTWriter.writeDataToFile(NoteData.getCurrentData(), newFile);
 				rename = new Alert(AlertType.INFORMATION);
 				rename.initOwner(JFXMain.mainStage);

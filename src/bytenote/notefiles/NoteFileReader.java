@@ -10,6 +10,7 @@ import bytenote.NoteData;
 import bytenote.notefiles.bynt.BYNTReader;
 import bytenote.notefiles.oldio.CFileReader;
 import bytenote.notefiles.oldio.CFileWriter;
+import bytenote.notefiles.oldio.CFileReader.Reader;
 
 public class NoteFileReader {
 	
@@ -46,12 +47,18 @@ public class NoteFileReader {
 					BYNTReader.readBYNTFile(file, loadOnFail);
 				} else {
 					CFileWriter.makeDefaultNoteFile(file);
-					CFileReader.getNoteFileReader(file).noteFileMain(file);
+					Reader reader = CFileReader.getNoteFileReader(file);
+					if(reader != null) {
+						reader.noteFileMain(file);
+					}
 				}
 				scan.close();
 			} else {
 				CFileWriter.makeDefaultNoteFile(file);
-				CFileReader.getNoteFileReader(file).noteFileMain(file);
+				Reader reader = CFileReader.getNoteFileReader(file);
+				if(reader != null) {
+					reader.noteFileMain(file);
+				}
 			}
 		}
 		

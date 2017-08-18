@@ -98,13 +98,13 @@ public class ControlPanel extends HBox {
 		checkUpdates.setOnAction( new CAction("checkForUpdatesAction") );
 		settings.getItems().add(checkUpdates);
 		
-		exit = new MenuItem("Exit");
-		exit.setOnAction( new CAction("exit") );
-		settings.getItems().add(exit);
-		
 		releaseNotes = new MenuItem("Show Release Notes...");
 		releaseNotes.setOnAction( new CAction("showReleaseNotes") );
 		settings.getItems().add(releaseNotes);
+		
+		exit = new MenuItem("Exit");
+		exit.setOnAction( new CAction("exit") );
+		settings.getItems().add(exit);
 		
 		
 		getChildren().add(menuBar);
