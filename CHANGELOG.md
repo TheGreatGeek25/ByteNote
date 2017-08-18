@@ -1,3 +1,10 @@
+## v2.1.0
+Released [unknown]
+* Show download speed while updating
+* Show approximate time remaining while updating
+* Add an option to view the release notes
+* Bug fixes
+
 ## v2.0.3
 Released 5/26/2017
 * Fixed a bug that prevented updates while running on Linux
