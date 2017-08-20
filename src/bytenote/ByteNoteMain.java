@@ -14,7 +14,7 @@ public class ByteNoteMain {
 	public static final String name = "ByteNote";
 	public static final String version = "v2.1.0";
 	public static final String syntaxVersion = "v1.0";
-	public static final String BYNTVersion = "BYNTv1.1";
+	public static final String BYNTVersion = "BYNTv1.0";
 	
 	public static final double minWidth = 400;
 	public static final double minHeight = 400;
