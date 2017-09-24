@@ -15,7 +15,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.util.Callback;
 
 public class NoteTypeManagerPanel extends BorderPane {
 	

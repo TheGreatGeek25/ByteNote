@@ -3,7 +3,6 @@ package bytenote;
 import bytenote.note.Note;
 import bytenote.note.editor.NoteEditPanel;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

@@ -1,10 +1,9 @@
 package bytenote.note.types.typeeditor;
 
 import bytenote.JFXMain;
-import bytenote.note.types.NoteTypes;
 import bytenote.note.types.NoteTypeManagerPanel;
+import bytenote.note.types.NoteTypes;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
