@@ -148,7 +148,9 @@ public class CAction implements EventHandler<ActionEvent> {
 
 			break;
 		case "exit":
-			JFXMain.mainStage.hide();
+			if(JFXMain.confirmExit()) {
+				JFXMain.mainStage.hide();
+			}
 			break;
 		case "showReleaseNotes":
 			try {
