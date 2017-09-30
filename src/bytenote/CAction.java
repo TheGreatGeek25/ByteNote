@@ -5,10 +5,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Base64;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
-import javax.xml.bind.DatatypeConverter;
 
 import bytenote.note.Note;
 import bytenote.note.editor.NoteEditPanel;
@@ -161,7 +161,7 @@ public class CAction implements EventHandler<ActionEvent> {
 				BufferedImage image = ImageIO.read(ByteNoteMain.class.getResourceAsStream("logo256.png"));
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				ImageIO.write(image, "png", baos);
-				String dataURI = "data:image/png;base64,"+DatatypeConverter.printBase64Binary(baos.toByteArray());
+				String dataURI = "data:image/png;base64,"+Base64.getMimeEncoder().encodeToString(baos.toByteArray());
 				wv.getEngine().loadContent(html.replace("logo.png", dataURI));
 				BorderPane pane = new BorderPane(wv);
 				Button exit = new Button("Exit");
