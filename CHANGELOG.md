@@ -1,5 +1,5 @@
 ## v2.1.0
-Released [unknown]
+Released 10/5/2017
 * Show download speed while updating
 * Show approximate time remaining while updating
 * Add an option to view the release notes
