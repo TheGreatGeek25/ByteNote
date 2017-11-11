@@ -23,7 +23,7 @@ public class ControlPanel extends HBox {
 	public Menu selection;
 	public MenuItem deselect;
 	public Menu settings;
-	public MenuItem checkUpdates, exit, releaseNotes;
+	public MenuItem checkUpdates, exit, releaseNotes, config;
 	
 	public NoteTypeManagerPanel typeManager;
 
@@ -102,9 +102,14 @@ public class ControlPanel extends HBox {
 		releaseNotes.setOnAction( new CAction("showReleaseNotes") );
 		settings.getItems().add(releaseNotes);
 		
+		config = new MenuItem("Edit settings...");
+		config.setOnAction( new CAction("editConfig") );
+		settings.getItems().add(config);
+		
 		exit = new MenuItem("Exit");
 		exit.setOnAction( new CAction("exit") );
 		settings.getItems().add(exit);
+		
 		
 		
 		getChildren().add(menuBar);

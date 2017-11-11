@@ -5,14 +5,14 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import bytenote.notefiles.NoteFileReader;
+import bytenote.config.Config;
 
 public class ByteNoteMain {
 		
 	public static boolean isSaved = true;
 	
 	public static final String name = "ByteNote";
-	public static final String version = "v2.1.0";
+	public static final String version = "v2.2.0-dev";
 	public static final String syntaxVersion = "v1.0";
 	public static final String BYNTVersion = "BYNTv1.0";
 	
@@ -47,7 +47,7 @@ public class ByteNoteMain {
 			}
 		} else {
 			try {
-				filePath = NoteFileReader.readConfigFile("lastOpenedPath.txt").replaceAll("\n", "");
+				filePath = Config.readFileInConfigDir("lastOpenedPath.txt").replaceAll("\n", "");
 				new File(filePath).toURI();
 			} catch (Exception e) {
 //				e.printStackTrace();
