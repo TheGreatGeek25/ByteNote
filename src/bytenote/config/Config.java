@@ -4,12 +4,26 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+
+import bytenote.note.types.NoteTypes;
+import bytenote.note.types.NoteTypes.NoteType;
 
 public class Config {
 	
+	public String bytenoteVersion;
+	
+	public ArrayList<NoteType> noteTypes;
+	
 	public void apply() {
-		
+		Map<String, NoteType> noteTypeMap = new HashMap<String, NoteType>();
+		for(NoteType notetype: noteTypes) {
+			noteTypeMap.put(notetype.getName(), notetype);
+		}
+		NoteTypes.setTypeMap(noteTypeMap);
 	}
 	
 	
