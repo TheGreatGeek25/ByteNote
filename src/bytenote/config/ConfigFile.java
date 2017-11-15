@@ -12,7 +12,7 @@ public class ConfigFile extends File {
 		super(Config.getURIInConfigDir(CONFIG));
 	}
 	
-	public Config readDataConfig() {
+	public Config readData() {
 		return null;
 	}
 	

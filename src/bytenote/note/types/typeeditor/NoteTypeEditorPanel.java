@@ -65,7 +65,6 @@ public class NoteTypeEditorPanel extends GridPane {
 	}
 	
 	protected void saveType() {
-//		System.out.println("Save type");
 		if(NoteTypes.getTypeMap().containsKey(typeStr)) {
 			for (int i = 0; i < JFXMain.root.todoPanel.notes.size(); i++) {
 				if(JFXMain.root.todoPanel.notes.get(i).type.equals(typeStr)) {
