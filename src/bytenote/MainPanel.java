@@ -59,10 +59,6 @@ public class MainPanel extends BorderPane {
 		setRight(doneScrollPane);
 		setBottom(infoPanel);
 		
-//		add(controlPanel, BorderLayout.PAGE_START);
-//		add(infoPanel, BorderLayout.PAGE_END);
-		
-			
 		
 	}
 	

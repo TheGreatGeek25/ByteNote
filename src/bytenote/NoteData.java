@@ -14,7 +14,13 @@ public abstract class NoteData implements Serializable {
 	private static final long serialVersionUID = 287788144153840368L;
 	
 	public static NoteData getCurrentData() {
-		return new V1_0(JFXMain.root.todoPanel.notes, JFXMain.root.doingPanel.notes, JFXMain.root.donePanel.notes, NoteTypes.getTypeMap());
+		HashMap<String, Color> types = new HashMap<>();
+		for(String key: NoteTypes.getTypeMap().keySet()) {
+			if(NoteTypes.getTypeMap().get(key).isLocal()) {
+				types.put(key, NoteTypes.getTypeMap().get(key).getColor());
+			}
+		}
+		return new V1_0(JFXMain.root.todoPanel.notes, JFXMain.root.doingPanel.notes, JFXMain.root.donePanel.notes, types);
 	}
 	
 	public static NoteData getBlankNoteData() {
@@ -56,7 +62,7 @@ public abstract class NoteData implements Serializable {
 			JFXMain.root.donePanel.addNotes(doneNotes);
 			NoteTypes.getTypeMap().clear();
 			for(String s:noteTypes.keySet()) {
-				NoteTypes.addToMap(s, Color.color(noteTypes.get(s)[0], noteTypes.get(s)[1], noteTypes.get(s)[2]));
+				NoteTypes.addToMap(s, Color.color(noteTypes.get(s)[0], noteTypes.get(s)[1], noteTypes.get(s)[2]), true);
 			}
 		}
 

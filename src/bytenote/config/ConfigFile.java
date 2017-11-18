@@ -13,10 +13,15 @@ public class ConfigFile extends File {
 	}
 	
 	public Config readData() {
+		Config config = new Config();
+		
+		
 		return null;
 	}
 	
 	public void writeData(Config data) {
+		
+		
 		
 	}
 	
