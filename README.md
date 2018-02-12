@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/github/license/TheGreatGeek25/ByteNote.svg)](https://github.com/TheGreatGeek25/ByteNote/blob/master/LICENSE)
 
-[![BADGINATOR](https://badginator.herokuapp.com/TheGreatGeek25/ByteNote.svg)](https://github.com/defunctzombie/badginator)
+<!--[![BADGINATOR](https://badginator.herokuapp.com/TheGreatGeek25/ByteNote.svg)](https://github.com/defunctzombie/badginator)-->
 ## About
 ByteNote is a note taking application.
 More information about this project is available [here](https://thegreatgeek25.github.io/ByteNote)
