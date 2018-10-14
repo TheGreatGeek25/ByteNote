@@ -2,3 +2,6 @@
 /build.fxbuild
 /build/
 /test/
+
+.idea/**
+**.iml
