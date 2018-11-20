@@ -17,23 +17,25 @@ public class ControlPanel extends HBox {
 	public MenuBar menuBar;
 	
 	public Menu file;
-	public MenuItem save, saveAs, newFile, open;
+	private MenuItem save, saveAs, newFile, open;
 	public Menu notes;
-	public MenuItem newNote, deleteNote, manageTypes;
-	public Menu selection;
-	public MenuItem deselect;
-	public Menu settings;
-	public MenuItem checkUpdates, exit, releaseNotes;
+	private MenuItem newNote, deleteNote, manageTypes;
+	private Menu selection;
+	private MenuItem deselect;
+	private Menu settings;
+	private MenuItem checkUpdates, exit, releaseNotes;
 	
 	public NoteTypeManagerPanel typeManager;
 
-	
+	private final JFXMain jfxMain;
+	private final MainPanel mainPanel;
 
-	
-	
-	public ControlPanel() {
+
+	public ControlPanel(JFXMain jfxMain, MainPanel mainPanel) {
 		super();
-		setPrefSize(JFXMain.mainStage.getWidth(), InfoPanel.defaultHeight);
+		this.jfxMain = jfxMain;
+		this.mainPanel = mainPanel;
+		setPrefSize(jfxMain.getMainStage().getWidth(), InfoPanel.defaultHeight);
 		setBackground( new Background( new BackgroundFill(Color.web("#00ffff"), null, null) ) );
 		
 		menuBar = new MenuBar();
@@ -118,7 +120,7 @@ public class ControlPanel extends HBox {
 			typeManager._run();
 			
 		}
-		if(JFXMain.root.infoPanel.note != null) {
+		if(mainPanel.infoPanel.note != null) {
 			deleteNote.setDisable(false);
 		} else {
 			deleteNote.setDisable(true);

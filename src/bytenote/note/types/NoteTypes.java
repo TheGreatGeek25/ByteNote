@@ -6,8 +6,8 @@ import java.util.Map;
 import javafx.scene.paint.Color;
 
 public class NoteTypes {
-	protected static HashMap<String, Color> typeMap = new HashMap<String, Color>();
-	protected static Color defaultColor = Color.rgb(255, 255, 127);
+	private static HashMap<String, Color> typeMap = new HashMap<String, Color>();
+	private static Color defaultColor = Color.rgb(255, 255, 127);
 	
 	public static Color getColor(String name) {
 		return typeMap.get(name);
@@ -19,8 +19,8 @@ public class NoteTypes {
 	
 	public static void setMap(Map<String, Color> newMap) {
 		typeMap.clear();
-		for (int i = 0; i < newMap.keySet().toArray().length; i++) {
-			addToMap((String) newMap.keySet().toArray()[i], newMap.get(newMap.keySet().toArray()[i]));
+		for(String s: newMap.keySet().toArray(new String[0])) {
+			addToMap(s, newMap.get(s));
 		}
 		addDefaultColor();
 	}

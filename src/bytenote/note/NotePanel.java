@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import bytenote.InfoPanel;
 import bytenote.JFXMain;
+import bytenote.MainPanel;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
@@ -31,15 +32,20 @@ public class NotePanel extends GridPane {
 	public ArrayList<Note> notes = new ArrayList<Note>();
 	public int minShownIndex = 0;
 	
-	public static int hvgap = 15;
+	private static int hvgap = 15;
 	
-	public Integer columns = 2;
+	private Integer columns = 2;
 	
-	public Label placeHolder;
+	private Label placeHolder;
+
+	private final JFXMain jfxMain;
+	private final MainPanel mainPanel;
 	
-	public NotePanel() {
+	public NotePanel(JFXMain jfxMain, MainPanel mainPanel) {
 		super();
-		
+		this.jfxMain = jfxMain;
+		this.mainPanel = mainPanel;
+
 		ObservableList<ColumnConstraints> c = getColumnConstraints();
 		c.clear();
 		for (int i=0; i<columns; i++) {
@@ -49,7 +55,7 @@ public class NotePanel extends GridPane {
 			c.add(cc);
 		}
 		
-		setPrefSize((JFXMain.mainStage.getWidth()*paneToWin)-JFXMain.mainStage.getWidth()/42, Math.max(JFXMain.mainStage.getHeight()-InfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*Note.cNotePrefHeight));
+		setPrefSize((jfxMain.getMainStage().getWidth()*paneToWin)-jfxMain.getMainStage().getWidth()/42, Math.max(jfxMain.getMainStage().getHeight()-InfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2.0)*Note.cNotePrefHeight));
 		setHgap(hvgap);
 		setVgap(hvgap);
 		setBorder( new Border( new BorderStroke(null, BorderStrokeStyle.SOLID, null, new BorderWidths(8) ) ) );
@@ -72,7 +78,7 @@ public class NotePanel extends GridPane {
 		ObservableList<Node> children = getChildren();
 		for (int i = 0; i < children.size(); i++) {
 			GridPane.setConstraints(children.get(i), i%columns, i/columns);
-			( (Label) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.ceil(children.size()/2));
+			( (Label) children.get(i) ).setPrefSize(this.getWidth()/2-hvgap*3, this.getHeight()/Math.ceil(children.size()/2.0));
 		}
 	}
 	
@@ -87,7 +93,7 @@ public class NotePanel extends GridPane {
 				}
 			}
 		}
-		setPrefSize((JFXMain.root.getWidth()*paneToWin)-JFXMain.root.getWidth()/42, Math.max(JFXMain.root.getHeight()-InfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2)*Note.cNotePrefHeight));
+		setPrefSize((mainPanel.getWidth()*paneToWin)-mainPanel.getWidth()/42, Math.max(mainPanel.getHeight()-InfoPanel.defaultHeight*2, Math.ceil(getChildren().size()/2.0)*Note.cNotePrefHeight));
 	}
 	
 	public void addNote(Note note) {
@@ -106,9 +112,8 @@ public class NotePanel extends GridPane {
 	}
 
 	public void addNotes(Collection<Note> newNotes) {
-		Iterator<Note> notesI = newNotes.iterator();
-		while (notesI.hasNext()) {
-			addNote(notesI.next());
+		for (Note newNote : newNotes) {
+			addNote(newNote);
 		}
 	}
 	

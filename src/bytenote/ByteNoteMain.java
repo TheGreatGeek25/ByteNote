@@ -71,7 +71,7 @@ public class ByteNoteMain {
 		try{
 			if(file.createNewFile()) {
 				if(!file.delete()) {
-					System.err.println("ERROR!!");
+					System.err.println("ERROR!!"); //FIXME
 				}
 			}
 			return true;

@@ -19,24 +19,28 @@ public class MainPanel extends BorderPane {
 	public NotePanel todoPanel;
 	public NotePanel doingPanel;
 	public NotePanel donePanel;
-	public ScrollPane todoScrollPane;
-	public ScrollPane doingScrollPane;
-	public ScrollPane doneScrollPane;
+	private ScrollPane todoScrollPane;
+	private ScrollPane doingScrollPane;
+	private ScrollPane doneScrollPane;
 	
 	
 	public InfoPanel infoPanel;
 	public ControlPanel controlPanel;
+
+	private final JFXMain jfxMain;
 	
-	public MainPanel() {
+	public MainPanel(JFXMain jfxMain) {
 		super();
-		
+
+		this.jfxMain = jfxMain;
+
 		setVisible(true);
 		
-		controlPanel = new ControlPanel();
-		todoPanel = new NotePanel();
-		doingPanel = new NotePanel();
-		donePanel = new NotePanel();
-		infoPanel = new InfoPanel();
+		controlPanel = new ControlPanel(jfxMain, this);
+		todoPanel = new NotePanel(jfxMain, this);
+		doingPanel = new NotePanel(jfxMain, this);
+		donePanel = new NotePanel(jfxMain, this);
+		infoPanel = new InfoPanel(jfxMain, this);
 		
 		todoScrollPane = new ScrollPane(todoPanel);
 		todoScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -82,28 +86,25 @@ public class MainPanel extends BorderPane {
 		
 		if(ByteNoteMain.savedData != null && ByteNoteMain.savedData.isEqual(NoteData.getCurrentData())) {
 			ByteNoteMain.isSaved = true;
-			JFXMain.mainStage.setTitle(ByteNoteMain.name+"   "+new File(ByteNoteMain.filePath).getAbsolutePath());
+			jfxMain.getMainStage().setTitle(ByteNoteMain.name+"   "+new File(ByteNoteMain.filePath).getAbsolutePath());
 		} else {
 			ByteNoteMain.isSaved = false;
-			JFXMain.mainStage.setTitle(ByteNoteMain.name+"   *"+new File(ByteNoteMain.filePath).getAbsolutePath()+"*");
+			jfxMain.getMainStage().setTitle(ByteNoteMain.name+"   *"+new File(ByteNoteMain.filePath).getAbsolutePath()+"*");
 		}
 		
 		UpdateHandler._run();
 		
 	}
-	
-	
+
+
 	public class _runService extends ScheduledService<Void> {
 
 		@Override
 		protected Task<Void> createTask() {
 			return new Task<Void>() {
 				@Override
-				protected Void call() throws Exception {
-					Platform.runLater( () -> {
-							MainPanel.this._run();
-						}
-					);
+				protected Void call() {
+					Platform.runLater(MainPanel.this::_run);
 					return null;
 				}
 			};

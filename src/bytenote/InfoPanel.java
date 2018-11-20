@@ -16,21 +16,26 @@ public class InfoPanel extends HBox {
 	
 	public static final int defaultHeight = 32;
 	
-	public Label noteText;
-	public Label noteType;
-	public Label notePriority;
+	private Label noteText;
+	private Label noteType;
+	private Label notePriority;
 	private String noteTextStr;
 	private String noteTypeStr;
 	
 	public Note note;
 	
-	public Button editNote;
+	private Button editNote;
 	
 	public NoteEditPanel noteEditor;
+
+	private final JFXMain jfxMain;
+	private final MainPanel mainPanel;
 	
-	public InfoPanel() {
+	public InfoPanel(JFXMain jfxMain, MainPanel mainPanel) {
 		super();
-		setPrefSize(JFXMain.mainStage.getWidth(), defaultHeight);
+		this.jfxMain = jfxMain;
+		this.mainPanel = mainPanel;
+		setPrefSize(jfxMain.getMainStage().getWidth(), defaultHeight);
 		setBackground( new Background( new BackgroundFill(Color.web("rgb(0,255,255)"), null, null) ) );
 		
 		noteText = new Label("Note text: No note selected");
@@ -54,7 +59,7 @@ public class InfoPanel extends HBox {
 		editNote.setDisable(true);
 		editNote.setOnAction( (ActionEvent event) -> {
 				InfoPanel.this.noteEditor = new NoteEditPanel(note);
-				JFXMain.showView(JFXMain.mainStage, InfoPanel.this.noteEditor, "Edit note", 300, 300);
+				JFXMain.showView(jfxMain.getMainStage(), InfoPanel.this.noteEditor, "Edit note", 300, 300);
 		});
 		getChildren().add(editNote);
 		

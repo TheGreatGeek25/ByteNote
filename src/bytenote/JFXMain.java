@@ -1,9 +1,5 @@
 package bytenote;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-
 import bytenote.notefiles.NoteFileFilter;
 import bytenote.notefiles.NoteFileReader;
 import bytenote.notefiles.NoteFileWriter;
@@ -19,15 +15,23 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
+import java.io.IOException;
+
 public class JFXMain extends Application {
-	
-	public static MainPanel root;
-	
-	public static Stage mainStage;
-	
+
+	private MainPanel root;
+
+	private Stage mainStage;
+
+	public ByteNote byteNote;
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+
+			byteNote = new ByteNote();
+
 			mainStage = primaryStage;
 			
 			primaryStage.setTitle(ByteNoteMain.name);
@@ -45,45 +49,58 @@ public class JFXMain extends Application {
 					}
 			});
 						
-			root = new MainPanel();
+			root = new MainPanel(this);
 			
 			Scene scene = new Scene(root, primaryStage.getWidth(), primaryStage.getHeight());
 			primaryStage.setScene(scene);
 			
 			
 			primaryStage.show();
-			
-			File notefile = new File(ByteNoteMain.filePath);
-			while(!ByteNoteMain.isFileValid(notefile)) {
+
+			File notefile = null;
+			if(!ByteNoteMain.filePath.equals("")) {
+				notefile = new File(ByteNoteMain.filePath);
+			}
+			/*while(!ByteNoteMain.isFileValid(notefile)) {
 				System.err.println("File at \""+notefile.getAbsolutePath()+"\" is invalid.");
 				notefile = openFileView(mainStage, "open");
 				notefile = NoteFileFilter.requestFormatUpdate(notefile);
-			}
-			ByteNoteMain.filePath = notefile.getAbsolutePath();
-			NoteFileReader.loadDataFromFile(notefile, NoteData.getBlankNoteData());
+			}*/
+
+			NoteData.getBlankNoteData().load();
 			ByteNoteMain.savedData = NoteData.getCurrentData();
-			NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
-			
+			if(notefile != null) {
+				NoteFileReader.loadDataFromFile(notefile, NoteData.getBlankNoteData());
+				ByteNoteMain.filePath = notefile.getAbsolutePath();
+				NoteFileWriter.writeConfigFile("lastOpenedPath.txt", ByteNoteMain.filePath.getBytes());
+			}
+
 			root._run = root.new _runService();
 			root._run.setRestartOnFailure(true);	
 			root._run.start();
-		} catch(URISyntaxException | IOException | ClassNotFoundException e) {
-			e.printStackTrace();
+		} catch(IOException | ClassNotFoundException e) {
+			throw new RuntimeException(e);
 		}
 
 	}
-	
+
+	public Stage getMainStage() {
+		return mainStage;
+	}
+
 	public static File openFileView(Stage parent, String openORsave) {
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().add(NoteFileFilter.cnoteFilter);
 		fc.getExtensionFilters().add(NoteFileFilter.byntFilter);
 		fc.setSelectedExtensionFilter(NoteFileFilter.byntFilter);
-		if(openORsave.equals("open")) {
-			return fc.showOpenDialog(parent);
-		} else if (openORsave.equals("save")) {
-			return fc.showSaveDialog(parent);
-		} else {
-			System.err.println("openORsave must be \"open\" or \"save\"");
+		switch (openORsave) {
+			case "open":
+				return fc.showOpenDialog(parent);
+			case "save":
+				return fc.showSaveDialog(parent);
+			default:
+				System.err.println("openORsave must be \"open\" or \"save\"");
+				break;
 		}
 		return null;
 	}
@@ -102,11 +119,11 @@ public class JFXMain extends Application {
 		return stage;
 	}
 
-	public static boolean confirmExit() {
+	public boolean confirmExit() {
 		return confirmExit("exit");
 	}
 	
-	public static boolean confirmExit(String replaceExit) {
+	public boolean confirmExit(String replaceExit) {
 		if(!ByteNoteMain.isSaved) {
 			Alert a = new Alert(AlertType.CONFIRMATION, "Are you sure you want to "+replaceExit+"? Unsaved changes will be lost.");
 			a.initOwner(mainStage);
