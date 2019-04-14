@@ -1,8 +1,11 @@
 build.fxbuild
-build/
 test/
 
+# Ignore Gradle project-specific cache directory
+.gradle
 
+# Ignore Gradle build output directory
+build
 
 # Created by https://www.gitignore.io/api/java,eclipse,intellij+all
 # Edit at https://www.gitignore.io/?templates=java,eclipse,intellij+all
