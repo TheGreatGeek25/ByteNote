@@ -46,21 +46,21 @@ public class ControlPanel extends HBox {
 		menuBar.getMenus().add(file);
 		
 		newFile = new MenuItem("New...");
-		newFile.setOnAction(new CAction("newFileAction", jfxMain) );
+		newFile.setOnAction(jfxMain.getEventHandlers().NEW_FILE_EVENT);
 		newFile.setAccelerator(KeyCombination.keyCombination("Ctrl+N"));
 		file.getItems().add(newFile);
 		
 		open = new MenuItem("Open...");
-		open.setOnAction( new CAction("openAction", jfxMain) );
+		open.setOnAction(jfxMain.getEventHandlers().OPEN_EVENT);
 		file.getItems().add(open);
 		
 		save = new MenuItem("Save");
-		save.setOnAction( new CAction("saveAction", jfxMain) );
+		save.setOnAction(jfxMain.getEventHandlers().SAVE_EVENT);
 		save.setAccelerator(KeyCombination.keyCombination("Ctrl+S"));
 		file.getItems().add(save);
 		
 		saveAs = new MenuItem("Save As...");
-		saveAs.setOnAction( new CAction("saveAsAction", jfxMain) );
+		saveAs.setOnAction(jfxMain.getEventHandlers().SAVE_AS_EVENT);
 		saveAs.setAccelerator(KeyCombination.keyCombination("Ctrl+Shift+S"));
 		file.getItems().add(saveAs);
 		
@@ -70,11 +70,11 @@ public class ControlPanel extends HBox {
 		menuBar.getMenus().add(notes);
 		
 		newNote = new MenuItem("New note...");
-		newNote.setOnAction( new CAction("newNoteAction", jfxMain) );
+		newNote.setOnAction(jfxMain.getEventHandlers().NEW_NOTE_EVENT);
 		notes.getItems().add(newNote);
 		
 		deleteNote = new MenuItem("Delete note");
-		deleteNote.setOnAction( new CAction("deleteNoteAction", jfxMain) );
+		deleteNote.setOnAction(jfxMain.getEventHandlers().DELETE_NOTE_EVENT);
 		deleteNote.setAccelerator(KeyCombination.keyCombination("DELETE"));
 		deleteNote.setDisable(true);
 		notes.getItems().add(deleteNote);
@@ -82,14 +82,14 @@ public class ControlPanel extends HBox {
 		notes.getItems().add( new SeparatorMenuItem() );
 	
 		manageTypes = new MenuItem("Manage types...");
-		manageTypes.setOnAction( new CAction("manageTypeAction", jfxMain) );
+		manageTypes.setOnAction(jfxMain.getEventHandlers().MANAGE_TYPE_EVENT);
 		notes.getItems().add(manageTypes);
 		
 		selection = new Menu("Selection");
 		menuBar.getMenus().add(selection);
 		
 		deselect = new MenuItem("Deselect");
-		deselect.setOnAction( new CAction("deselectAction", jfxMain) );
+		deselect.setOnAction(jfxMain.getEventHandlers().DESELECT_EVENT);
 		deselect.setAccelerator(KeyCombination.keyCombination("Ctrl+Shift+A"));
 		selection.getItems().add(deselect);
 		
@@ -97,15 +97,15 @@ public class ControlPanel extends HBox {
 		menuBar.getMenus().add(settings);
 		
 		checkUpdates = new MenuItem("Check for Updates...");
-		checkUpdates.setOnAction( new CAction("checkForUpdatesAction", jfxMain) );
+		checkUpdates.setOnAction(jfxMain.getEventHandlers().CHECK_FOR_UPDATES_EVENT);
 		settings.getItems().add(checkUpdates);
 		
 		releaseNotes = new MenuItem("Show Release Notes...");
-		releaseNotes.setOnAction( new CAction("showReleaseNotes", jfxMain) );
+		releaseNotes.setOnAction(jfxMain.getEventHandlers().SHOW_RELEASE_NOTES_EVENT);
 		settings.getItems().add(releaseNotes);
 		
 		exit = new MenuItem("Exit");
-		exit.setOnAction( new CAction("exit", jfxMain) );
+		exit.setOnAction(jfxMain.getEventHandlers().EXIT_EVENT);
 		settings.getItems().add(exit);
 		
 		

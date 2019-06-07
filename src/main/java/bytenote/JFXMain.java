@@ -26,9 +26,12 @@ public class JFXMain extends Application {
 
 	public ByteNote byteNote;
 
+	private EventHandlers eventHandlers;
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			eventHandlers = new EventHandlers(this);
 
 			byteNote = new ByteNote();
 
@@ -137,5 +140,8 @@ public class JFXMain extends Application {
 	public MainPanel getRoot() {
 		return root;
 	}
-	
+
+	public EventHandlers getEventHandlers() {
+		return eventHandlers;
+	}
 }
