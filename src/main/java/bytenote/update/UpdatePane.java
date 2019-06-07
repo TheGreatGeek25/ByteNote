@@ -14,8 +14,6 @@ import bytenote.JFXMain;
 import bytenote.update.UpdateHandler.UpdateType;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker.State;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -28,7 +26,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
-import javafx.stage.WindowEvent;
 
 public class UpdatePane extends BorderPane {
 	
@@ -55,7 +52,7 @@ public class UpdatePane extends BorderPane {
 
 		wv = new WebView();
 		WebEngine we = wv.getEngine();
-		we.load(updateSite.toString()+"/releaseNotes.html");
+		we.load(updateSite.toString()+ "/bytenote/releaseNotes.html");
 		setCenter(wv);
 		
 		exitButton = new Button("Exit");

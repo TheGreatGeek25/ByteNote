@@ -35,7 +35,7 @@ public class JFXMain extends Application {
 			mainStage = primaryStage;
 			
 			primaryStage.setTitle(ByteNoteMain.name);
-			primaryStage.getIcons().add( new Image(this.getClass().getResourceAsStream("bytenote/logo32.png")) );
+			primaryStage.getIcons().add( new Image(JFXMain.class.getResourceAsStream("/bytenote/logo32.png")) );
 			primaryStage.setResizable(true);
 			primaryStage.setMinHeight(ByteNoteMain.minHeight);
 			primaryStage.setMinWidth(ByteNoteMain.minWidth);

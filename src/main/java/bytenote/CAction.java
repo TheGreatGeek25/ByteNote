@@ -154,11 +154,11 @@ public class CAction implements EventHandler<ActionEvent> {
 			break;
 		case "showReleaseNotes":
 			try {
-				Scanner sc = new Scanner(ByteNoteMain.class.getResourceAsStream("releaseNotes.html"));
+				Scanner sc = new Scanner(ByteNoteMain.class.getResourceAsStream("/bytenote/releaseNotes.html"));
 				sc.useDelimiter("\\A");
 				WebView wv = new WebView();
 				String html = sc.next();
-				BufferedImage image = ImageIO.read(ByteNoteMain.class.getResourceAsStream("logo256.png"));
+				BufferedImage image = ImageIO.read(ByteNoteMain.class.getResourceAsStream("/bytenote/logo256.png"));
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				ImageIO.write(image, "png", baos);
 				String dataURI = "data:image/png;base64,"+Base64.getMimeEncoder().encodeToString(baos.toByteArray());
