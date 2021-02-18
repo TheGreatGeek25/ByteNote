@@ -7,5 +7,4 @@
 <!--[![BADGINATOR](https://badginator.herokuapp.com/TheGreatGeek25/ByteNote.svg)](https://github.com/defunctzombie/badginator)-->
 ## About
 ByteNote is a note taking application.
-More information about this project is available [here](https://thegreatgeek25.github.io/ByteNote)
-
+This project is NOT maintained, and I have no intention of ever maintaining it in the future. Please never attempt to use it.
